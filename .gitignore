@@ -1,0 +1,14 @@
+# Workspace dependencies
+node_modules/
+.next/
+
+# Agent tools & configs
+.agents/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
