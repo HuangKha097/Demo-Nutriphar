@@ -2,7 +2,8 @@
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { Activity, ShieldCheck, BrainCircuit, Wind, Zap, Baby, Bone, Heart } from "lucide-react";
+import { Activity, ShieldCheck, BrainCircuit, Wind, Zap, Baby, Bone, Heart, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const benefits = [
   {
@@ -37,7 +38,7 @@ const benefits = [
   },
   {
     icon: Bone,
-    title: "Tăng Cường Sức Khỏe Xương Khớp",
+    title: "Tăng Cường Sức Khoẻ Xương Khớp",
     description: "Kết hợp nhũ hương cùng Yến sào chứa nhiều canxi, giúp xương chắc khỏe, ngăn ngừa loãng xương. Yến sào chứa nhiều chất chống oxy hóa, giúp chống lại các tác nhân gây viêm, đau khớp.",
   },
   {
@@ -48,6 +49,12 @@ const benefits = [
 ];
 
 export function BenefitsSection() {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const toggleBenefit = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return (
     <Section className="bg-background !py-10 md:!py-14">
       <Container>
@@ -62,28 +69,44 @@ export function BenefitsSection() {
 
         <div className="flex flex-col md:flex-row gap-12 lg:gap-20 xl:gap-24 items-center">
           {/* Cột trái: Ảnh sản phẩm */}
-          <div className="w-full md:w-[40%] relative h-[400px] lg:h-[600px] flex items-center justify-center shrink-0">
-            {/* Glow mềm */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary opacity-20 blur-[80px] rounded-full pointer-events-none"></div>
-
+          <div className="w-full md:w-[40%] relative h-[400px] lg:h-[600px] flex items-center justify-center shrink-0 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/yensao.png"
               alt="Yến sào thượng hạng Nutriphar"
-              className="w-full h-auto object-contain relative z-10 scale-440 drop-shadow-2xl"
+              className="w-full h-auto object-contain relative z-10 scale-440"
             />
           </div>
 
           {/* Cột phải: Danh sách công dụng */}
           <div className="w-full md:w-[60%] flex flex-col gap-y-2 lg:gap-y-3 relative z-20">
             {benefits.map((benefit, index) => {
+              const isExpanded = expandedIndex === index;
               return (
-                <div key={index} className="group flex flex-col cursor-pointer border-b border-border/40 pb-2 last:border-0 last:pb-0">
-                  <h3 className="text-[18px] lg:text-[20px] font-semibold text-foreground relative pl-6 transition-colors group-hover:text-primary py-2">
-                    <span className="absolute left-0 top-[15px] lg:top-[16px] w-2 h-2 rounded-full bg-primary transition-transform group-hover:scale-125"></span>
-                    {benefit.title}
+                <div key={index} className="group flex flex-col border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                  <h3 
+                    onClick={() => toggleBenefit(index)}
+                    className="text-[17px] sm:text-[18px] lg:text-[20px] font-semibold text-foreground relative pl-6 transition-colors hover:text-primary py-3 flex items-center justify-between cursor-pointer select-none"
+                  >
+                    <div className="flex items-center">
+                      <span className={`absolute left-0 top-[23px] lg:top-[24px] w-2 h-2 rounded-full bg-primary transition-transform duration-300 ${
+                        isExpanded ? "scale-125 bg-accent" : "group-hover:scale-125"
+                      }`} />
+                      {benefit.title}
+                    </div>
+                    <ChevronDown 
+                      className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
+                        isExpanded ? "rotate-180 text-accent" : "group-hover:text-primary"
+                      }`} 
+                    />
                   </h3>
-                  <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out group-hover:grid-rows-[1fr] group-hover:opacity-100">
+                  <div 
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isExpanded 
+                        ? "grid-rows-[1fr] opacity-100" 
+                        : "grid-rows-[0fr] opacity-0 md:group-hover:grid-rows-[1fr] md:group-hover:opacity-100"
+                    }`}
+                  >
                     <div className="overflow-hidden">
                       <p className="text-muted-foreground text-[15px] leading-[1.7] pl-6 pb-3">{benefit.description}</p>
                     </div>
