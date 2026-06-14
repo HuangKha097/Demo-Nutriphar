@@ -3,7 +3,7 @@
 import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
+import { CtaButton } from "@/components/ui/CtaButton";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -46,10 +46,12 @@ export function AboutSection() {
               </p>
               <div>
                 <Link href="/about">
-                  <Button className="px-8 h-[48px] bg-accent hover:bg-[#8B1215] text-white text-[15px] font-medium rounded-full border-none shadow-md transition-all duration-300 inline-flex items-center gap-2">
+                  <CtaButton
+                    icon={<ArrowRight className="w-4 h-4 text-white" />}
+                    className="px-8 h-[48px]"
+                  >
                     Tìm hiểu thêm
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  </CtaButton>
                 </Link>
               </div>
             </div>

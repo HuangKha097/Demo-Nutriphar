@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "./Container";
-import { Button } from "./Button";
+import { CtaButton } from "./CtaButton";
 import { Globe, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -11,17 +11,55 @@ import { usePathname } from "next/navigation";
 export function Header() {
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const existing = localStorage.getItem("cart");
+      if (existing) {
+        try {
+          const items = JSON.parse(existing);
+          const totalQty = items.reduce((sum: number, item: any) => sum + (item.quantity || 0), 0);
+          setCartCount(totalQty);
+        } catch (e) {
+          setCartCount(0);
+        }
+      } else {
+        setCartCount(0);
+      }
+    };
+
+    updateCartCount();
+
+    window.addEventListener("cart-updated", updateCartCount);
+    return () => window.removeEventListener("cart-updated", updateCartCount);
+  }, []);
 
   useEffect(() => {
     setIsAtTop(window.scrollY <= 50);
   }, [pathname]);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setIsAtTop(window.scrollY <= 50);
+      const currentScrollY = window.scrollY;
+
+      // Update at top state
+      setIsAtTop(currentScrollY <= 50);
+
+      // Scroll logic: hide on scroll down (past 100px), show on scroll up
+      if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      lastScrollY = currentScrollY;
     };
 
     // Set initial state
@@ -57,119 +95,206 @@ export function Header() {
     ? "text-white/90 hover:text-[#D4AF37]"
     : "text-[#1C1C1C] hover:text-[#D4AF37]";
 
+  const [activeHash, setActiveHash] = useState("");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveHash(window.location.hash);
+    };
+
+    const handleScrollForHash = () => {
+      if (pathname === "/") {
+        const newsSection = document.getElementById("news");
+        if (newsSection) {
+          const rect = newsSection.getBoundingClientRect();
+          // If the news section's top is in the upper part of the viewport
+          if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.2) {
+            setActiveHash("#news");
+            return;
+          }
+        }
+        if (window.scrollY < 200) {
+          setActiveHash("");
+        }
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("scroll", handleScrollForHash, { passive: true });
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("scroll", handleScrollForHash);
+    };
+  }, [pathname]);
+
+  const isLinkActive = (href: string) => {
+    if (href.startsWith("/#")) {
+      const hash = href.split("#")[1];
+      return pathname === "/" && activeHash === `#${hash}`;
+    }
+    if (href === "/") {
+      return pathname === "/" && activeHash === "";
+    }
+    return pathname === href || pathname?.startsWith(href + "/");
+  };
+
+  const getNavLinkStyles = (href: string) => {
+    const active = isLinkActive(href);
+    const baseClasses = "relative text-[15px] lg:text-[16px] font-medium transition-colors duration-300 whitespace-nowrap after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:bg-[#D4AF37] after:rounded-full after:transition-all after:duration-300";
+    
+    if (active) {
+      return `${baseClasses} text-[#D4AF37] after:w-full`;
+    }
+    
+    const inactiveTextColor = shouldBeTransparent
+      ? "text-white/90 hover:text-[#D4AF37]"
+      : "text-[#1C1C1C] hover:text-[#D4AF37]";
+      
+    return `${baseClasses} ${inactiveTextColor} after:w-0 hover:after:w-full`;
+  };
+
+  const getMobileNavLinkStyles = (href: string) => {
+    const active = isLinkActive(href);
+    const baseClasses = "text-[16px] font-semibold transition-colors font-body py-1 border-b border-[#E5E5E5]/50 flex items-center justify-between";
+    if (active) {
+      return `${baseClasses} text-[#D4AF37]`;
+    }
+    return `${baseClasses} text-[#1C1C1C] hover:text-[#D4AF37]`;
+  };
+
   return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-colors duration-300 ease-in-out ${
-        isMobileMenuOpen
-          ? "bg-transparent shadow-none"
-          : shouldBeTransparent
-          ? "bg-transparent shadow-none"
-          : "bg-[#FAFAF7]/94 backdrop-blur-[12px] shadow-sm border-b border-[#E5E5E5]/40"
-      }`}
-    >
-      {/* Promo banner */}
-      <div className={`w-full overflow-hidden py-1.5 transition-colors duration-500 ${shouldBeTransparent ? "bg-white/10 backdrop-blur-sm" : "bg-accent"}`}>
-        <div className="flex animate-marquee text-white/90 whitespace-nowrap">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex items-center gap-8 px-4 text-[12px] md:text-[13px] font-body tracking-wide">
-              <span> Giảm 15% cho đơn hàng đầu tiên</span>
-              <span className="text-[#D4AF37]">✦</span>
-              <span> Miễn phí vận chuyển đơn từ 500K</span>
-              <span className="text-[#D4AF37]">✦</span>
-              <span> Flash Sale — Yến sào cao cấp chỉ từ 299K</span>
-              <span className="text-[#D4AF37]">✦</span>
-              <span> Tặng kèm nước yến khi mua combo 6 hộp</span>
-              <span className="text-[#D4AF37]">✦</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <Container>
-        <div className="flex h-[76px] lg:h-[80px] items-center justify-between relative">
-          {/* Logo — left */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Image
-              src="/images/logo.svg"
-              alt="Nutriphar"
-              width={150}
-              height={50}
-              priority
-              className="h-8 md:h-10 w-auto"
-            />
-          </Link>
-
-          {/* Nav — centered (shifts left when search is open) */}
-          <nav className={`hidden md:flex items-center gap-8 absolute -translate-x-1/2 transition-[left] duration-300 ease-in-out ${isSearchOpen ? "left-[30%]" : "left-1/2"
-            }`}>
-            <Link href="/" className={`text-[15px] lg:text-[16px] font-medium transition-colors duration-500 whitespace-nowrap ${navLinkColor}`}>
-              Trang chủ
-            </Link>
-            <Link href="/products" className={`text-[15px] lg:text-[16px] font-medium transition-colors duration-500 whitespace-nowrap ${navLinkColor}`}>
-              Sản phẩm
-            </Link>
-            <Link href="/about" className={`text-[15px] lg:text-[16px] font-medium transition-colors duration-500 whitespace-nowrap ${navLinkColor}`}>
-              Về chúng tôi
-            </Link>
-            <Link href="#" className={`text-[15px] lg:text-[16px] font-medium transition-colors duration-500 whitespace-nowrap ${navLinkColor}`}>
-              Tin tức
-            </Link>
-          </nav>
-
-          {/* Actions — right */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            {/* Search area */}
-            <div className="flex items-center gap-2">
-              {/* Search input — expands when open (Desktop), always visible (Mobile) */}
-              <div className={`w-[130px] sm:w-[180px] md:overflow-hidden md:transition-all md:duration-300 md:ease-in-out ${isSearchOpen ? "md:w-[200px] lg:w-[280px] md:opacity-100" : "md:w-0 md:opacity-0"
-                }`}>
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder="Tìm kiếm..."
-                  className={`w-full h-[36px] px-4 rounded-full text-[14px] font-body outline-none transition-colors duration-300 ${isAtTop
-                    ? "bg-white/15 text-white placeholder-white/50 border border-white/20 focus:bg-white/25"
-                    : "bg-gray-100 text-[#1C1C1C] placeholder-gray-400 border border-gray-200 focus:border-primary/40"
-                    }`}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") setIsSearchOpen(false);
-                  }}
-                />
+    <>
+      <header
+        className={`fixed top-0 z-50 w-full transition-all duration-300 ease-in-out ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          isMobileMenuOpen
+            ? "bg-transparent shadow-none"
+            : shouldBeTransparent
+            ? "bg-transparent shadow-none"
+            : "bg-white/95 backdrop-blur-[12px] shadow-sm border-b border-[#E5E5E5]/40"
+        }`}
+      >
+        {/* Promo banner */}
+        <div className={`w-full overflow-hidden py-1.5 transition-colors duration-500 ${shouldBeTransparent ? "bg-white/10 backdrop-blur-sm" : "bg-accent"}`}>
+          <div className="flex animate-marquee text-white/90 whitespace-nowrap">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="flex items-center gap-8 px-4 text-[12px] md:text-[13px] font-body tracking-wide">
+                <span> Giảm 15% cho đơn hàng đầu tiên</span>
+                <span className="text-[#D4AF37]">✦</span>
+                <span> Miễn phí vận chuyển đơn từ 500K</span>
+                <span className="text-[#D4AF37]">✦</span>
+                <span> Flash Sale — Yến sào cao cấp chỉ từ 299K</span>
+                <span className="text-[#D4AF37]">✦</span>
+                <span> Tặng kèm nước yến khi mua combo 6 hộp</span>
+                <span className="text-[#D4AF37]">✦</span>
               </div>
-
-              {/* Search toggle button — Desktop only */}
-              <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className={`hidden md:block transition-colors duration-500 ${iconColor}`}
-                aria-label="Toggle search"
-              >
-                {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-              </button>
-            </div>
-
-            <button className={`transition-colors duration-500 ${iconColor}`}>
-              <ShoppingCart className="h-5 w-5" />
-            </button>
-            {/* Language toggle */}
-            <button className={`hidden md:flex items-center gap-1 text-[13px] font-medium transition-colors duration-500 ${iconColor}`}>
-              <Globe className="h-4 w-4" />
-              <span>VI</span>
-            </button>
-
-            <div className="hidden md:block">
-              <Button className="px-6 bg-accent hover:bg-[#8B1215] text-accent-foreground text-[15px] lg:text-[16px] font-medium border-none shadow-md rounded-full">
-                Đăng nhập
-              </Button>
-            </div>
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className={`md:hidden transition-colors duration-500 ${iconColor}`}
-              aria-label="Open menu"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
+            ))}
           </div>
         </div>
-      </Container>
+        <Container>
+          <div className="flex h-[76px] lg:h-[80px] items-center justify-between relative">
+            {/* Logo — left */}
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <Image
+                src="/images/logo.svg"
+                alt="Nutriphar"
+                width={150}
+                height={50}
+                priority
+                className="h-8 md:h-10 w-auto"
+              />
+            </Link>
+
+            {/* Nav — centered (shifts left when search is open) */}
+            <nav className={`hidden md:flex items-center gap-8 absolute -translate-x-1/2 transition-[left] duration-300 ease-in-out ${isSearchOpen ? "left-[30%]" : "left-1/2"
+              }`}>
+              <Link href="/" className={getNavLinkStyles("/")}>
+                Trang chủ
+              </Link>
+              <Link href="/products" className={getNavLinkStyles("/products")}>
+                Sản phẩm
+              </Link>
+              <Link href="/about" className={getNavLinkStyles("/about")}>
+                Về chúng tôi
+              </Link>
+              <Link href="/#news" className={getNavLinkStyles("/#news")}>
+                Tin tức
+              </Link>
+            </nav>
+
+            {/* Actions — right */}
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+              {/* Search area */}
+              <div className="flex items-center gap-2">
+                {/* Search input — expands when open (Desktop), always visible (Mobile) */}
+                <div className={`w-[130px] sm:w-[180px] md:overflow-hidden md:transition-all md:duration-300 md:ease-in-out ${isSearchOpen ? "md:w-[200px] lg:w-[280px] md:opacity-100" : "md:w-0 md:opacity-0"
+                  }`}>
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="Tìm kiếm..."
+                    className={`w-full h-[36px] px-4 rounded-full text-[14px] font-body outline-none transition-colors duration-300 ${shouldBeTransparent
+                      ? "bg-white/15 text-white placeholder-white/50 border border-white/20 focus:bg-white/25"
+                      : "bg-gray-100 text-[#1C1C1C] placeholder-gray-400 border border-gray-200 focus:border-primary/40"
+                      }`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") setIsSearchOpen(false);
+                    }}
+                  />
+                </div>
+
+                {/* Search toggle button — Desktop only */}
+                <button
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className={`hidden md:block transition-colors duration-500 ${iconColor}`}
+                  aria-label="Toggle search"
+                >
+                  {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+                </button>
+              </div>
+
+              <Link
+                href="/cart"
+                className={`relative transition-colors duration-500 hover:text-accent p-1.5 flex items-center justify-center ${iconColor}`}
+                aria-label="Giỏ hàng"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1.5 bg-accent text-white text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center shadow-sm">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+              {/* Language toggle */}
+              <button className={`hidden md:flex items-center gap-1 text-[13px] font-medium transition-colors duration-500 ${iconColor}`}>
+                <Globe className="h-4 w-4" />
+                <span>VI</span>
+              </button>
+
+              <div className="hidden md:block">
+                <Link href="/login">
+                  <CtaButton
+                    icon={<User className="h-4 w-4 text-white" />}
+                    className="pl-5 pr-1.5 py-1 text-[13.5px] shadow-sm bg-primary hover:bg-[#12224F]"
+                  >
+                    Đăng nhập
+                  </CtaButton>
+                </Link>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className={`md:hidden transition-colors duration-500 ${iconColor}`}
+                aria-label="Open menu"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+        </Container>
+      </header>
 
       {/* Mobile Drawer Menu */}
       <div
@@ -214,30 +339,34 @@ export function Header() {
               <Link
                 href="/"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[16px] font-semibold text-[#1C1C1C] hover:text-[#D4AF37] transition-colors font-body py-1 border-b border-[#E5E5E5]/50"
+                className={getMobileNavLinkStyles("/")}
               >
-                Trang chủ
+                <span>Trang chủ</span>
+                {isLinkActive("/") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
               <Link
                 href="/products"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[16px] font-semibold text-[#1C1C1C] hover:text-[#D4AF37] transition-colors font-body py-1 border-b border-[#E5E5E5]/50"
+                className={getMobileNavLinkStyles("/products")}
               >
-                Sản phẩm
+                <span>Sản phẩm</span>
+                {isLinkActive("/products") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
               <Link
                 href="/about"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[16px] font-semibold text-[#1C1C1C] hover:text-[#D4AF37] transition-colors font-body py-1 border-b border-[#E5E5E5]/50"
+                className={getMobileNavLinkStyles("/about")}
               >
-                Về chúng tôi
+                <span>Về chúng tôi</span>
+                {isLinkActive("/about") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
               <Link
-                href="#"
+                href="/#news"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[16px] font-semibold text-[#1C1C1C] hover:text-[#D4AF37] transition-colors font-body py-1 border-b border-[#E5E5E5]/50"
+                className={getMobileNavLinkStyles("/#news")}
               >
-                Tin tức
+                <span>Tin tức</span>
+                {isLinkActive("/#news") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
             </nav>
           </div>
@@ -251,16 +380,17 @@ export function Header() {
             </button>
 
             {/* Login button */}
-            <Button
-              className="w-full py-3 bg-accent hover:bg-[#8B1215] text-accent-foreground text-[16px] font-medium border-none shadow-md rounded-full flex justify-center items-center gap-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <User className="h-4 w-4" />
-              Đăng nhập
-            </Button>
+            <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full">
+              <CtaButton
+                icon={<User className="h-4 w-4 text-white" />}
+                className="w-full justify-between bg-primary hover:bg-[#12224F]"
+              >
+                Đăng nhập
+              </CtaButton>
+            </Link>
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }

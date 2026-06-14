@@ -1,125 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { Search, Filter, RefreshCw, X, Star, ChevronDown } from "lucide-react";
-
-interface MockProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  image: string;
-  badge?: string;
-  rating: number;
-  reviewCount: number;
-  category: string;
-  priceVal: number;
-}
-
-const mockProducts: MockProduct[] = [
-  {
-    id: "1",
-    name: "Yến Sào Khánh Hòa Thượng Hạng (100g)",
-    description: "Tổ yến thiên nhiên nguyên tổ làm sạch cao cấp, khai thác tại vùng biển Khánh Hòa. Giàu dinh dưỡng, bồi bổ sức khỏe toàn diện.",
-    price: "4.500.000đ",
-    originalPrice: "5.200.000đ",
-    image: "/images/yensao.png",
-    badge: "Bán chạy",
-    category: "Yến sào Khánh Hòa",
-    rating: 5,
-    reviewCount: 48,
-    priceVal: 4500000,
-  },
-  {
-    id: "2",
-    name: "Nước Yến Sào Đường Phèn Hũ Chưng Sẵn (70ml)",
-    description: "Yến chưng đường phèn thanh mát tinh khiết. Hàm lượng yến thật 20%, giúp ăn ngon ngủ ngon, thích hợp sử dụng hàng ngày.",
-    price: "299.000đ",
-    originalPrice: "350.000đ",
-    image: "/images/yensao.png",
-    badge: "Hot",
-    category: "Yến chưng sẵn",
-    rating: 5,
-    reviewCount: 124,
-    priceVal: 299000,
-  },
-  {
-    id: "3",
-    name: "Yến Chưng Nhân Sâm Cao Cấp (Hộp 6 Hũ)",
-    description: "Sự kết hợp hoàn hảo giữa tổ yến thiên nhiên tinh khiết và nhân sâm Hàn Quốc thượng hạng giúp tăng cường sinh lực.",
-    price: "580.000đ",
-    originalPrice: "680.000đ",
-    image: "/images/yensao.png",
-    badge: "Mới",
-    category: "Yến chưng sẵn",
-    rating: 4,
-    reviewCount: 36,
-    priceVal: 580000,
-  },
-  {
-    id: "4",
-    name: "Yến Chưng Đông Trùng Hạ Thảo (Hộp 6 Hũ)",
-    description: "Yến sào kết hợp đông trùng hạ thảo bổ khí huyết, bồi bổ sức đề kháng cho người lớn tuổi hoặc người mới ốm dậy.",
-    price: "599.000đ",
-    image: "/images/yensao.png",
-    category: "Yến chưng sẵn",
-    rating: 5,
-    reviewCount: 52,
-    priceVal: 599000,
-  },
-  {
-    id: "5",
-    name: "Nước Yến Dinh Dưỡng Kid Sào Cho Bé",
-    description: "Nước yến dinh dưỡng cho trẻ nhỏ, bổ sung Canxi và Lysine kích thích tiêu hóa ăn ngon, hỗ trợ tăng chiều cao.",
-    price: "249.000đ",
-    originalPrice: "299.000đ",
-    image: "/images/yensao.png",
-    badge: "Cho Bé",
-    category: "Nước yến dinh dưỡng",
-    rating: 5,
-    reviewCount: 89,
-    priceVal: 249000,
-  },
-  {
-    id: "6",
-    name: "Hộp Quà Yến Sào Premium Luxury",
-    description: "Bộ quà tặng cao cấp gồm yến nguyên tổ và nước yến chưng sẵn thảo dược. Thiết kế sang trọng quý phái, món quà ý nghĩa trao gửi sức khỏe.",
-    price: "2.800.000đ",
-    originalPrice: "3.200.000đ",
-    image: "/images/yensao.png",
-    badge: "Quà Tặng",
-    category: "Quà tặng cao cấp",
-    rating: 5,
-    reviewCount: 22,
-    priceVal: 2800000,
-  },
-  {
-    id: "7",
-    name: "Yến Hũ Chưng Sẵn Không Đường (70ml)",
-    description: "Yến sào nguyên chất tinh khiết 100%, không đường tốt cho người tiểu đường, cao huyết áp hoặc người ăn kiêng.",
-    price: "289.000đ",
-    image: "/images/yensao.png",
-    category: "Yến chưng sẵn",
-    rating: 4,
-    reviewCount: 15,
-    priceVal: 289000,
-  },
-  {
-    id: "8",
-    name: "Yến Sào Khánh Hòa Loại 2 (50g)",
-    description: "Tổ yến đảo thiên nhiên Khánh Hòa nguyên tổ sơ chế sạch sẽ, thơm ngon giàu dưỡng chất với mức giá tiếp cận.",
-    price: "2.100.000đ",
-    originalPrice: "2.400.000đ",
-    image: "/images/yensao.png",
-    category: "Yến sào Khánh Hòa",
-    rating: 4,
-    reviewCount: 19,
-    priceVal: 2100000,
-  }
-];
+import { useProducts } from "@/hooks/useProducts";
 
 const categories = [
   "Tất cả",
@@ -147,56 +32,37 @@ export function ProductsContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Reset page to 1 when filters change
+  // Integrate our unified query hook
+  const { products, total, loading, updateParams } = useProducts({
+    page: currentPage,
+    limit: itemsPerPage,
+    category: selectedCategory,
+    query: searchQuery,
+    minPrice: selectedPriceRange.min,
+    maxPrice: selectedPriceRange.max,
+    rating: selectedRating,
+    sort: sortOption
+  });
+
+  // Sync state mutations to parameters update
+  useEffect(() => {
+    updateParams({
+      page: currentPage,
+      category: selectedCategory,
+      query: searchQuery,
+      minPrice: selectedPriceRange.min,
+      maxPrice: selectedPriceRange.max,
+      rating: selectedRating,
+      sort: sortOption
+    });
+  }, [currentPage, selectedCategory, searchQuery, selectedPriceRange, selectedRating, sortOption]);
+
+  // Reset pagination index when filter parameters change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, selectedCategory, selectedPriceRange, selectedRating, sortOption]);
 
-  // Filtered & Sorted products computation
-  const filteredProducts = useMemo(() => {
-    let result = [...mockProducts];
-
-    // 1. Filter by search query
-    if (searchQuery.trim() !== "") {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
-      );
-    }
-
-    // 2. Filter by category
-    if (selectedCategory !== "Tất cả") {
-      result = result.filter((p) => p.category === selectedCategory);
-    }
-
-    // 3. Filter by price range
-    result = result.filter(
-      (p) => p.priceVal >= selectedPriceRange.min && p.priceVal <= selectedPriceRange.max
-    );
-
-    // 4. Filter by minimum rating
-    if (selectedRating !== null) {
-      result = result.filter((p) => p.rating >= selectedRating);
-    }
-
-    // 5. Apply sorting
-    if (sortOption === "price-asc") {
-      result.sort((a, b) => a.priceVal - b.priceVal);
-    } else if (sortOption === "price-desc") {
-      result.sort((a, b) => b.priceVal - a.priceVal);
-    } else if (sortOption === "reviews") {
-      result.sort((a, b) => b.reviewCount - a.reviewCount);
-    }
-
-    return result;
-  }, [searchQuery, selectedCategory, selectedPriceRange, selectedRating, sortOption]);
-
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredProducts, currentPage, itemsPerPage]);
+  const totalPages = Math.ceil(total / itemsPerPage);
 
   const handleResetFilters = () => {
     setSearchQuery("");
@@ -207,10 +73,9 @@ export function ProductsContent() {
     setCurrentPage(1);
   };
 
-  // Filter sidebar element (reusable for desktop & mobile drawer)
+  // Sidebar reusable control panel
   const FilterPanel = () => (
     <div className="flex flex-col gap-8 bg-white p-6 rounded-xs border border-[#E5E5E5]/80 shadow-xs">
-      {/* Header filter title */}
       <div className="flex items-center justify-between pb-4 border-b border-[#E5E5E5]">
         <div className="flex items-center gap-2 font-display font-semibold text-[#1A2F6B] text-[18px]">
           <Filter className="w-5 h-5 text-[#D4AF37]" />
@@ -226,7 +91,7 @@ export function ProductsContent() {
         </button>
       </div>
 
-      {/* 1. Keyword search inside filter */}
+      {/* Keyword Search */}
       <div className="flex flex-col gap-2">
         <label className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
           Tìm kiếm từ khóa
@@ -251,7 +116,7 @@ export function ProductsContent() {
         </div>
       </div>
 
-      {/* 2. Categories checkbox style */}
+      {/* Categories select list */}
       <div className="flex flex-col gap-3">
         <span className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
           Danh mục sản phẩm
@@ -261,15 +126,17 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedCategory(cat)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedCategory === cat
+              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${
+                selectedCategory === cat
                   ? "text-[#8C6A00] font-semibold"
                   : "text-[#4A4A4A] hover:text-[#D4AF37]"
-                }`}
+              }`}
             >
-              <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedCategory === cat
-                  ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                  : "border-gray-300 bg-white"
-                }`}>
+              <span
+                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${
+                  selectedCategory === cat ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                }`}
+              >
                 {selectedCategory === cat && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}
               </span>
               <span>{cat}</span>
@@ -278,7 +145,7 @@ export function ProductsContent() {
         </div>
       </div>
 
-      {/* 3. Price Radio List */}
+      {/* Price Options */}
       <div className="flex flex-col gap-3">
         <span className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
           Khoảng giá bán
@@ -288,15 +155,17 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedPriceRange(p)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedPriceRange.label === p.label
+              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${
+                selectedPriceRange.label === p.label
                   ? "text-[#8C6A00] font-semibold"
                   : "text-[#4A4A4A] hover:text-[#D4AF37]"
-                }`}
+              }`}
             >
-              <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedPriceRange.label === p.label
-                  ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                  : "border-gray-300 bg-white"
-                }`}>
+              <span
+                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${
+                  selectedPriceRange.label === p.label ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                }`}
+              >
                 {selectedPriceRange.label === p.label && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}
               </span>
               <span>{p.label}</span>
@@ -305,7 +174,7 @@ export function ProductsContent() {
         </div>
       </div>
 
-      {/* 4. Rating stars filter */}
+      {/* Client Ratings Option */}
       <div className="flex flex-col gap-3">
         <span className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
           Đánh giá từ khách hàng
@@ -313,8 +182,9 @@ export function ProductsContent() {
         <div className="flex flex-col gap-2">
           <button
             onClick={() => setSelectedRating(null)}
-            className={`flex items-center gap-2 text-[14px] font-body select-none cursor-pointer ${selectedRating === null ? "text-[#8C6A00] font-semibold" : "text-[#4A4A4A] hover:text-[#D4AF37]"
-              }`}
+            className={`flex items-center gap-2 text-[14px] font-body select-none cursor-pointer ${
+              selectedRating === null ? "text-[#8C6A00] font-semibold" : "text-[#4A4A4A] hover:text-[#D4AF37]"
+            }`}
           >
             <span>Tất cả đánh giá</span>
           </button>
@@ -322,15 +192,17 @@ export function ProductsContent() {
             <button
               key={stars}
               onClick={() => setSelectedRating(stars)}
-              className={`flex items-center gap-2 text-[14px] font-body select-none cursor-pointer ${selectedRating === stars ? "text-[#8C6A00] font-semibold" : "text-[#4A4A4A] hover:text-[#D4AF37]"
-                }`}
+              className={`flex items-center gap-2 text-[14px] font-body select-none cursor-pointer ${
+                selectedRating === stars ? "text-[#8C6A00] font-semibold" : "text-[#4A4A4A] hover:text-[#D4AF37]"
+              }`}
             >
               <div className="flex items-center">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-3.5 h-3.5 ${i < stars ? "fill-[#D4AF37] text-[#D4AF37]" : "fill-gray-100 text-gray-200"
-                      }`}
+                    className={`w-3.5 h-3.5 ${
+                      i < stars ? "fill-[#D4AF37] text-[#D4AF37]" : "fill-gray-100 text-gray-200"
+                    }`}
                   />
                 ))}
               </div>
@@ -346,7 +218,7 @@ export function ProductsContent() {
     <div className="flex flex-col gap-10">
       {/* Main Catalog Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start">
-        {/* LEFT COLUMN: Filter Sidebar (Desktop: col-span-2, Mobile: Drawer overlay) */}
+        {/* LEFT COLUMN: Filter Sidebar */}
         <aside className="hidden lg:block lg:col-span-2 sticky top-32 self-start">
           <FilterPanel />
         </aside>
@@ -362,7 +234,7 @@ export function ProductsContent() {
           </button>
 
           <span className="text-[14px] text-gray-500 font-body">
-            {filteredProducts.length} sản phẩm
+            {total} sản phẩm
           </span>
         </div>
 
@@ -390,18 +262,18 @@ export function ProductsContent() {
                 onClick={() => setIsMobileFilterOpen(false)}
                 className="w-full mt-6 py-3 bg-[#A4161A] text-white rounded-full text-[15px] font-semibold tracking-wide shadow-md active:scale-95 transition-all select-none cursor-pointer"
               >
-                Xem kết quả ({filteredProducts.length})
+                Xem kết quả ({total})
               </button>
             </div>
           </div>
         )}
 
-        {/* RIGHT COLUMN: Product Catalog (Desktop: col-span-8) */}
+        {/* RIGHT COLUMN: Product Catalog */}
         <div className="col-span-1 lg:col-span-8 flex flex-col gap-6">
           {/* Sort header options & results count */}
           <div className="hidden lg:flex items-center justify-between pb-4 border-b border-[#E5E5E5]/60">
             <span className="text-[15px] text-gray-500 font-body">
-              Đang hiển thị <strong>{filteredProducts.length}</strong> sản phẩm phù hợp
+              Đang hiển thị <strong>{total}</strong> sản phẩm phù hợp
             </span>
 
             <div className="flex items-center gap-3">
@@ -423,11 +295,26 @@ export function ProductsContent() {
           </div>
 
           {/* Dynamic products catalog grid */}
-          {filteredProducts.length > 0 ? (
+          {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {paginatedProducts.map((product) => (
+              {Array.from({ length: itemsPerPage }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white border border-[#E5E5E5]/60 rounded-xs overflow-hidden p-6 flex flex-col gap-4 animate-pulse shadow-2xs"
+                >
+                  <div className="aspect-square bg-gray-100 rounded-xs w-full" />
+                  <div className="h-5 bg-gray-100 rounded-full w-2/3 mt-2" />
+                  <div className="h-4 bg-gray-50 rounded-full w-1/2" />
+                  <div className="h-8 bg-gray-100 rounded-full w-full mt-4" />
+                </div>
+              ))}
+            </div>
+          ) : products.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {products.map((product) => (
                 <ProductCard
                   key={product.id}
+                  id={product.id}
                   name={product.name}
                   description={product.description}
                   price={product.price}
@@ -436,6 +323,7 @@ export function ProductsContent() {
                   badge={product.badge}
                   rating={product.rating}
                   reviewCount={product.reviewCount}
+                  priceVal={product.priceVal}
                 />
               ))}
             </div>
@@ -458,15 +346,15 @@ export function ProductsContent() {
         </div>
       </div>
 
-      {/* Pagination row: outside the main catalog grid to limit sticky scroll */}
-      {filteredProducts.length > 0 && totalPages > 1 && (
+      {/* Pagination row */}
+      {products.length > 0 && totalPages > 1 && (
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center pt-6 border-t border-[#E5E5E5]/40">
           <div className="hidden lg:block lg:col-span-2" />
           <div className="col-span-1 lg:col-span-8">
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              onPageChange={setCurrentPage} 
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
             />
           </div>
         </div>

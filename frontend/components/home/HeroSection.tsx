@@ -3,6 +3,8 @@
 import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { CtaButton } from "@/components/ui/CtaButton";
+import { ArrowRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import { Suspense, useRef } from "react";
 import gsap from "gsap";
@@ -63,13 +65,16 @@ export function HeroSection() {
               Nutriphar tự hào mang đến dòng yến sào thượng hạng được khai thác từ biển Khánh Hòa. Hòa quyện cùng công nghệ bảo quản tối ưu, giữ trọn vẹn dưỡng chất thiên nhiên cho sức khỏe gia đình bạn.
             </p>
 
-            <div data-reveal className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Button size="lg" className="w-full sm:w-auto bg-[#A4161A] hover:bg-[#D7263D] text-white font-medium text-[15px] lg:text-[16px] px-8 h-[52px] rounded-full border-none shadow-lg">
+            <div data-reveal className="relative z-20 flex flex-row flex-wrap items-center justify-center lg:justify-start gap-3">
+              <CtaButton
+                icon={<ArrowRight className="w-4 h-4 text-white" />}
+                className="w-auto h-[46px] md:h-[52px] text-[14px] md:text-[16px] pl-6 pr-1.5 md:pl-8 md:pr-2 bg-accent hover:bg-[#8B1215] shadow-lg border-none"
+              >
                 Mua Ngay
-              </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-[#D4AF37] border-2 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#1C1C1C] font-medium text-[15px] lg:text-[16px] px-8 h-[52px] rounded-full transition-all">
+              </CtaButton>
+              <button className="w-auto bg-transparent border-white border-2 text-white hover:bg-white/10 hover:opacity-80 font-medium text-[14px] md:text-[16px] px-6 md:px-8 h-[46px] md:h-[52px] rounded-full transition-all duration-300 active:scale-[0.98] cursor-pointer">
                 Tìm Hiểu Thêm
-              </Button>
+              </button>
             </div>
           </div>
 

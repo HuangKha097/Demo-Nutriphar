@@ -1,9 +1,12 @@
 "use client";
 
-import { Button } from "./Button";
-import { ShoppingCart, Star } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
+import { StarRating } from "@/components/ui/StarRating";
+import { useToast } from "@/context/ToastContext";
 
 export interface ProductCardProps {
+  id: string;
   name: string;
   description: string;
   price: string;
@@ -12,9 +15,11 @@ export interface ProductCardProps {
   badge?: string;
   rating?: number;
   reviewCount?: number;
+  priceVal: number;
 }
 
 export function ProductCard({
+  id,
   name,
   description,
   price,
@@ -23,9 +28,14 @@ export function ProductCard({
   badge,
   rating = 5,
   reviewCount = 0,
+  priceVal,
 }: ProductCardProps) {
+  const { success: showSuccessToast } = useToast();
   return (
-    <div className="group relative flex flex-col rounded-xs overflow-hidden bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-1">
+    <Link
+      href={`/products/${id}`}
+      className="group relative flex flex-col rounded-xs overflow-hidden bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-1 h-full"
+    >
       {/* Badge */}
       {badge && (
         <div className="absolute top-4 left-4 z-20">
@@ -58,17 +68,7 @@ export function ProductCard({
         {/* Rating */}
         {rating > 0 && (
           <div className="flex items-center gap-1.5 mb-2">
-            <div className="flex items-center gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-3.5 h-3.5 ${i < rating
-                    ? "fill-[#D4AF37] text-[#D4AF37]"
-                    : "fill-gray-200 text-gray-200"
-                    }`}
-                />
-              ))}
-            </div>
+            <StarRating rating={rating} className="w-3.5 h-3.5" />
             {reviewCount > 0 && (
               <span className="text-[12px] text-gray-400 font-body">
                 ({reviewCount})
@@ -100,14 +100,47 @@ export function ProductCard({
             </span>
           </div>
 
-          <Button
-            className="flex items-center gap-2 px-4 h-[40px]  bg-accent hover:bg-[#D7263D] text-white text-[13px] font-medium rounded-full border-none shadow-sm hover:shadow-md transition-all duration-300"
+          <span
+            role="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const defaultSize = name.toLowerCase().includes("hũ") || description.toLowerCase().includes("hũ")
+                ? "Hộp 6 hũ"
+                : "Hộp 50g";
+
+              const existing = localStorage.getItem("cart");
+              const cart = existing ? JSON.parse(existing) : [];
+              const existingItemIndex = cart.findIndex(
+                (item: any) => item.id === id && item.size === defaultSize
+              );
+
+              if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += 1;
+              } else {
+                cart.push({
+                  id,
+                  name,
+                  price,
+                  priceVal,
+                  image,
+                  size: defaultSize,
+                  quantity: 1
+                });
+              }
+
+              localStorage.setItem("cart", JSON.stringify(cart));
+              window.dispatchEvent(new Event("cart-updated"));
+              showSuccessToast(`Đã thêm thành công 1 ${defaultSize} của "${name}" vào giỏ hàng!`);
+            }}
+            className="flex items-center justify-center gap-2 px-4 h-[40px] bg-accent hover:bg-[#D7263D] text-white text-[13px] font-medium rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none"
           >
             <ShoppingCart className="w-4 h-4" />
             <span className="hidden sm:inline">Mua</span>
-          </Button>
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

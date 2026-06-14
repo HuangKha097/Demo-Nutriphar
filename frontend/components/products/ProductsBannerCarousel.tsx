@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { SliderNavigation } from "@/components/ui/SliderNavigation";
 
 const slides = [
   {
@@ -92,21 +92,12 @@ export function ProductsBannerCarousel() {
       </div>
 
       {/* Navigation Arrow Buttons */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-[40px] h-[40px] sm:w-[46px] sm:h-[46px] flex items-center justify-center rounded-full bg-black/20 hover:bg-black/55 text-white hover:scale-105 active:scale-95 transition-all md:opacity-0 md:group-hover:opacity-100 duration-300 backdrop-blur-sm cursor-pointer shadow-md"
-        aria-label="Previous Slide"
-      >
-        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-[40px] h-[40px] sm:w-[46px] sm:h-[46px] flex items-center justify-center rounded-full bg-black/20 hover:bg-black/55 text-white hover:scale-105 active:scale-95 transition-all md:opacity-0 md:group-hover:opacity-100 duration-300 backdrop-blur-sm cursor-pointer shadow-md"
-        aria-label="Next Slide"
-      >
-        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
+      <SliderNavigation
+        onPrev={prevSlide}
+        onNext={nextSlide}
+        variant="dark"
+        className="top-1/2 -translate-y-1/2 w-[40px] h-[40px] sm:w-[46px] sm:h-[46px]"
+      />
 
       {/* Navigation Indicators (Dots) */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
