@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { BenefitsSection } from "@/components/home/BenefitsSection";
 import { AboutHero } from "@/components/ui/AboutHero";
 import { getAboutData } from "@/services/api";
+import { CoreValuesWheel } from "@/components/ui/CoreValuesWheel";
 import { ShieldCheck, Heart, Sparkles, Target, Users, BadgeCheck } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -45,27 +46,7 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {aboutData.coreValues.map((value, i) => {
-              const Icon = iconMap[value.iconName] || ShieldCheck;
-              return (
-                <div
-                  key={i}
-                  className="bg-white p-8 rounded-xs border border-[#E5E5E5] hover:border-[#D4AF37] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start gap-4 group"
-                >
-                  <div className="w-12 h-12 rounded-full bg-[#E0F1FC] text-primary flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-[18px] font-bold font-display text-[#1C1C1C] group-hover:text-primary transition-colors">
-                    {value.title}
-                  </h3>
-                  <p className="text-[14px] leading-[1.6] text-muted-foreground font-body">
-                    {value.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+          <CoreValuesWheel coreValues={aboutData.coreValues} />
         </Container>
       </Section>
 
