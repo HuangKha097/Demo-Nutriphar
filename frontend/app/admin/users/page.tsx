@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +19,6 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Card } from "@/components/ui/card";
 import {
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription,
 } from "@/components/ui/form";
@@ -102,66 +101,115 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="space-y-4 text-foreground">
-      <div className="flex flex-wrap items-center gap-2">
-        <Input placeholder="Tìm kiếm người dùng…" value={query} onChange={(e) => {
-          setQuery(e.target.value);
-          setCurrentPage(1);
-        }} className="max-w-xs bg-card" />
-        {canCreate && (
-          <Button className="ml-auto" onClick={openNew}>
-            <Plus className="h-4 w-4" /> Người dùng mới
-          </Button>
-        )}
-      </div>
-      <Card className="flex flex-col max-h-[calc(100vh-190px)] min-h-[400px]">
-        <div className="flex-1 overflow-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Họ tên</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Vai trò</TableHead>
-                <TableHead>Cập nhật</TableHead>
-                <TableHead className="w-24" />
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedUsers.map((u) => (
-                <TableRow key={u.id}>
-                  <TableCell className="font-medium max-w-[200px] truncate">{u.fullName}</TableCell>
-                  <TableCell className="text-muted-foreground">{u.email}</TableCell>
-                  <TableCell className="capitalize">{u.role?.roleName || "—"}</TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{u.updatedAt ? new Date(u.updatedAt).toLocaleDateString() : "—"}</TableCell>
-                  <TableCell className="text-right">
-                    {canEdit && (
-                      <Button variant="ghost" size="icon" onClick={() => openEdit(u)}>
-                        <Pencil className="h-4 w-4 text-muted-foreground" />
-                      </Button>
-                    )}
-                    {canDelete && (
-                      <Button variant="ghost" size="icon" onClick={() => setDeleteId(u.id)}>
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      </Button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-              {paginatedUsers.length === 0 && (
-                <TableRow><TableCell colSpan={5} className="text-center text-sm text-muted-foreground py-8">Không tìm thấy người dùng nào</TableCell></TableRow>
-              )}
-            </TableBody>
-          </Table>
+    <div className="space-y-6 text-foreground py-4 animate-fade-in">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <span className="text-[10px] tracking-[0.25em] font-bold uppercase text-[#D4AF37] font-body">Hệ thống</span>
+          <h2 className="text-3xl font-semibold tracking-tight text-[#1A2F6B] font-display">Quản lý người dùng</h2>
         </div>
-        <Pagination
-          totalItems={totalItems}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          onPageChange={setCurrentPage}
-          onPageSizeChange={setPageSize}
-        />
-      </Card>
 
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Keyword Search */}
+          <div className="relative w-full sm:w-64">
+            <Input
+              placeholder="Tìm kiếm người dùng…"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="pl-9 pr-4 py-2 rounded-full border-[#E5E5E5] bg-white text-[13px] focus-visible:ring-[#1A2F6B] focus-visible:border-[#1A2F6B] h-10 shadow-2xs font-body transition-all duration-300"
+            />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+
+          {canCreate && (
+            <Button
+              className="rounded-full px-6 py-2 bg-[#1A2F6B] hover:bg-[#A4161A] text-white shadow-sm font-semibold tracking-wide h-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2 group cursor-pointer"
+              onClick={openNew}
+            >
+              <Plus className="h-4 w-4 text-[#D4AF37] group-hover:rotate-90 transition-transform duration-300" />
+              <span>Người dùng mới</span>
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Main Table Layout with Double-Bezel */}
+      <div className="bg-[#E5E5E5]/25 border border-[#E5E5E5]/40 p-2 rounded-[2rem] shadow-xs">
+        <div className="bg-white rounded-[calc(2rem-0.5rem)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.9)] overflow-hidden flex flex-col min-h-[400px]">
+          <div className="flex-1 overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b border-[#E5E5E5]/60 hover:bg-transparent">
+                  <TableHead className="pl-6 text-[11px] font-bold text-gray-400 uppercase tracking-wider font-body">Họ tên</TableHead>
+                  <TableHead className="text-[11px] font-bold text-gray-400 uppercase tracking-wider font-body">Email</TableHead>
+                  <TableHead className="text-[11px] font-bold text-gray-400 uppercase tracking-wider font-body">Vai trò</TableHead>
+                  <TableHead className="text-[11px] font-bold text-gray-400 uppercase tracking-wider font-body">Cập nhật</TableHead>
+                  <TableHead className="w-24 pr-6" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedUsers.map((u) => (
+                  <TableRow key={u.id} className="border-b border-[#E5E5E5]/40 hover:bg-[#E0F1FC]/10 transition-colors duration-300">
+                    <TableCell className="pl-6 py-4 font-semibold text-primary max-w-[200px] truncate font-display text-[15px]" title={u.fullName}>
+                      {u.fullName}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground font-body py-4">{u.email}</TableCell>
+                    <TableCell className="capitalize font-medium text-gray-700 font-body py-4">{u.role?.roleName || "—"}</TableCell>
+                    <TableCell className="text-xs text-muted-foreground font-body py-4">
+                      {u.updatedAt ? new Date(u.updatedAt).toLocaleDateString("vi-VN") : "—"}
+                    </TableCell>
+                    <TableCell className="text-right pr-6 py-4">
+                      <div className="flex items-center justify-end gap-1">
+                        {canEdit && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openEdit(u)}
+                            className="rounded-full w-8 h-8 hover:bg-gray-100 transition-colors"
+                          >
+                            <Pencil className="h-3.5 w-3.5 text-gray-500 hover:text-primary" />
+                          </Button>
+                        )}
+                        {canDelete && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setDeleteId(u.id)}
+                            className="rounded-full w-8 h-8 hover:bg-red-50 transition-colors"
+                          >
+                            <Trash2 className="h-3.5 w-3.5 text-[#A4161A] hover:text-[#D7263D]" />
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {paginatedUsers.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center text-sm text-muted-foreground py-16 font-body">
+                      Không tìm thấy người dùng nào
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="border-t border-[#E5E5E5]/60 bg-neutral-50/50 px-6 py-4 rounded-b-[calc(2rem-0.5rem)]">
+            <Pagination
+              totalItems={totalItems}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              onPageChange={setCurrentPage}
+              onPageSizeChange={setPageSize}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* User Dialog */}
       <UserDialog
         key={editing?.id ?? "new"}
         open={open}
@@ -170,15 +218,25 @@ export default function UsersPage() {
         onSave={handleSave}
       />
 
+      {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={(o) => !o && setDeleteId(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-[1.5rem] p-6 max-w-sm border-none bg-white shadow-2xl animate-scale-in">
           <AlertDialogHeader>
-            <AlertDialogTitle>Xóa người dùng?</AlertDialogTitle>
-            <AlertDialogDescription>Hành động này không thể hoàn tác.</AlertDialogDescription>
+            <AlertDialogTitle className="font-display text-[#1C1C1C] text-lg font-semibold">Xóa người dùng?</AlertDialogTitle>
+            <AlertDialogDescription className="font-body text-[#4A4A4A] text-sm">
+              Hành động này không thể hoàn tác và tài khoản này sẽ bị xóa vĩnh viễn khỏi hệ thống.
+            </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Hủy</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Xóa</AlertDialogAction>
+          <AlertDialogFooter className="mt-4 gap-2">
+            <AlertDialogCancel className="rounded-full px-5 py-2 h-9 text-xs font-semibold cursor-pointer border-gray-200">
+              Hủy
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="rounded-full px-5 py-2 h-9 text-xs font-semibold bg-[#A4161A] hover:bg-[#D7263D] text-white cursor-pointer transition-colors duration-300"
+            >
+              Xóa bỏ
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -220,21 +278,27 @@ function UserDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{user ? "Chỉnh sửa người dùng" : "Thêm người dùng mới"}</DialogTitle>
-          <DialogDescription>Nhập thông tin người dùng. Lưu ý về mật khẩu.</DialogDescription>
+      <DialogContent className="rounded-[2rem] max-w-md p-8 border-none bg-white shadow-2xl overflow-y-auto max-h-[90dvh]">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="font-display font-semibold text-2xl text-[#1A2F6B]">
+            {user ? "Chỉnh sửa người dùng" : "Thêm người dùng mới"}
+          </DialogTitle>
+          <DialogDescription className="font-body text-[#4A4A4A] text-[13px]">
+            Nhập thông tin người dùng. Lưu ý về mật khẩu.
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSave)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSave)} className="space-y-5">
             <FormField
               control={form.control}
               name="fullName"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Họ và tên</FormLabel>
-                  <FormControl><Input {...field} /></FormControl>
-                  <FormMessage />
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs font-bold text-gray-500 uppercase tracking-wider font-body">Họ và tên</FormLabel>
+                  <FormControl>
+                    <Input className="rounded-xl border-[#E5E5E5] bg-white h-11 focus-visible:ring-[#1A2F6B] focus-visible:border-[#1A2F6B] transition-all font-body text-sm" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-[11px]" />
                 </FormItem>
               )}
             />
@@ -242,10 +306,12 @@ function UserDialog({
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl><Input type="email" {...field} /></FormControl>
-                  <FormMessage />
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs font-bold text-gray-500 uppercase tracking-wider font-body">Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" className="rounded-xl border-[#E5E5E5] bg-white h-11 focus-visible:ring-[#1A2F6B] focus-visible:border-[#1A2F6B] transition-all font-body text-sm" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-[11px]" />
                 </FormItem>
               )}
             />
@@ -253,11 +319,13 @@ function UserDialog({
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mật khẩu</FormLabel>
-                  <FormControl><Input type="password" {...field} /></FormControl>
-                  {user && <FormDescription>Để trống nếu muốn giữ nguyên mật khẩu hiện tại.</FormDescription>}
-                  <FormMessage />
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs font-bold text-gray-500 uppercase tracking-wider font-body">Mật khẩu</FormLabel>
+                  <FormControl>
+                    <Input type="password" className="rounded-xl border-[#E5E5E5] bg-white h-11 focus-visible:ring-[#1A2F6B] focus-visible:border-[#1A2F6B] transition-all font-body text-sm" {...field} />
+                  </FormControl>
+                  {user && <FormDescription className="text-[11px] text-gray-400">Để trống nếu muốn giữ nguyên mật khẩu hiện tại.</FormDescription>}
+                  <FormMessage className="text-[11px]" />
                 </FormItem>
               )}
             />
@@ -265,23 +333,23 @@ function UserDialog({
               control={form.control}
               name="roleId"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Vai trò</FormLabel>
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-xs font-bold text-gray-500 uppercase tracking-wider font-body">Vai trò</FormLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
-                      <SelectTrigger><SelectValue placeholder="Chọn vai trò" /></SelectTrigger>
+                      <SelectTrigger className="rounded-xl border-[#E5E5E5] bg-white h-11 focus-visible:ring-[#1A2F6B] focus-visible:border-[#1A2F6B] transition-all font-body text-sm"><SelectValue placeholder="Chọn vai trò" /></SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {roles.map((r) => <SelectItem key={r.id} value={r.id}>{r.roleName}</SelectItem>)}
+                      {roles.map((r) => <SelectItem key={r.id} value={r.id} className="cursor-pointer">{r.roleName}</SelectItem>)}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-[11px]" />
                 </FormItem>
               )}
             />
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Hủy</Button>
-              <Button type="submit">Lưu</Button>
+            <DialogFooter className="pt-4 border-t border-[#E5E5E5]/60 gap-2">
+              <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full px-6 h-11 text-xs font-bold font-body cursor-pointer transition-all border-gray-200 hover:bg-gray-50">Hủy</Button>
+              <Button type="submit" className="rounded-full px-6 h-11 text-xs font-bold font-body bg-[#1A2F6B] hover:bg-[#A4161A] text-white cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-sm">Lưu lại</Button>
             </DialogFooter>
           </form>
         </Form>
