@@ -317,3 +317,9 @@ textarea::placeholder {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* ── Radix Portal Z-Index Stacking Fix ─────────────────── */
+[data-radix-portal] {
+  position: relative;
+  z-index: 99999 !important;
+}
