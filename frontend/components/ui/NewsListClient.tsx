@@ -37,18 +37,18 @@ export function NewsListClient({ articles }: NewsListClientProps) {
 
   return (
     <div className="w-full">
-      {/* Category Tabs — matching the flat text header bar with active underline in the mockup image */}
-      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-gray-200/60 pb-0 mb-12 max-w-4xl mx-auto font-body text-[14px] md:text-[15px] font-semibold text-gray-500">
+      {/* Category Tabs — matching the style of the product section on the home page */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-12 max-w-4xl mx-auto">
         {categories.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`pb-4 transition-all duration-300 relative select-none cursor-pointer active:scale-95 ${
+              className={`px-5 py-2 rounded-full text-[14px] font-medium font-body transition-all duration-300 select-none cursor-pointer active:scale-95 ${
                 isActive
-                  ? "text-primary border-b-2 border-[#D4AF37]"
-                  : "hover:text-primary"
+                  ? "bg-[#D4AF37] text-white shadow-md"
+                  : "bg-white text-[#4A4A4A] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] border border-gray-200"
               }`}
             >
               {cat}

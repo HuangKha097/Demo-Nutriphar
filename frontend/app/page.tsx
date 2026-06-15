@@ -12,6 +12,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col w-full bg-background">
       <HeroSection />
+      <ContactBanner />
 
       <AboutSection />
       <ProductsSection />
