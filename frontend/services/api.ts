@@ -261,7 +261,6 @@ export async function getProductById(id: string): Promise<Product | null> {
   return product || null;
 }
 
-// 2. News API Service
 export async function getNewsArticles(): Promise<any[]> {
   if (!USE_MOCK && API_BASE_URL) {
     const response = await fetch(`${API_BASE_URL}/news`);
@@ -272,6 +271,19 @@ export async function getNewsArticles(): Promise<any[]> {
   await new Promise((resolve) => setTimeout(resolve, 200));
   const storedNews = getLocalStorage<any[]>("nutriphar_news", DEFAULT_NEWS);
   return storedNews;
+}
+
+export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | null> {
+  if (!USE_MOCK && API_BASE_URL) {
+    const response = await fetch(`${API_BASE_URL}/news/${slug}`);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error("Failed to fetch news article detail");
+    return response.json();
+  }
+  
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  const articles = await getNewsArticles();
+  return articles.find((art) => art.slug.endsWith(slug)) || null;
 }
 
 
