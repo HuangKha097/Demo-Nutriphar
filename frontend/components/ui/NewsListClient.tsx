@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Pagination } from "./Pagination";
 import { type NewsArticle } from "@/services/api";
+import { NewsCard } from "./NewsCard";
 import Link from "next/link";
 
 interface NewsListClientProps {
@@ -57,36 +58,21 @@ export function NewsListClient({ articles }: NewsListClientProps) {
         })}
       </div>
 
-      {/* Grid Layout — Symmetrical 3-Column Grid with centered titles matching the mockup image */}
+      {/* Grid Layout — Symmetrical 3-Column Grid matching the mockup image */}
       {paginatedArticles.length > 0 ? (
         <div className="flex flex-col gap-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch animate-fade-in">
             {paginatedArticles.map((article) => {
               return (
-                <Link
+                <NewsCard
                   key={article.id}
-                  href={article.slug}
-                  className="group flex flex-col w-full bg-white border border-[#E5E5E5]/60 hover:border-[#D4AF37]/50 rounded-xs overflow-hidden shadow-xs hover:shadow-md transition-all duration-500 hover:-translate-y-1"
-                >
-                  {/* Card Thumbnail */}
-                  <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#F5F5F5]">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                  </div>
-
-                  {/* Card Content — centered matching the mockup image layout */}
-                  <div className="p-5 text-center flex flex-col items-center justify-center flex-1">
-                    <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mb-2 block font-body">
-                      {article.category || "Tin tức"}
-                    </span>
-                    <h3 className="text-[15px] md:text-[16.5px] font-bold text-[#1C1C1C] group-hover:text-primary transition-colors duration-300 leading-snug font-display line-clamp-2">
-                      {article.title}
-                    </h3>
-                  </div>
-                </Link>
+                  title={article.title}
+                  excerpt={article.excerpt}
+                  image={article.image}
+                  date={article.date}
+                  slug={article.slug}
+                  variant="standard"
+                />
               );
             })}
           </div>
