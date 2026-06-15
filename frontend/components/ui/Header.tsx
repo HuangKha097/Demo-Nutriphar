@@ -154,15 +154,15 @@ export function Header() {
   const getNavLinkStyles = (href: string) => {
     const active = isLinkActive(href);
     const baseClasses = "relative text-[15px] lg:text-[16px] font-medium transition-colors duration-300 whitespace-nowrap after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:bg-[#D4AF37] after:rounded-full after:transition-all after:duration-300";
-    
+
     if (active) {
       return `${baseClasses} text-[#D4AF37] after:w-full`;
     }
-    
+
     const inactiveTextColor = shouldBeTransparent
       ? "text-white/90 hover:text-[#D4AF37]"
       : "text-[#1C1C1C] hover:text-[#D4AF37]";
-      
+
     return `${baseClasses} ${inactiveTextColor} after:w-0 hover:after:w-full`;
   };
 
@@ -178,15 +178,13 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 z-50 w-full transition-all duration-300 ease-in-out ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${
-          isMobileMenuOpen
+        className={`fixed top-0 z-50 w-full transition-all duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
+          } ${isMobileMenuOpen
             ? "bg-transparent shadow-none"
             : shouldBeTransparent
-            ? "bg-transparent shadow-none"
-            : "bg-white/95 backdrop-blur-[12px] shadow-sm border-b border-[#E5E5E5]/40"
-        }`}
+              ? "bg-transparent shadow-none"
+              : "bg-white/95 backdrop-blur-[12px] shadow-sm border-b border-[#E5E5E5]/40"
+          }`}
       >
         {/* Promo banner */}
         <div className={`w-full overflow-hidden py-1.5 transition-colors duration-500 ${shouldBeTransparent ? "bg-white/10 backdrop-blur-sm" : "bg-accent"}`}>
@@ -239,16 +237,15 @@ export function Header() {
                 </Link>
                 {/* Premium Dropdown Menu */}
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 transition-all duration-300 ${
-                    isProductsDropdownOpen
-                      ? "opacity-100 translate-y-0 pointer-events-auto"
-                      : "opacity-0 -translate-y-2 pointer-events-none"
-                  }`}
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 transition-all duration-300 ${isProductsDropdownOpen
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-2 pointer-events-none"
+                    }`}
                 >
-                  <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-[16px] flex flex-col gap-0.5">
+                  <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-xs flex flex-col gap-0.5">
                     <Link
                       href="/products"
-                      className="block px-4 py-2.5 text-[14px] font-bold text-[#1C1C1C] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-[8px]"
+                      className="block px-4 py-2.5 text-[14px] font-bold text-[#1C1C1C] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs"
                     >
                       Tất cả sản phẩm
                     </Link>
@@ -257,7 +254,7 @@ export function Header() {
                       <Link
                         key={idx}
                         href={`/products?category=${encodeURIComponent(cat)}`}
-                        className="block px-4 py-2.5 text-[13.5px] font-medium text-[#1C1C1C]/80 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-[8px]"
+                        className="block px-4 py-2.5 text-[13.5px] font-medium text-[#1C1C1C]/80 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs"
                       >
                         {cat}
                       </Link>
@@ -268,7 +265,7 @@ export function Header() {
               <Link href="/about" className={getNavLinkStyles("/about")}>
                 Về chúng tôi
               </Link>
-              <Link href="/#news" className={getNavLinkStyles("/#news")}>
+              <Link href="/news" className={getNavLinkStyles("/news")}>
                 Tin tức
               </Link>
             </nav>
@@ -395,17 +392,15 @@ export function Header() {
               <div className="flex flex-col">
                 <button
                   onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                  className={`w-full cursor-pointer flex items-center justify-between text-[16px] font-semibold transition-colors font-body py-1 border-b border-[#E5E5E5]/50 ${
-                    isLinkActive("/products") ? "text-[#D4AF37]" : "text-[#1C1C1C] hover:text-[#D4AF37]"
-                  }`}
+                  className={`w-full cursor-pointer flex items-center justify-between text-[16px] font-semibold transition-colors font-body py-1 border-b border-[#E5E5E5]/50 ${isLinkActive("/products") ? "text-[#D4AF37]" : "text-[#1C1C1C] hover:text-[#D4AF37]"
+                    }`}
                 >
                   <span>Sản phẩm</span>
                   <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMobileProductsOpen ? "rotate-180" : ""}`} />
                 </button>
                 <div
-                  className={`pl-4 flex flex-col gap-2.5 overflow-hidden transition-all duration-300 ${
-                    isMobileProductsOpen ? "max-h-[300px] mt-3 pb-2" : "max-h-0"
-                  }`}
+                  className={`pl-4 flex flex-col gap-2.5 overflow-hidden transition-all duration-300 ${isMobileProductsOpen ? "max-h-[300px] mt-3 pb-2" : "max-h-0"
+                    }`}
                 >
                   <Link
                     href="/products"
@@ -432,6 +427,7 @@ export function Header() {
                   ))}
                 </div>
               </div>
+
               <Link
                 href="/about"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -441,12 +437,12 @@ export function Header() {
                 {isLinkActive("/about") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
               <Link
-                href="/#news"
+                href="/news"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={getMobileNavLinkStyles("/#news")}
+                className={getMobileNavLinkStyles("/news")}
               >
                 <span>Tin tức</span>
-                {isLinkActive("/#news") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
+                {isLinkActive("/news") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
             </nav>
           </div>

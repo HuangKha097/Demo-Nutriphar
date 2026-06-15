@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { BenefitsSection } from "@/components/home/BenefitsSection";
+import { AboutHero } from "@/components/ui/AboutHero";
 import { getAboutData } from "@/services/api";
 import { ShieldCheck, Heart, Sparkles, Target, Users, BadgeCheck } from "lucide-react";
 
@@ -24,36 +25,7 @@ export default async function AboutPage() {
   return (
     <main className="flex-1 bg-background overflow-x-hidden">
       {/* Intro Hero Section */}
-      <Section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-br from-[#1A2F6B] via-[#0E1C42] to-[#122355]">
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[40%] h-[40%] bg-[#D4AF37] opacity-15 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-4 font-body">
-              Nutriphar Story
-            </span>
-            <h1 className="text-[40px] md:text-[56px] font-bold font-display tracking-wide mb-8 bg-gradient-to-r from-[#F4D88A] via-[#D4AF37] to-[#F4D88A] bg-clip-text text-transparent leading-[1.2]">
-              Kiến Tạo Sức Khỏe Bền Vững
-            </h1>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mt-12">
-              <div className="bg-white/95 backdrop-blur-md p-8 rounded-xs border border-white/20 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5">
-                <h3 className="text-xl font-bold text-[#1A2F6B] mb-4 font-display">Sứ Mệnh Của Chúng Tôi</h3>
-                <p className="text-[15px] leading-[1.8] text-[#4A4A4A] font-body">
-                  Với sứ mệnh <strong>&quot;Kiến tạo sức khỏe bền vững cho cộng đồng&quot;</strong>, Nutriphar cam kết mang đến những sản phẩm chất lượng, an toàn và hiệu quả nhất, được phát triển bởi đội ngũ chuyên gia hàng đầu trong ngành y dược.
-                </p>
-              </div>
-
-              <div className="bg-white/95 backdrop-blur-md p-8 rounded-xs border border-white/20 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5">
-                <h3 className="text-xl font-bold text-[#1A2F6B] mb-4 font-display">Cam Kết Chất Lượng</h3>
-                <p className="text-[15px] leading-[1.8] text-[#4A4A4A] font-body">
-                  Chúng tôi tự hào là đơn vị tiên phong trong lĩnh vực nghiên cứu, sản xuất và phân phối các sản phẩm chăm sóc sức khỏe từ thiên nhiên, bảo toàn dưỡng chất tự nhiên hoàn hảo nhất cho người sử dụng.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <AboutHero />
 
       {/* Core Values Section */}
       <Section className="bg-[#FAFAF7] !py-16 md:!py-24 border-b border-[#E5E5E5]/60">
@@ -232,33 +204,55 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {aboutData.teamMembers.map((member, i) => (
               <div
                 key={i}
-                className="bg-white rounded-xs border border-[#E5E5E5] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+                className="relative flex flex-col lg:block overflow-hidden rounded-xs border border-[#E5E5E5] bg-white group shadow-sm hover:shadow-xl transition-all duration-300 w-full"
               >
-                <div className="h-44 bg-gradient-to-br from-[#1A2F6B]/80 to-[#D4AF37]/40 flex items-center justify-center text-white p-6 relative">
-                  <Users className="w-12 h-12 opacity-30 absolute right-4 bottom-4" />
-                  <div className="text-center">
-                    <span className="text-[12px] font-bold tracking-widest uppercase text-[#F4D88A] block mb-1">
-                      Nutriphar Member
-                    </span>
-                    <p className="text-[14px] font-medium font-body opacity-90">{member.experience}</p>
-                  </div>
+                {/* Image Section */}
+                <div className="relative w-full aspect-[4/5] lg:aspect-[3/4] overflow-hidden bg-[#1A2F6B]/5">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-500 lg:group-hover:scale-105"
+                  />
+                  {!member.image && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1A2F6B]/20 to-[#D4AF37]/20">
+                      <Users className="w-12 h-12 text-[#1A2F6B] opacity-40" />
+                    </div>
+                  )}
                 </div>
 
-                <div className="p-8 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-[19px] font-bold font-display text-primary mb-1">
-                      {member.name}
-                    </h3>
-                    <p className="text-[13px] font-semibold text-[#A4161A] font-body mb-4">
-                      {member.role}
-                    </p>
-                    <p className="text-[14px] leading-[1.7] text-muted-foreground italic font-body">
-                      &quot;{member.bio}&quot;
-                    </p>
+                {/* Info Overlay (Desktop: hover to slide-up, Mobile: static display below) */}
+                <div className="p-6 bg-gradient-to-b from-[#1A2F6B] to-[#0E1C42] text-white flex-1 flex flex-col justify-between lg:absolute lg:inset-0 lg:bg-gradient-to-b lg:from-[#1A2F6B]/95 lg:to-[#0E1C42]/98 lg:translate-y-full lg:group-hover:translate-y-0 lg:transition-transform lg:duration-500 lg:ease-out z-10">
+                  <div className="flex flex-col h-full justify-between">
+                    <div>
+                      {/* Member Name */}
+                      <h3 className="text-[20px] font-bold font-display text-[#F4D88A] mb-1">
+                        {member.name}
+                      </h3>
+                      
+                      {/* Role */}
+                      <p className="text-[13px] font-semibold text-white/80 tracking-wide uppercase font-body mb-4">
+                        {member.role}
+                      </p>
+
+                      {/* Bio Quote */}
+                      <div className="relative my-2 pl-4 border-l-2 border-[#D4AF37]/60">
+                        <p className="text-[13.5px] leading-[1.6] text-white/90 italic font-body">
+                          &quot;{member.bio}&quot;
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Experience section */}
+                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center gap-2">
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+                      <p className="text-[12px] font-medium tracking-wide text-white/80 font-body">
+                        {member.experience}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -25,7 +25,7 @@ export function NewsCard({
   return (
     <Link
       href={slug}
-      className={`group flex flex-col border border-[#E5E5E5] hover:border-[#D4AF37]/60 hover:shadow-xl transition-all duration-500 bg-white rounded-xs overflow-hidden ${
+      className={`group relative flex flex-col rounded-xs overflow-hidden bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-1 w-full ${
         isFeatured ? "h-full" : "h-auto"
       } ${
         isHorizontal ? "md:flex-row" : ""
@@ -35,10 +35,10 @@ export function NewsCard({
       <div
         className={`relative overflow-hidden bg-[#F5F5F5] shrink-0 w-full ${
           isFeatured
-            ? "h-[200px] sm:h-[240px] md:h-[260px] lg:h-[300px] border-b border-[#E5E5E5]"
+            ? "h-[200px] sm:h-[240px] md:h-[260px] lg:h-[300px]"
             : isHorizontal
-            ? "aspect-[16/10] md:aspect-auto md:w-[160px] lg:w-[190px] md:self-stretch md:border-r md:border-b-0 border-b border-[#E5E5E5]"
-            : "h-[140px] sm:h-[160px] md:h-[170px] lg:h-[175px] border-b border-[#E5E5E5]"
+            ? "aspect-[16/10] md:aspect-auto md:w-[160px] lg:w-[190px] md:self-stretch"
+            : "h-[140px] sm:h-[160px] md:h-[170px] lg:h-[175px]"
         }`}
       >
         <Image
@@ -55,11 +55,11 @@ export function NewsCard({
           }
         />
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.02] transition-colors duration-500" />
 
         {/* Featured Tag */}
         {isFeatured && (
-          <div className="absolute top-4 left-4 bg-primary text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 z-10 rounded-xs shadow-md">
+          <div className="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 z-10 rounded-xs shadow-md">
             Tin nổi bật
           </div>
         )}
@@ -72,7 +72,7 @@ export function NewsCard({
         }`}
       >
         {/* Date */}
-        <time className="text-[12px] text-[#BDBDBD] font-body tracking-wide mb-1.5 block">
+        <time className="text-[12px] text-[#9E9E9E] font-body tracking-wide mb-1.5 block">
           {date}
         </time>
 
@@ -105,11 +105,15 @@ export function NewsCard({
           {excerpt}
         </p>
 
-        {/* Read more */}
-        <span className="mt-auto inline-flex items-center gap-2 text-primary font-semibold text-[13px] font-body group-hover:gap-3 transition-all duration-300">
-          Đọc thêm
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </span>
+        {/* Read more with Nested Circle Button */}
+        <div className="mt-auto pt-2 flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5 text-primary font-bold text-[13px] font-body">
+            Đọc thêm
+          </span>
+          <span className="w-7 h-7 rounded-full bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-all duration-500 ease-out">
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-0.5" strokeWidth={1.2} />
+          </span>
+        </div>
       </div>
     </Link>
   );

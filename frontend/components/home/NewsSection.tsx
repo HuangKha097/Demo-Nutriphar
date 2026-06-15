@@ -73,7 +73,7 @@ export async function NewsSection() {
 
         {/* View all button */}
         <div className="flex justify-end mt-12">
-          <Link href="/#news">
+          <Link href="/news">
             <CtaButton
               icon={<ArrowRight className="w-4 h-4 text-white" />}
               className="px-8 h-[48px]"
