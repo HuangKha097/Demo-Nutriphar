@@ -8,8 +8,9 @@ import { FloatingActions } from "@/components/ui/FloatingActions";
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
+  const isAdminPage = pathname.startsWith("/admin");
 
-  if (isLoginPage) {
+  if (isLoginPage || isAdminPage) {
     return <div className="flex-1 flex flex-col">{children}</div>;
   }
 

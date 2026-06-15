@@ -336,7 +336,7 @@ export function ProductsContent() {
                   badge={product.badge}
                   rating={product.rating}
                   reviewCount={product.reviewCount}
-                  priceVal={product.priceVal}
+                  priceVal={product.priceVal ?? 0}
                 />
               ))}
             </div>

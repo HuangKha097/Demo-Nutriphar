@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora, Mulish } from "next/font/google";
 import { ToastProvider } from "@/context/ToastContext";
 import { ClientLayout } from "@/components/layout/ClientLayout";
+import { Providers } from "@/app/providers";
 import "./globals.css";
 
 const displayFont = Lora({
@@ -35,9 +36,11 @@ export default function RootLayout({
       className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body" suppressHydrationWarning>
-        <ToastProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </ToastProvider>
+        <Providers>
+          <ToastProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </ToastProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
+import { setCookie } from "cookies-next";
 import {
   loginWithCredentials,
   registerWithCredentials,
@@ -84,6 +85,12 @@ export function useAuth() {
           localStorage.setItem("remembered_email", email);
         } else {
           localStorage.removeItem("remembered_email");
+        }
+
+        if (email === "admin@nutriphar.vn" || result.user.email === "admin@nutriphar.vn") {
+          setCookie("cms-auth-uid", result.user.id || "1", { maxAge: 30 * 24 * 60 * 60, path: "/", sameSite: "lax" });
+          router.push("/admin");
+          return;
         }
       } else {
         const result = await registerWithCredentials(name, email, password);
