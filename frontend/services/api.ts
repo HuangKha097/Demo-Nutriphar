@@ -1,6 +1,8 @@
 import { sharedProducts, SharedProduct } from "@/data/products";
 
-export interface Product extends SharedProduct {}
+export interface Product extends SharedProduct {
+  categoryId?: string | null;
+}
 
 export interface NewsArticle {
   id: number;
@@ -44,8 +46,113 @@ export interface AboutData {
 }
 
 // Global API configuration
+// Helper for client-side storage persistence
+export function getLocalStorage<T>(key: string, defaultValue: T): T {
+  if (typeof window === "undefined") return defaultValue;
+  const val = localStorage.getItem(key);
+  if (!val) {
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+  }
+  try {
+    const parsed = JSON.parse(val);
+    
+    // Auto-migrate old localStorage data if it's an array of objects
+    if (Array.isArray(parsed) && Array.isArray(defaultValue)) {
+      let changed = false;
+      const updated = parsed.map((item: any) => {
+        if (item && typeof item === "object" && item.id !== undefined) {
+          const defaultItem = (defaultValue as any[]).find((d: any) => d && d.id === item.id);
+          if (defaultItem) {
+            let itemChanged = false;
+            const newItem = { ...item };
+            for (const k of Object.keys(defaultItem)) {
+              if (newItem[k] === undefined || newItem[k] === null || newItem[k] === "") {
+                newItem[k] = defaultItem[k];
+                itemChanged = true;
+              }
+            }
+            if (itemChanged) {
+              changed = true;
+              return newItem;
+            }
+          }
+        }
+        return item;
+      });
+      if (changed) {
+        localStorage.setItem(key, JSON.stringify(updated));
+        return updated as unknown as T;
+      }
+    }
+    
+    return parsed;
+  } catch {
+    return defaultValue;
+  }
+}
+
+export function setLocalStorage<T>(key: string, value: T): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+// Global API configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const USE_MOCK = true; // Set to false to hit the live API endpoints
+
+// Default Category Definitions
+export const DEFAULT_CATEGORIES = [
+  { id: "cat-1", name: "Yến sào Khánh Hòa", image: "/images/yensao.png" },
+  { id: "cat-2", name: "Yến chưng sẵn", image: "/images/Nuoc-yen-sao-co-duong.png" },
+  { id: "cat-3", name: "Nước yến dinh dưỡng", image: "/images/Ve-Yen-Thi-Web.png" },
+  { id: "cat-4", name: "Quà tặng cao cấp", image: "/images/vecongty.jpg" }
+];
+
+// Helper to map category names to categoryIds
+const getCategoryIdByName = (name: string): string | null => {
+  const match = DEFAULT_CATEGORIES.find(c => c.name.toLowerCase() === name.toLowerCase());
+  return match ? match.id : null;
+};
+
+// Default Products mapped with categoryId
+export const INITIAL_PRODUCTS = sharedProducts.map(p => ({
+  ...p,
+  categoryId: (p as any).categoryId || getCategoryIdByName(p.category) || "cat-1",
+  price: p.price,
+  priceVal: (p as any).priceVal
+}));
+
+// Default News Articles
+export const DEFAULT_NEWS = [
+  {
+    id: 1,
+    title: "Yến Sào Nutriphar Đạt Chứng Nhận Chất Lượng ISO 22000:2018",
+    excerpt: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội.",
+    image: "/images/quytrinhsanxuat.jpg",
+    date: "15/05/2025",
+    slug: "#",
+    content: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội. Chúng tôi luôn mong muốn đem tới giải pháp dinh dưỡng tối ưu và thượng hạng cho sức khỏe gia đình bạn."
+  },
+  {
+    id: 2,
+    title: "Khám Phá Quy Trình Sản Xuất Yến Sào Sạch Tại Nha Trang",
+    excerpt: "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa.",
+    image: "/images/vecongty.jpg",
+    date: "28/04/2025",
+    slug: "#",
+    content: "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa. Quy trình sản xuất tiệt trùng khép kín bảo đảm an toàn vệ sinh thực phẩm cao nhất."
+  },
+  {
+    id: 3,
+    title: "Lợi Ích Của Yến Sào Đối Với Sức Khỏe Phụ Nữ Mang Thai",
+    excerpt: "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi.",
+    image: "/images/khanhhoa-sea.jpg",
+    date: "10/04/2025",
+    slug: "#",
+    content: "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi. Dùng yến sào đúng liều lượng giúp bé phát triển trí tuệ và đề kháng tốt."
+  }
+];
 
 // 1. Products API Service
 export async function getProducts(params?: {
@@ -77,7 +184,11 @@ export async function getProducts(params?: {
   // Simulated API response delay for realistic loader states
   await new Promise((resolve) => setTimeout(resolve, 300));
 
-  let result = [...sharedProducts];
+  // Load products dynamically from localStorage
+  const storedProducts = getLocalStorage<Product[]>("nutriphar_products", INITIAL_PRODUCTS as any);
+  const storedCategories = getLocalStorage<any[]>("nutriphar_categories", DEFAULT_CATEGORIES);
+
+  let result = [...storedProducts];
 
   if (params?.query) {
     const q = params.query.toLowerCase();
@@ -87,28 +198,34 @@ export async function getProducts(params?: {
   }
 
   if (params?.category && params.category !== "Tất cả") {
-    result = result.filter((p) => p.category === params.category);
+    // Check if category name matches
+    result = result.filter((p) => {
+      // Find category name by categoryId
+      const cat = storedCategories.find(c => c.id === p.categoryId);
+      const catName = cat ? cat.name : p.category;
+      return catName === params.category;
+    });
   }
 
   if (params?.minPrice !== undefined) {
-    result = result.filter((p) => p.priceVal >= params.minPrice!);
+    result = result.filter((p) => (p.priceVal ?? p.price ?? 0) >= params.minPrice!);
   }
 
   if (params?.maxPrice !== undefined) {
-    result = result.filter((p) => p.priceVal <= params.maxPrice!);
+    result = result.filter((p) => (p.priceVal ?? p.price ?? 0) <= params.maxPrice!);
   }
 
   if (params?.rating !== undefined && params.rating !== null) {
-    result = result.filter((p) => p.rating >= params.rating!);
+    result = result.filter((p) => (p.rating ?? 5) >= params.rating!);
   }
 
   if (params?.sort) {
     if (params.sort === "price-asc") {
-      result.sort((a, b) => a.priceVal - b.priceVal);
+      result.sort((a, b) => (a.priceVal ?? (a.price as any)) - (b.priceVal ?? (b.price as any)));
     } else if (params.sort === "price-desc") {
-      result.sort((a, b) => b.priceVal - a.priceVal);
+      result.sort((a, b) => (b.priceVal ?? (b.price as any)) - (a.priceVal ?? (a.price as any)));
     } else if (params.sort === "reviews") {
-      result.sort((a, b) => b.reviewCount - a.reviewCount);
+      result.sort((a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0));
     }
   }
 
@@ -118,7 +235,16 @@ export async function getProducts(params?: {
   const startIndex = (page - 1) * limit;
   const products = result.slice(startIndex, startIndex + limit);
 
-  return { products, total };
+  // Sync category string name on return for storefront compatibility
+  const productsWithCategoryName = products.map(p => {
+    const cat = storedCategories.find(c => c.id === p.categoryId);
+    return {
+      ...p,
+      category: cat ? cat.name : p.category
+    };
+  });
+
+  return { products: productsWithCategoryName as any, total };
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
@@ -130,12 +256,13 @@ export async function getProductById(id: string): Promise<Product | null> {
   }
 
   await new Promise((resolve) => setTimeout(resolve, 150));
-  const product = sharedProducts.find((p) => p.id === id);
+  const storedProducts = getLocalStorage<Product[]>("nutriphar_products", INITIAL_PRODUCTS as any);
+  const product = storedProducts.find((p) => p.id === id);
   return product || null;
 }
 
 // 2. News API Service
-export async function getNewsArticles(): Promise<NewsArticle[]> {
+export async function getNewsArticles(): Promise<any[]> {
   if (!USE_MOCK && API_BASE_URL) {
     const response = await fetch(`${API_BASE_URL}/news`);
     if (!response.ok) throw new Error("Failed to fetch news articles");
@@ -143,35 +270,8 @@ export async function getNewsArticles(): Promise<NewsArticle[]> {
   }
 
   await new Promise((resolve) => setTimeout(resolve, 200));
-  return [
-    {
-      id: 1,
-      title: "Yến Sào Nutriphar Đạt Chứng Nhận Chất Lượng ISO 22000:2018",
-      excerpt:
-        "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội.",
-      image: "/images/quytrinhsanxuat.jpg",
-      date: "15/05/2025",
-      slug: "#",
-    },
-    {
-      id: 2,
-      title: "Khám Phá Quy Trình Sản Xuất Yến Sào Sạch Tại Nha Trang",
-      excerpt:
-        "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa.",
-      image: "/images/vecongty.jpg",
-      date: "28/04/2025",
-      slug: "#",
-    },
-    {
-      id: 3,
-      title: "Lợi Ích Của Yến Sào Đối Với Sức Khỏe Phụ Nữ Mang Thai",
-      excerpt:
-        "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi.",
-      image: "/images/khanhhoa-sea.jpg",
-      date: "10/04/2025",
-      slug: "#",
-    },
-  ];
+  const storedNews = getLocalStorage<any[]>("nutriphar_news", DEFAULT_NEWS);
+  return storedNews;
 }
 
 // 3. About API Service
@@ -387,4 +487,3 @@ export async function loginWithGoogle(): Promise<AuthResponse> {
     token: "mock-google-token-54321",
   };
 }
-
