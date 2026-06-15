@@ -56,7 +56,7 @@ export function getLocalStorage<T>(key: string, defaultValue: T): T {
   }
   try {
     const parsed = JSON.parse(val);
-    
+
     // Auto-migrate old localStorage data if it's an array of objects
     if (Array.isArray(parsed) && Array.isArray(defaultValue)) {
       let changed = false;
@@ -85,7 +85,7 @@ export function getLocalStorage<T>(key: string, defaultValue: T): T {
         return updated as unknown as T;
       }
     }
-    
+
     return parsed;
   } catch {
     return defaultValue;
@@ -274,6 +274,7 @@ export async function getNewsArticles(): Promise<any[]> {
   return storedNews;
 }
 
+
 // 3. About API Service
 export async function getAboutData(): Promise<AboutData> {
   if (!USE_MOCK && API_BASE_URL) {
@@ -402,7 +403,7 @@ export async function loginWithCredentials(email: string, password: string): Pro
 
   // Simulated mock authentication
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  
+
   if (email === "admin@nutriphar.vn" && password === "admin123") {
     return {
       user: {
@@ -413,7 +414,7 @@ export async function loginWithCredentials(email: string, password: string): Pro
       token: "mock-jwt-token-12345",
     };
   }
-  
+
   // Accept any valid-looking input for demo purposes, but simulate real validation
   if (!email.includes("@")) {
     throw new Error("Địa chỉ email không hợp lệ");
@@ -421,7 +422,7 @@ export async function loginWithCredentials(email: string, password: string): Pro
   if (password.length < 6) {
     throw new Error("Mật khẩu phải chứa ít nhất 6 ký tự");
   }
-  
+
   return {
     user: {
       id: String(Math.floor(Math.random() * 1000) + 10),
