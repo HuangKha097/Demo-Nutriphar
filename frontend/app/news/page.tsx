@@ -15,9 +15,9 @@ export default async function NewsPage() {
   return (
     <main className="flex-1 bg-[#FDFBF7] overflow-x-hidden pt-20">
       {/* Intro Header Section with Soft Structuralism Vibe */}
-      <Section className="relative !py-24 md:!py-32 overflow-hidden bg-gradient-to-b from-[#FAFAF7] to-[#FDFBF7]">
+      <Section className="relative !pt-24 md:!pt-32 !pb-6 md:!pb-8 overflow-hidden bg-gradient-to-b from-[#FAFAF7] to-[#FDFBF7]">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#D4AF37]/5 opacity-30 blur-[120px] rounded-full pointer-events-none" />
-        
+
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Eyebrow Tag */}
@@ -36,7 +36,7 @@ export default async function NewsPage() {
       </Section>
 
       {/* Main Listing Section */}
-      <Section className="!pb-32 bg-[#FDFBF7]">
+      <Section className="!pt-4 !pb-24 md:!pb-32 bg-[#FDFBF7]">
         <Container>
           <NewsListClient articles={articles} />
         </Container>

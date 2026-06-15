@@ -3,37 +3,13 @@
 import { useState, useEffect } from "react";
 import { NewsCard } from "./NewsCard";
 import { Pagination } from "./Pagination";
-
-interface NewsArticle {
-  id: number;
-  title: string;
-  excerpt: string;
-  image: string;
-  date: string;
-  slug: string;
-  category?: string;
-}
+import { type NewsArticle } from "@/services/api";
 
 interface NewsListClientProps {
   articles: NewsArticle[];
 }
 
-const CATEGORIES = [
-  "Tất cả",
-  "Sản phẩm",
-  "Khoa học & Sức khỏe",
-  "Sự kiện & Doanh nghiệp"
-];
-
-const ITEMS_PER_PAGE = 2; // Set to 2 to show pagination since we only have 3 mock articles
-
-// Helper to assign categories to mock data for demo filtering
-const getCategoryForDemo = (id: number) => {
-  if (id === 1) return "Sự kiện & Doanh nghiệp"; // ISO certificate
-  if (id === 2) return "Sự kiện & Doanh nghiệp"; // Factory visit
-  if (id === 3) return "Khoa học & Sức khỏe"; // Pregnant women benefits
-  return "Sản phẩm";
-};
+const ITEMS_PER_PAGE = 6; // Standard layout count for a 3-column grid
 
 export function NewsListClient({ articles }: NewsListClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
@@ -44,15 +20,16 @@ export function NewsListClient({ articles }: NewsListClientProps) {
     setCurrentPage(1);
   }, [selectedCategory]);
 
-  // Enrich mock data with categories for functional filtering
-  const enrichedArticles = articles.map(art => ({
-    ...art,
-    category: getCategoryForDemo(art.id)
-  }));
+  // Extract unique categories dynamically from backend data
+  const categories = [
+    "Tất cả",
+    ...Array.from(new Set(articles.map((art) => art.category).filter(Boolean)))
+  ] as string[];
 
+  // Filter articles based on backend category values
   const filteredArticles = selectedCategory === "Tất cả"
-    ? enrichedArticles
-    : enrichedArticles.filter(art => art.category === selectedCategory);
+    ? articles
+    : articles.filter(art => art.category === selectedCategory);
 
   const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -62,7 +39,7 @@ export function NewsListClient({ articles }: NewsListClientProps) {
     <div className="w-full">
       {/* Category Pills - Clean floating style */}
       <div className="flex flex-wrap items-center justify-center gap-2.5 mb-16 max-w-3xl mx-auto">
-        {CATEGORIES.map((cat) => {
+        {categories.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
             <button

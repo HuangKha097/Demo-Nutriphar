@@ -48,7 +48,7 @@ export function AboutSection() {
                 <Link href="/about">
                   <CtaButton
                     icon={<ArrowRight className="w-4 h-4 text-white" />}
-                    className="px-8 h-[48px]"
+                    className="  h-[48px] justify-between"
                   >
                     Tìm hiểu thêm
                   </CtaButton>

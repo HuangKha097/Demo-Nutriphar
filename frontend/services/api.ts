@@ -9,6 +9,8 @@ export interface NewsArticle {
   image: string;
   date: string;
   slug: string;
+  category?: string;
+  content?: string;
 }
 
 export interface CoreValue {
@@ -152,7 +154,9 @@ export async function getNewsArticles(): Promise<NewsArticle[]> {
         "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội.",
       image: "/images/quytrinhsanxuat.jpg",
       date: "15/05/2025",
-      slug: "#",
+      slug: "/news/iso-22000-2018",
+      category: "Sự kiện & Doanh nghiệp",
+      content: "<p>Công ty Cổ phần Dược phẩm Nutriphar tự hào thông báo đã chính thức đạt chứng nhận chất lượng ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm. Đây là cột mốc quan trọng khẳng định cam kết chất lượng vượt trội của Nutriphar đối với sức khỏe người tiêu dùng.</p><h4>Quy trình kiểm định nghiêm ngặt</h4><p>Để đạt được chứng nhận này, toàn bộ dây chuyền sản xuất của Nutriphar đã trải qua quá trình đánh giá độc lập vô cùng khắt khe từ tổ chức kiểm định quốc tế. Các yếu tố từ nguyên liệu yến thô đảo Khánh Hòa đầu vào, môi trường tinh chế khép kín vô trùng, đến khâu đóng gói hoàn thiện đều tuân thủ nghiêm ngặt tiêu chuẩn y tế quốc tế.</p><h4>Cam kết từ Nutriphar</h4><p>Chúng tôi cam kết luôn giữ vững và liên tục cải tiến hệ thống quản lý chất lượng để mang tới cho khách hàng những sản phẩm yến sào thượng hạng, bảo toàn trọn vẹn dưỡng chất thiên nhiên và an toàn tuyệt đối cho cả gia đình bạn.</p>"
     },
     {
       id: 2,
@@ -161,7 +165,9 @@ export async function getNewsArticles(): Promise<NewsArticle[]> {
         "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa.",
       image: "/images/vecongty.jpg",
       date: "28/04/2025",
-      slug: "#",
+      slug: "/news/quy-trinh-san-xuat-sach",
+      category: "Sự kiện & Doanh nghiệp",
+      content: "<p>Hành trình khám phá nhà máy sản xuất yến sào sạch của Nutriphar tại Nha Trang - Khánh Hòa mang đến cái nhìn chân thực về quy trình sản xuất yến chưng sẵn đạt chuẩn y tế GMP.</p><h4>Từ nhà yến thiên nhiên đến nhà máy tinh chế</h4><p>Nutriphar sở hữu chuỗi nhà yến kiểm soát vi khí hậu khép kín trực tiếp tại vùng biển Khánh Hòa. Tổ yến sau khi thu hoạch được vận chuyển ngay về nhà máy Nha Trang, tại đây đội ngũ kỹ thuật viên lành nghề tiến hành nhặt lông thủ công tỉ mỉ bằng nước tinh khiết mà không sử dụng bất kỳ hóa chất tẩy rửa nào.</p><h4>Ứng dụng công nghệ chưng cất tự động</h4><p>Sau khâu làm sạch, yến được đưa vào hệ thống chưng cất tự động kiểm soát nhiệt độ và áp suất chính xác, giúp giữ lại nguyên vẹn 18 loại axit amin cùng các hoạt chất sinh học quý giá, đáp ứng tiêu chuẩn xuất khẩu nghiêm ngặt sang thị trường Đông Nam Á.</p>"
     },
     {
       id: 3,
@@ -170,9 +176,24 @@ export async function getNewsArticles(): Promise<NewsArticle[]> {
         "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi.",
       image: "/images/khanhhoa-sea.jpg",
       date: "10/04/2025",
-      slug: "#",
+      slug: "/news/loi-ich-cua-yen-sao-cho-me-bau",
+      category: "Khoa học & Sức khỏe",
+      content: "<p>Yến sào từ lâu đã được coi là nguồn dinh dưỡng vàng cho phụ nữ mang thai. Các nghiên cứu khoa học hiện đại đã chứng minh những lợi ích sức khỏe vượt trội mà yến sào mang lại cho cả mẹ bầu và thai nhi.</p><h4>Bổ sung Glycoprotein và Axit Amin thiết yếu</h4><p>Yến sào chứa tới hơn 50% protein cùng nhiều loại axit amin thiết yếu như Aspartic acid, Proline hỗ trợ quá trình tái tạo tế bào cơ thể mạnh mẽ. Đặc biệt, hoạt chất Epidermal Growth Factor (EGF) hỗ trợ kích thích tăng trưởng biểu bì tế bào, giúp làn da mẹ bầu duy trì độ đàn hồi tốt và giảm thiểu rạn da hiệu quả.</p><h4>Hỗ trợ sự phát triển não bộ của thai nhi</h4><p>Hàm lượng Axit Sialic dồi dào trong tổ yến đóng vai trò cực kỳ quan trọng trong việc hình thành và phát triển các liên kết thần kinh, nâng cao hệ miễn dịch và hỗ trợ hoàn thiện não bộ cho thai nhi ngay từ trong bụng mẹ.</p>"
     },
   ];
+}
+
+export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | null> {
+  if (!USE_MOCK && API_BASE_URL) {
+    const response = await fetch(`${API_BASE_URL}/news/${slug}`);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error("Failed to fetch news article detail");
+    return response.json();
+  }
+  
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  const articles = await getNewsArticles();
+  return articles.find((art) => art.slug.endsWith(slug)) || null;
 }
 
 // 3. About API Service
