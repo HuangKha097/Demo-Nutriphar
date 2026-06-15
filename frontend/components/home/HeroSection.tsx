@@ -34,10 +34,17 @@ export function HeroSection() {
       <div className="absolute inset-0 z-0 overflow-hidden bg-[#1a1a1a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/herobackground2.png"
+          src="/images/herobackground1.jpg"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.85]"
         />
+        {/* Phủ gradient tách chữ khỏi nền tre */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            background: "linear-gradient(90deg, rgba(38, 23, 14, 0.72) 0%, rgba(38, 23, 14, 0.48) 38%, rgba(38, 23, 14, 0.08) 68%)"
+          }}
+        ></div>
       </div>
 
 
