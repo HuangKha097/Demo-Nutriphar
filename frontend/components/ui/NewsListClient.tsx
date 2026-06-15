@@ -9,7 +9,7 @@ interface NewsListClientProps {
   articles: NewsArticle[];
 }
 
-const ITEMS_PER_PAGE = 6; // Standard layout count for a 3-column grid
+const ITEMS_PER_PAGE = 2; // Set to 2 to show pagination since we only have 3 mock articles
 
 export function NewsListClient({ articles }: NewsListClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
