@@ -15,13 +15,19 @@ export function AboutSection() {
       <div ref={rootRef as any}>
         <Container>
           {/* Top: Title & Subtitle */}
-          <div data-reveal className="mb-10">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-              About Nutriphar
-            </span>
-            <h2 className="text-[36px] md:text-[48px] font-bold font-display tracking-wide bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div data-reveal className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Về Công Ty Nutriphar
             </h2>
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
+              Sứ mệnh kiến tạo sức khỏe bền vững cho cộng đồng từ những sản phẩm tinh túy thiên nhiên.
+            </p>
           </div>
 
           {/* Content area */}

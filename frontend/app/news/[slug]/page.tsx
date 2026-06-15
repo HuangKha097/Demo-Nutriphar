@@ -29,7 +29,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
   // Fetch all articles to display related ones in the "Popular post" sidebar
   const allArticles = await getNewsArticles();
-  const relatedArticles = allArticles.filter((art) => art.id !== article.id);
+  const relatedArticles = allArticles.filter((art) => art.id !== article.id).slice(0, 2);
 
   return (
     <main className="flex-1 bg-white overflow-x-hidden pt-20">

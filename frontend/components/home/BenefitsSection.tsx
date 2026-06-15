@@ -123,11 +123,17 @@ export function BenefitsSection() {
       {/* Container thu hẹp để gom các thẻ gần trung tâm, tránh trôi ra xa mép màn hình */}
       <Container className="relative z-10 max-w-6xl">
         <div ref={containerRef} className="relative w-full">
-          <div className="text-center mb-16 lg:mb-24">
-            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Công Dụng Chi Tiết
             </h2>
-            <p className="text-lead text-muted-foreground max-w-2xl mx-auto">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
               Mỗi sản phẩm Nutriphar đều mang lại những lợi ích vượt trội, đáp ứng từng nhu cầu cụ thể của cơ thể bạn.
             </p>
           </div>

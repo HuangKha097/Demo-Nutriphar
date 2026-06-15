@@ -30,14 +30,17 @@ export default async function AboutPage() {
       {/* Core Values Section */}
       <Section className="bg-[#FAFAF7] !py-16 md:!py-24 border-b border-[#E5E5E5]/60">
         <Container>
-          <div className="text-center mb-16">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-              Core Values
-            </span>
-            <h2 className="text-[32px] md:text-[42px] font-bold font-display tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Giá Trị Cốt Lõi
             </h2>
-            <p className="text-lead text-muted-foreground max-w-2xl mx-auto font-body">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
               Tại Nutriphar, những giá trị này là kim chỉ nam cho mọi hoạt động nghiên cứu, sản xuất và chăm sóc khách hàng của chúng tôi.
             </p>
           </div>
@@ -72,14 +75,17 @@ export default async function AboutPage() {
       {/* Timeline/Milestones Section */}
       <Section className="bg-[#FAFAF7] !py-16 md:!py-24 border-y border-[#E5E5E5]/60">
         <Container>
-          <div className="text-center mb-16">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-              Nutriphar Journey
-            </span>
-            <h2 className="text-[32px] md:text-[42px] font-bold font-display tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Hành Trình Phát Triển
             </h2>
-            <p className="text-lead text-muted-foreground max-w-2xl mx-auto font-body">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
               Nhìn lại những cột mốc đáng nhớ đánh dấu sự trưởng thành và phát triển bền vững của Nutriphar.
             </p>
           </div>
@@ -91,9 +97,8 @@ export default async function AboutPage() {
               {aboutData.timelineEvents.map((event, i) => (
                 <div
                   key={i}
-                  className={`flex flex-col md:flex-row items-stretch relative ${
-                    i % 2 === 0 ? "" : "md:flex-row-reverse"
-                  }`}
+                  className={`flex flex-col md:flex-row items-stretch relative ${i % 2 === 0 ? "" : "md:flex-row-reverse"
+                    }`}
                 >
                   <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-[#D4AF37] border-4 border-white transform -translate-x-[7px] md:-translate-x-1/2 top-1.5 shadow-md z-10"></div>
 
@@ -148,14 +153,17 @@ export default async function AboutPage() {
       {/* Certifications Section */}
       <Section className="bg-white !py-16 md:!py-24 border-b border-[#E5E5E5]/60">
         <Container>
-          <div className="text-center mb-16">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-              Quality Assurance
-            </span>
-            <h2 className="text-[32px] md:text-[42px] font-bold font-display tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Chứng Nhận & Cam Kết Chất Lượng
             </h2>
-            <p className="text-lead text-muted-foreground max-w-2xl mx-auto font-body">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
               Nutriphar tự hào đạt đầy đủ các tiêu chuẩn kiểm định an toàn vệ sinh y tế cao nhất để bảo vệ sức khỏe người dùng.
             </p>
           </div>
@@ -192,14 +200,17 @@ export default async function AboutPage() {
       {/* Leadership & Expert Team Section */}
       <Section className="bg-[#FAFAF7] !py-16 md:!py-24">
         <Container>
-          <div className="text-center mb-16">
-            <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-              Expertise & Leadership
-            </span>
-            <h2 className="text-[32px] md:text-[42px] font-bold font-display tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          <div className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Đội Ngũ Ban Lãnh Đạo & Chuyên Gia
             </h2>
-            <p className="text-lead text-muted-foreground max-w-2xl mx-auto font-body">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
               Quy tụ đội ngũ sáng lập tận tâm cùng những dược sĩ hàng đầu trong ngành nghiên cứu và phát triển y học thảo dược.
             </p>
           </div>
@@ -218,38 +229,38 @@ export default async function AboutPage() {
                     className="w-full h-full object-cover transition-transform duration-500 lg:group-hover:scale-105"
                   />
                   {!member.image && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1A2F6B]/20 to-[#D4AF37]/20">
-                      <Users className="w-12 h-12 text-[#1A2F6B] opacity-40" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-400">
+                      <Users className="w-12 h-12" />
                     </div>
                   )}
                 </div>
 
                 {/* Info Overlay (Desktop: hover to slide-up, Mobile: static display below) */}
-                <div className="p-6 bg-gradient-to-b from-[#1A2F6B] to-[#0E1C42] text-white flex-1 flex flex-col justify-between lg:absolute lg:inset-0 lg:bg-gradient-to-b lg:from-[#1A2F6B]/95 lg:to-[#0E1C42]/98 lg:translate-y-full lg:group-hover:translate-y-0 lg:transition-transform lg:duration-500 lg:ease-out z-10">
+                <div className="p-6 lg:p-4 bg-white text-slate-800 border-t border-[#E5E5E5]/60 flex-1 flex flex-col justify-between lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:h-[40%] lg:bg-white/80 lg:backdrop-blur-md lg:border-t lg:border-white/20 lg:translate-y-full lg:group-hover:translate-y-0 lg:transition-transform lg:duration-500 lg:ease-out z-10">
                   <div className="flex flex-col h-full justify-between">
                     <div>
                       {/* Member Name */}
-                      <h3 className="text-[20px] font-bold font-display text-[#F4D88A] mb-1">
+                      <h3 className="text-[18px] lg:text-[19px] font-bold font-display text-[#1A2F6B] mb-0.5">
                         {member.name}
                       </h3>
-                      
+
                       {/* Role */}
-                      <p className="text-[13px] font-semibold text-white/80 tracking-wide uppercase font-body mb-4">
+                      <p className="text-[12.5px] lg:text-[13px] font-semibold text-slate-500 tracking-wide uppercase font-body mb-2 lg:mb-1">
                         {member.role}
                       </p>
 
                       {/* Bio Quote */}
-                      <div className="relative my-2 pl-4 border-l-2 border-[#D4AF37]/60">
-                        <p className="text-[13.5px] leading-[1.6] text-white/90 italic font-body">
+                      <div className="relative my-2 lg:my-1 pl-3 border-l-2 border-[#D4AF37]/60">
+                        <p className="text-[12.5px] lg:text-[13px] leading-[1.5] text-slate-600 italic font-body line-clamp-2 lg:line-clamp-3">
                           &quot;{member.bio}&quot;
                         </p>
                       </div>
                     </div>
 
                     {/* Experience section */}
-                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center gap-2">
+                    <div className="mt-3 lg:mt-1 pt-3 lg:pt-1 border-t border-[#E5E5E5]/60 flex items-center gap-2">
                       <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
-                      <p className="text-[12px] font-medium tracking-wide text-white/80 font-body">
+                      <p className="text-[11.5px] lg:text-[12px] font-medium tracking-wide text-slate-600 font-body">
                         {member.experience}
                       </p>
                     </div>

@@ -275,7 +275,7 @@ export function Header() {
               {/* Search area */}
               <div className="flex items-center gap-2">
                 {/* Search input — expands when open (Desktop), always visible (Mobile) */}
-                <div className={`w-[130px] sm:w-[180px] md:overflow-hidden md:transition-all md:duration-300 md:ease-in-out ${isSearchOpen ? "md:w-[200px] lg:w-[280px] md:opacity-100" : "md:w-0 md:opacity-0"
+                <div className={`w-[160px] sm:w-[220px] md:overflow-hidden md:transition-all md:duration-300 md:ease-in-out ${isSearchOpen ? "md:w-[200px] lg:w-[280px] md:opacity-100" : "md:w-0 md:opacity-0"
                   }`}>
                   <input
                     ref={searchInputRef}

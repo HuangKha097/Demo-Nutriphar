@@ -58,11 +58,20 @@ export function getLocalStorage<T>(key: string, defaultValue: T): T {
     return defaultValue;
   }
   try {
-    const parsed = JSON.parse(val);
+    let parsed = JSON.parse(val);
 
     // Auto-migrate old localStorage data if it's an array of objects
     if (Array.isArray(parsed) && Array.isArray(defaultValue)) {
       let changed = false;
+
+      // Append any default items that are missing from the parsed list
+      const parsedIds = new Set(parsed.map((item: any) => item && item.id).filter((id: any) => id !== undefined));
+      const missingItems = defaultValue.filter((d: any) => d && d.id !== undefined && !parsedIds.has(d.id));
+      if (missingItems.length > 0) {
+        parsed = [...parsed, ...missingItems];
+        changed = true;
+      }
+
       const updated = parsed.map((item: any) => {
         if (item && typeof item === "object" && item.id !== undefined) {
           const defaultItem = (defaultValue as any[]).find((d: any) => d && d.id === item.id);
@@ -70,7 +79,7 @@ export function getLocalStorage<T>(key: string, defaultValue: T): T {
             let itemChanged = false;
             const newItem = { ...item };
             for (const k of Object.keys(defaultItem)) {
-              if (newItem[k] === undefined || newItem[k] === null || newItem[k] === "") {
+              if (newItem[k] === undefined || newItem[k] === null || newItem[k] === "" || newItem[k] === "#") {
                 newItem[k] = defaultItem[k];
                 itemChanged = true;
               }
@@ -134,8 +143,9 @@ export const DEFAULT_NEWS = [
     excerpt: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội.",
     image: "/images/quytrinhsanxuat.jpg",
     date: "15/05/2025",
-    slug: "#",
-    content: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội. Chúng tôi luôn mong muốn đem tới giải pháp dinh dưỡng tối ưu và thượng hạng cho sức khỏe gia đình bạn."
+    slug: "/news/iso-22000-2018",
+    category: "Sự kiện & Doanh nghiệp",
+    content: "<p>Công ty Cổ phần Dược phẩm Nutriphar tự hào thông báo đã chính thức đạt chứng nhận chất lượng ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm. Đây là cột mốc quan trọng khẳng định cam kết chất lượng vượt trội của Nutriphar đối với sức khỏe người tiêu dùng.</p><h4>Quy trình kiểm định nghiêm ngặt</h4><p>Để đạt được chứng nhận này, toàn bộ dây chuyền sản xuất của Nutriphar đã trải qua quá trình đánh giá độc lập vô cùng khắt khe từ tổ chức kiểm định quốc tế. Các yếu tố từ nguyên liệu yến thô đảo Khánh Hòa đầu vào, môi trường tinh chế khép kín vô trùng, đến khâu đóng gói hoàn thiện đều tuân thủ nghiêm ngặt tiêu chuẩn y tế quốc tế.</p><h4>Cam kết từ Nutriphar</h4><p>Chúng tôi cam kết luôn giữ vững và liên tục cải tiến hệ thống quản lý chất lượng để mang tới cho khách hàng những sản phẩm yến sào thượng hạng, bảo toàn trọn vẹn dưỡng chất thiên nhiên và an toàn tuyệt đối cho cả gia đình bạn.</p>"
   },
   {
     id: 2,
@@ -143,8 +153,9 @@ export const DEFAULT_NEWS = [
     excerpt: "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa.",
     image: "/images/vecongty.jpg",
     date: "28/04/2025",
-    slug: "#",
-    content: "Tham quan quy trình sản xuất yến sào từ khâu thu hoạch, làm sạch đến đóng gói tại nhà máy hiện đại của Nutriphar tại Nha Trang - Khánh Hòa. Quy trình sản xuất tiệt trùng khép kín bảo đảm an toàn vệ sinh thực phẩm cao nhất."
+    slug: "/news/quy-trinh-san-xuat-sach",
+    category: "Sự kiện & Doanh nghiệp",
+    content: "<p>Hành trình khám phá nhà máy sản xuất yến sào sạch của Nutriphar tại Nha Trang - Khánh Hòa mang đến cái nhìn chân thực về quy trình sản xuất yến chưng sẵn đạt chuẩn y tế GMP.</p><h4>Từ nhà yến thiên nhiên đến nhà máy tinh chế</h4><p>Nutriphar sở hữu chuỗi nhà yến kiểm soát vi khí hậu khép kín trực tiếp tại vùng biển Khánh Hòa. Tổ yến sau khi thu hoạch được vận chuyển ngay về nhà máy Nha Trang, tại đây đội ngũ kỹ thuật viên lành nghề tiến hành nhặt lông thủ công tỉ mỉ bằng nước tinh khiết mà không sử dụng bất kỳ hóa chất tẩy rửa nào.</p><h4>Ứng dụng công nghệ chưng cất tự động</h4><p>Sau khâu làm sạch, yến được đưa vào hệ thống chưng cất tự động kiểm soát nhiệt độ và áp suất chính xác, giúp giữ lại nguyên vẹn 18 loại axit amin cùng các hoạt chất sinh học quý giá, đáp ứng tiêu chuẩn xuất khẩu nghiêm ngặt sang thị trường Đông Nam Á.</p>"
   },
   {
     id: 3,
@@ -152,8 +163,49 @@ export const DEFAULT_NEWS = [
     excerpt: "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi.",
     image: "/images/khanhhoa-sea.jpg",
     date: "10/04/2025",
-    slug: "#",
-    content: "Nghiên cứu khoa học cho thấy yến sào giàu glycoprotein, axit amin và khoáng chất thiết yếu, hỗ trợ sức khỏe toàn diện cho mẹ bầu và thai nhi. Dùng yến sào đúng liều lượng giúp bé phát triển trí tuệ và đề kháng tốt."
+    slug: "/news/loi-ich-cua-yen-sao-cho-me-bau",
+    category: "Khoa học & Sức khỏe",
+    content: "<p>Yến sào từ lâu đã được coi là nguồn dinh dưỡng vàng cho phụ nữ mang thai. Các nghiên cứu khoa học hiện đại đã chứng minh những lợi ích sức khỏe vượt trội mà yến sào mang lại cho cả mẹ bầu và thai nhi.</p><h4>Bổ sung Glycoprotein và Axit Amin thiết yếu</h4><p>Yến sào chứa tới hơn 50% protein cùng nhiều loại axit amin thiết yếu như Aspartic acid, Proline hỗ trợ quá trình tái tạo tế bào cơ thể mạnh mẽ. Đặc biệt, hoạt chất Epidermal Growth Factor (EGF) hỗ trợ kích thích tăng trưởng biểu bì tế bào, giúp làn da mẹ bầu duy trì độ đàn hồi tốt và giảm thiểu rạn da hiệu quả.</p><h4>Hỗ trợ sự phát triển não bộ của thai nhi</h4><p>Hàm lượng Axit Sialic dồi dào trong tổ yến đóng vai trò cực kỳ quan trọng trong việc hình thành và phát triển các liên kết thần kinh, nâng cao hệ miễn dịch và hỗ trợ hoàn thiện não bộ cho thai nhi ngay từ trong bụng mẹ.</p>"
+  },
+  {
+    id: 4,
+    title: "5 Cách Phân Biệt Yến Sào Thật Giả Chính Xác Nhất",
+    excerpt: "Mẹo nhỏ giúp người tiêu dùng thông minh nhận biết tổ yến nguyên chất so với tổ yến giả, yến độn hóa chất độc hại trên thị trường.",
+    image: "/images/vecongty.jpg",
+    date: "05/04/2025",
+    slug: "/news/cach-phan-biet-yen-sao-that-gia",
+    category: "Khoa học & Sức khỏe",
+    content: "<p>Phân biệt yến thật yến giả luôn là mối quan tâm hàng đầu của người tiêu dùng...</p>"
+  },
+  {
+    id: 5,
+    title: "Nutriphar Khai Trương Showroom Trưng Bày Sản Phẩm Mới Tại Hà Nội",
+    excerpt: "Sự kiện đánh dấu bước phát triển vượt bậc của Nutriphar trong hành trình đưa yến sào thượng hạng đến gần hơn với khách hàng thủ đô.",
+    image: "/images/quytrinhsanxuat.jpg",
+    date: "22/03/2025",
+    slug: "/news/khai-truong-showroom-ha-noi",
+    category: "Sự kiện & Doanh nghiệp",
+    content: "<p>Nhằm đáp ứng nhu cầu sử dụng các sản phẩm yến chưng sẵn ngày càng tăng cao của cư dân thủ đô...</p>"
+  },
+  {
+    id: 6,
+    title: "Yến Sào Dinh Dưỡng - Món Quà Sức Khỏe Cho Người Cao Tuổi",
+    excerpt: "Tại sao yến sào lại được xem là thần dược giúp tăng cường trí lực, làm chậm quá trình lão hóa và bồi bổ xương khớp cho người già.",
+    image: "/images/vecongty.jpg",
+    date: "15/03/2025",
+    slug: "/news/yen-sao-cho-nguoi-cao-tuoi",
+    category: "Khoa học & Sức khỏe",
+    content: "<p>Người cao tuổi thường có hệ miễn dịch suy giảm, do đó bổ sung yến sào thường xuyên sẽ mang lại nhiều tác động tích cực...</p>"
+  },
+  {
+    id: 7,
+    title: "Chương Trình Khuyến Mãi 'Sức Khỏe Vàng - Ngập Tràn Yêu Thương'",
+    excerpt: "Đón hè rực rỡ cùng vô vàn ưu đãi hấp dẫn từ Nutriphar: Giảm ngay 15% tất cả các dòng sản phẩm yến hũ chưng sẵn và combo quà tặng.",
+    image: "/images/khanhhoa-sea.jpg",
+    date: "01/03/2025",
+    slug: "/news/chuong-trinh-khuyen-mai-he",
+    category: "Sản phẩm",
+    content: "<p>Để cảm ơn quý khách hàng đã đồng hành cùng thương hiệu yến sào DRSANNESTPRO trong suốt thời gian qua...</p>"
   }
 ];
 

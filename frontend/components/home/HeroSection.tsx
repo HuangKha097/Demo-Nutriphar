@@ -29,25 +29,16 @@ export function HeroSection() {
   }, { scope: rootRef });
 
   return (
-    <section ref={rootRef} className="relative w-full min-h-[94vh] flex items-center overflow-hidden">
+    <section ref={rootRef} className="relative w-full h-[100vh] flex items-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden bg-[#1a1a1a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/herobackground.jpg"
+          src="/images/herobackground2.png"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-[0.85]"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Phủ gradient tách chữ khỏi nền tre */}
-        <div
-          className="absolute inset-0 z-10"
-          style={{
-            background: "linear-gradient(90deg, rgba(38, 23, 14, 0.72) 0%, rgba(38, 23, 14, 0.48) 38%, rgba(38, 23, 14, 0.08) 68%)"
-          }}
-        ></div>
       </div>
-
-      {/* Lá dứa trang trí góc phải (Đã bọc thêm div để animate) */}
 
 
       <Container className="relative z-10 w-full">
@@ -55,13 +46,13 @@ export function HeroSection() {
 
           {/* Cột trái: Nội dung */}
           <div className="lg:col-span-7 pb-20 lg:py-0 text-center lg:text-left">
-            <span data-reveal className="block text-[#D4AF37] font-semibold tracking-widest uppercase mb-4 text-[14px]">
+            <span data-reveal className="block text-[#D4AF37] font-semibold tracking-widest uppercase mb-4 text-[14px]" style={{ textShadow: "0 1px 2px rgba(0, 0, 0, 0.3)" }}>
               Thương hiệu yến sào cao cấp
             </span>
-            <h1 data-reveal className="text-[48px] lg:text-[64px] font-semibold text-[#FFF6E8] mb-6 font-display leading-[1.15]">
+            <h1 data-reveal className="text-[48px] lg:text-[64px] font-semibold text-[#FFF6E8] mb-6 font-display leading-[1.15]" style={{ textShadow: "0 2px 4px rgba(0, 0, 0, 0.35)" }}>
               Món Quà Đến Từ <br /> Thiên Nhiên
             </h1>
-            <p data-reveal className="text-[17px] lg:text-[18px] leading-[1.7] text-[#EADCCA] max-w-[580px] mx-auto lg:mx-0 mb-10 font-body">
+            <p data-reveal className="text-[17px] lg:text-[18px] leading-[1.7] text-[#EADCCA] max-w-[580px] mx-auto lg:mx-0 mb-10 font-body" style={{ textShadow: "0 1px 3px rgba(0, 0, 0, 0.35)" }}>
               Nutriphar tự hào mang đến dòng yến sào thượng hạng được khai thác từ biển Khánh Hòa. Hòa quyện cùng công nghệ bảo quản tối ưu, giữ trọn vẹn dưỡng chất thiên nhiên cho sức khỏe gia đình bạn.
             </p>
 

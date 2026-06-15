@@ -30,11 +30,20 @@ export function FaqSection() {
     <Section className="bg-background text-foreground">
       <div ref={rootRef as any} className="relative z-10">
         <Container>
-          {/* Section title */}
-          <div data-reveal className="text-center mb-12">
-            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-6 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+          {/* Section title — centered, matching wireframe */}
+          <div data-reveal className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
               Nước Yến Sào Nutriphar
             </h2>
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
+              Giá trị vàng cho sức khỏe gia đình từ nguồn yến sào thiên nhiên bổ dưỡng tinh chế khép kín.
+            </p>
           </div>
 
           {/* Cards */}

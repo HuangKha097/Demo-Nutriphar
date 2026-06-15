@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { NewsCard } from "./NewsCard";
 import { Pagination } from "./Pagination";
 import { type NewsArticle } from "@/services/api";
+import Link from "next/link";
 
 interface NewsListClientProps {
   articles: NewsArticle[];
 }
 
-const ITEMS_PER_PAGE = 2; // Set to 2 to show pagination since we only have 3 mock articles
+const ITEMS_PER_PAGE = 6; // Configured to 6 news/page as requested
 
 export function NewsListClient({ articles }: NewsListClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
@@ -37,18 +37,18 @@ export function NewsListClient({ articles }: NewsListClientProps) {
 
   return (
     <div className="w-full">
-      {/* Category Pills - Clean floating style */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 mb-16 max-w-3xl mx-auto">
+      {/* Category Tabs — matching the flat text header bar with active underline in the mockup image */}
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-gray-200/60 pb-0 mb-12 max-w-4xl mx-auto font-body text-[14px] md:text-[15px] font-semibold text-gray-500">
         {categories.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2 text-[13.5px] font-semibold rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] cursor-pointer ${
+              className={`pb-4 transition-all duration-300 relative select-none cursor-pointer active:scale-95 ${
                 isActive
-                  ? "bg-primary text-white border-primary shadow-sm shadow-primary/10"
-                  : "bg-white text-gray-600 border-gray-200/60 hover:border-primary/40 hover:text-primary"
+                  ? "text-primary border-b-2 border-[#D4AF37]"
+                  : "hover:text-primary"
               }`}
             >
               {cat}
@@ -57,28 +57,36 @@ export function NewsListClient({ articles }: NewsListClientProps) {
         })}
       </div>
 
-      {/* Grid Layout - Symmetrical Grid similar to Products */}
+      {/* Grid Layout — Symmetrical 3-Column Grid with centered titles matching the mockup image */}
       {paginatedArticles.length > 0 ? (
         <div className="flex flex-col gap-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch animate-fade-in">
-            {paginatedArticles.map((article, index) => {
+            {paginatedArticles.map((article) => {
               return (
-                <div
+                <Link
                   key={article.id}
-                  className="flex transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] translate-y-0 opacity-100"
-                  style={{
-                    animationDelay: `${index * 100}ms`
-                  }}
+                  href={article.slug}
+                  className="group flex flex-col w-full bg-white border border-[#E5E5E5]/60 hover:border-[#D4AF37]/50 rounded-xs overflow-hidden shadow-xs hover:shadow-md transition-all duration-500 hover:-translate-y-1"
                 >
-                  <NewsCard
-                    title={article.title}
-                    excerpt={article.excerpt}
-                    image={article.image}
-                    date={article.date}
-                    slug={article.slug}
-                    variant="standard"
-                  />
-                </div>
+                  {/* Card Thumbnail */}
+                  <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#F5F5F5]">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Card Content — centered matching the mockup image layout */}
+                  <div className="p-5 text-center flex flex-col items-center justify-center flex-1">
+                    <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mb-2 block font-body">
+                      {article.category || "Tin tức"}
+                    </span>
+                    <h3 className="text-[15px] md:text-[16.5px] font-bold text-[#1C1C1C] group-hover:text-primary transition-colors duration-300 leading-snug font-display line-clamp-2">
+                      {article.title}
+                    </h3>
+                  </div>
+                </Link>
               );
             })}
           </div>

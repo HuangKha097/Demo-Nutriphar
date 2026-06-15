@@ -53,17 +53,26 @@ export function TestimonialsSection() {
     <Section className="bg-gradient-to-br from-[#FFF9EE] via-[#FAFAF7] to-[#F5ECD7]">
       <div ref={rootRef as any}>
         <Container>
+          {/* Section header — centered, matching wireframe */}
+          <div data-reveal className="text-center mb-14">
+            <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
+              Cảm Nhận Khách Hàng
+            </h2>
+            {/* Decorative line */}
+            <div className="flex items-center justify-center gap-1.5 mb-5">
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+              <div className="h-[2px] w-10 bg-[#D4AF37] rounded-full" />
+              <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
+            </div>
+            <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
+              Những đánh giá chân thực và trải nghiệm thực tế từ các khách hàng đã và đang tin dùng yến sào Nutriphar.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
 
             {/* Left: Content */}
             <div data-reveal>
-              {/* Section label & title */}
-              <span className="block text-[#D4AF37] font-semibold tracking-widest uppercase text-[13px] mb-3 font-body">
-                Khách hàng nói gì
-              </span>
-              <h2 className="text-[36px] md:text-[48px] font-bold font-display tracking-wide mb-10 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
-                Cảm Nhận Khách Hàng
-              </h2>
 
               {/* Quote */}
               <div className="relative mb-8">
