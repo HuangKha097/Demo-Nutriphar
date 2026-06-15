@@ -221,10 +221,7 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
               Thêm vào giỏ hàng
             </CtaButton>
 
-            {/* Wishlist Button */}
-            <button className="flex items-center justify-center w-[48px] h-[48px] rounded-full border border-[#E5E5E5] bg-white text-gray-400 hover:text-accent hover:border-accent transition-colors duration-300 select-none cursor-pointer active:scale-90">
-              <Heart className="w-5 h-5" />
-            </button>
+
           </div>
 
           {/* Success Banner popup has been replaced by global high-end Toast */}

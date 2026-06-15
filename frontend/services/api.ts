@@ -11,6 +11,8 @@ export interface NewsArticle {
   image: string;
   date: string;
   slug: string;
+  category?: string;
+  content?: string;
 }
 
 export interface CoreValue {
@@ -36,6 +38,7 @@ export interface TeamMember {
   role: string;
   experience: string;
   bio: string;
+  image?: string;
 }
 
 export interface AboutData {
@@ -369,18 +372,21 @@ export async function getAboutData(): Promise<AboutData> {
         role: "Trưởng phòng Nghiên cứu & Phát triển (R&D)",
         experience: "15+ năm kinh nghiệm nghiên cứu thảo dược",
         bio: "Mỗi công thức yến sào kết hợp dược liệu đều được tôi và đội ngũ tối ưu hóa tỷ lệ sinh học để cơ thể hấp thu tối đa dinh dưỡng quý báu.",
+        image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
       },
       {
         name: "Bà Trần Thị B",
         role: "Sáng lập viên & Tổng Giám đốc (CEO)",
         experience: "Người mang khát vọng nâng tầm yến sào Việt",
         bio: "Nutriphar không chỉ bán sản phẩm chăm sóc sức khỏe, chúng tôi trao gửi giải pháp sức khỏe bền vững đi từ cái Tâm và uy tín hàng đầu.",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
       },
       {
         name: "Dược Sĩ Lê Hoàng C",
         role: "Giám đốc Kiểm soát Chất lượng (QA/QC)",
         experience: "Thành viên ban kiểm định chất lượng y tế",
         bio: "Từng lô sản phẩm xuất xưởng đều phải vượt qua 3 tầng kiểm định vi sinh lý hóa khắt khe để đảm bảo sự an tâm tuyệt đối cho khách hàng.",
+        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600",
       },
     ],
   };

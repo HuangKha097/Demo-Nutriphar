@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Minus, Plus, ShoppingCart, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { sharedProducts } from "@/data/products";
 import { CartItem } from "@/hooks/useCart";
@@ -77,9 +77,16 @@ export function CartItemList({
           <p className="text-[14px] text-muted-foreground font-body max-w-sm mb-6">
             Không có sản phẩm nào trong giỏ hàng của bạn. Hãy quay lại trang sản phẩm để lựa chọn các hộp yến sào bổ dưỡng.
           </p>
-          <Link href="/products">
-            <CtaButton>Đến cửa hàng</CtaButton>
-          </Link>
+          <div data-reveal className="flex justify-center mt-10">
+            <Link href="/products">
+              <CtaButton
+                icon={<ArrowRight className="w-4 h-4 text-white" />}
+                className="justify-between h-[48px]"
+              >
+                Xem tất cả sản phẩm
+              </CtaButton>
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col gap-6">
@@ -96,9 +103,8 @@ export function CartItemList({
             {cartItems.map((item, index) => (
               <div
                 key={`${item.id}-${item.size}`}
-                className={`grid grid-cols-1 sm:grid-cols-12 gap-4 items-center ${
-                  index > 0 ? "pt-6" : ""
-                }`}
+                className={`grid grid-cols-1 sm:grid-cols-12 gap-4 items-center ${index > 0 ? "pt-6" : ""
+                  }`}
               >
                 {/* 1. Image & metadata */}
                 <div className="col-span-1 sm:col-span-5 flex items-center gap-4">
