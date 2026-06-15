@@ -238,8 +238,8 @@ export default function RolesPage() {
                           <td className="p-3 capitalize font-semibold text-gray-700">{res}</td>
                           {ACTIONS.map((a) => (
                             <td key={a} className="p-3 text-center">
-                              <Checkbox 
-                                checked={perms[res]?.[a] || false} 
+                              <Checkbox
+                                checked={perms[res]?.[a] || false}
                                 onCheckedChange={() => toggle(res, a)}
                                 className="rounded border-gray-300 text-[#1A2F6B] focus:ring-[#1A2F6B]"
                               />
@@ -252,7 +252,7 @@ export default function RolesPage() {
                 </div>
               </div>
               <DialogFooter className="pt-4 border-t border-[#E5E5E5]/60 gap-2">
-                <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-full px-6 h-11 text-xs font-bold font-body cursor-pointer transition-all border-gray-200 hover:bg-gray-50">Hủy</Button>
+                <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-full px-6 h-11 text-xs font-bold font-body cursor-pointer transition-all border-gray-200 hover:bg-red-500 text-red-500">Hủy</Button>
                 <Button type="submit" className="rounded-full px-6 h-11 text-xs font-bold font-body bg-[#1A2F6B] hover:bg-[#A4161A] text-white cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-sm">Lưu lại</Button>
               </DialogFooter>
             </form>
@@ -271,7 +271,7 @@ export default function RolesPage() {
           </AlertDialogHeader>
           <AlertDialogFooter className="mt-4 gap-2">
             <AlertDialogCancel className="rounded-full px-5 py-2 h-9 text-xs font-semibold cursor-pointer border-gray-200">Hủy</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={async () => {
                 if (deleteId) {
                   try {

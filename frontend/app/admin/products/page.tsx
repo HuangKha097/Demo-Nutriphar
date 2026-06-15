@@ -43,7 +43,7 @@ export default function ProductsPage() {
 
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  
+
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(query), 300);
     return () => clearTimeout(t);
@@ -108,7 +108,7 @@ export default function ProductsPage() {
           <span className="text-[10px] tracking-[0.25em] font-bold uppercase text-[#D4AF37] font-body">Quản lý</span>
           <h2 className="text-3xl font-semibold tracking-tight text-[#1A2F6B] font-display">Sản phẩm dược phẩm</h2>
         </div>
-        
+
         <div className="flex flex-wrap items-center gap-3">
           {/* Keyword Search */}
           <div className="relative w-full sm:w-64">
@@ -401,7 +401,7 @@ function ProductDialog({
               )}
             />
             <DialogFooter className="pt-4 border-t border-[#E5E5E5]/60 gap-2">
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full px-6 h-11 text-xs font-bold font-body cursor-pointer transition-all border-gray-200 hover:bg-gray-50">Hủy</Button>
+              <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full px-6 h-11 text-xs font-bold font-body cursor-pointer transition-all border-gray-200 hover:bg-red-500 text-red-500">Hủy</Button>
               <Button type="submit" className="rounded-full px-6 h-11 text-xs font-bold font-body bg-[#1A2F6B] hover:bg-[#A4161A] text-white cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-sm">Lưu lại</Button>
             </DialogFooter>
           </form>
