@@ -114,8 +114,8 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
                   key={i}
                   onClick={() => setSelectedImage(img)}
                   className={`relative aspect-square rounded-xs overflow-hidden border transition-all duration-300 select-none cursor-pointer ${selectedImage === img
-                      ? "border-[#D4AF37] shadow-sm scale-95"
-                      : "border-[#E5E5E5] hover:border-[#D4AF37]/50"
+                    ? "border-[#D4AF37] shadow-sm scale-95"
+                    : "border-[#E5E5E5] hover:border-[#D4AF37]/50"
                     }`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -181,8 +181,8 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
                   key={sz}
                   onClick={() => setSelectedSize(sz)}
                   className={`px-5 py-2.5 rounded-full text-[13px] font-medium font-body transition-all duration-300 cursor-pointer select-none active:scale-95 ${selectedSize === sz
-                      ? "bg-primary text-white shadow-sm"
-                      : "bg-white text-[#4A4A4A] border border-[#E5E5E5] hover:border-[#D4AF37]/50"
+                    ? "bg-primary text-white shadow-sm"
+                    : "bg-white text-[#4A4A4A] border border-[#E5E5E5] hover:border-[#D4AF37]/50"
                     }`}
                 >
                   {sz}

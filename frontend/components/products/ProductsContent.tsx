@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { Search, Filter, RefreshCw, X, Star, ChevronDown } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
+import { useSearchParams } from "next/navigation";
 
 const categories = [
   "Tất cả",
@@ -23,6 +24,9 @@ const priceFilters = [
 ];
 
 export function ProductsContent() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [selectedPriceRange, setSelectedPriceRange] = useState(priceFilters[0]);
@@ -31,6 +35,18 @@ export function ProductsContent() {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  // Sync category from URL search parameters
+  useEffect(() => {
+    if (categoryParam) {
+      const decodedCat = decodeURIComponent(categoryParam);
+      if (categories.includes(decodedCat)) {
+        setSelectedCategory(decodedCat);
+      }
+    } else {
+      setSelectedCategory("Tất cả");
+    }
+  }, [categoryParam]);
 
   // Integrate our unified query hook
   const { products, total, loading, updateParams } = useProducts({
@@ -75,7 +91,7 @@ export function ProductsContent() {
 
   // Sidebar reusable control panel
   const FilterPanel = () => (
-    <div className="flex flex-col gap-8 bg-white p-6 rounded-xs border border-[#E5E5E5]/80 shadow-xs">
+    <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between pb-4 border-b border-[#E5E5E5]">
         <div className="flex items-center gap-2 font-display font-semibold text-[#1A2F6B] text-[18px]">
           <Filter className="w-5 h-5 text-[#D4AF37]" />
@@ -92,29 +108,7 @@ export function ProductsContent() {
       </div>
 
       {/* Keyword Search */}
-      <div className="flex flex-col gap-2">
-        <label className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
-          Tìm kiếm từ khóa
-        </label>
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Nhập tên sản phẩm..."
-            className="w-full h-[40px] pl-10 pr-4 rounded-full text-[14px] font-body bg-[#FAFAF7] border border-[#E5E5E5] outline-none focus:border-[#D4AF37] transition-all"
-          />
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600 cursor-pointer"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-      </div>
+
 
       {/* Categories select list */}
       <div className="flex flex-col gap-3">
@@ -126,16 +120,14 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedCategory(cat)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${
-                selectedCategory === cat
-                  ? "text-[#8C6A00] font-semibold"
-                  : "text-[#4A4A4A] hover:text-[#D4AF37]"
-              }`}
+              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedCategory === cat
+                ? "text-[#8C6A00] font-semibold"
+                : "text-[#4A4A4A] hover:text-[#D4AF37]"
+                }`}
             >
               <span
-                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${
-                  selectedCategory === cat ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
-                }`}
+                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedCategory === cat ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                  }`}
               >
                 {selectedCategory === cat && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}
               </span>
@@ -155,16 +147,14 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedPriceRange(p)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${
-                selectedPriceRange.label === p.label
-                  ? "text-[#8C6A00] font-semibold"
-                  : "text-[#4A4A4A] hover:text-[#D4AF37]"
-              }`}
+              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedPriceRange.label === p.label
+                ? "text-[#8C6A00] font-semibold"
+                : "text-[#4A4A4A] hover:text-[#D4AF37]"
+                }`}
             >
               <span
-                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${
-                  selectedPriceRange.label === p.label ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
-                }`}
+                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedPriceRange.label === p.label ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                  }`}
               >
                 {selectedPriceRange.label === p.label && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}
               </span>
@@ -175,7 +165,7 @@ export function ProductsContent() {
       </div>
 
       {/* Client Ratings Option */}
-      <div className="flex flex-col gap-3">
+      {/* <div className="flex flex-col gap-3">
         <span className="text-[14px] font-bold text-[#1C1C1C] uppercase tracking-wider font-body">
           Đánh giá từ khách hàng
         </span>
@@ -210,7 +200,7 @@ export function ProductsContent() {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 
@@ -271,12 +261,35 @@ export function ProductsContent() {
         {/* RIGHT COLUMN: Product Catalog */}
         <div className="col-span-1 lg:col-span-8 flex flex-col gap-6">
           {/* Sort header options & results count */}
-          <div className="hidden lg:flex items-center justify-between pb-4 border-b border-[#E5E5E5]/60">
-            <span className="text-[15px] text-gray-500 font-body">
-              Đang hiển thị <strong>{total}</strong> sản phẩm phù hợp
-            </span>
+          <div className="hidden lg:flex items-end justify-between pb-4 border-b border-[#E5E5E5]/60">
+            {/* Left Column: Search & Results count */}
+            <div className="flex flex-col gap-2 w-full max-w-md">
+              {/* Keyword Search */}
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Nhập tên sản phẩm cần tìm..."
+                  className="w-full h-[42px] pl-10 pr-10 rounded-full text-[14px] font-body bg-white border border-[#E5E5E5] outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all shadow-2xs"
+                />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-700 cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+              <span className="text-[13px] text-gray-500 font-body pl-2">
+                Đang hiển thị <strong>{total}</strong> sản phẩm phù hợp
+              </span>
+            </div>
 
-            <div className="flex items-center gap-3">
+            {/* Right Column: Sort Select */}
+            <div className="flex items-center gap-3 pb-1">
               <span className="text-[14px] text-gray-500 font-body">Sắp xếp theo:</span>
               <div className="relative">
                 <select

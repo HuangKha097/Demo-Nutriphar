@@ -4,9 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "./Container";
 import { CtaButton } from "./CtaButton";
-import { Globe, Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { Globe, Menu, Search, ShoppingCart, User, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+
+const productCategories = [
+  "Yến sào Khánh Hòa",
+  "Yến chưng sẵn",
+  "Nước yến dinh dưỡng",
+  "Quà tặng cao cấp"
+];
 
 export function Header() {
   const pathname = usePathname();
@@ -16,6 +23,8 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [cartCount, setCartCount] = useState(0);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -41,6 +50,8 @@ export function Header() {
 
   useEffect(() => {
     setIsAtTop(window.scrollY <= 50);
+    setIsProductsDropdownOpen(false);
+    setIsMobileProductsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -214,9 +225,46 @@ export function Header() {
               <Link href="/" className={getNavLinkStyles("/")}>
                 Trang chủ
               </Link>
-              <Link href="/products" className={getNavLinkStyles("/products")}>
-                Sản phẩm
-              </Link>
+              <div
+                className="relative py-2 group"
+                onMouseEnter={() => setIsProductsDropdownOpen(true)}
+                onMouseLeave={() => setIsProductsDropdownOpen(false)}
+              >
+                <Link
+                  href="/products"
+                  className={`flex items-center gap-1 cursor-pointer ${getNavLinkStyles("/products")}`}
+                >
+                  <span>Sản phẩm</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isProductsDropdownOpen ? "rotate-180 text-[#D4AF37]" : ""}`} />
+                </Link>
+                {/* Premium Dropdown Menu */}
+                <div
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 transition-all duration-300 ${
+                    isProductsDropdownOpen
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : "opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-[16px] flex flex-col gap-0.5">
+                    <Link
+                      href="/products"
+                      className="block px-4 py-2.5 text-[14px] font-bold text-[#1C1C1C] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-[8px]"
+                    >
+                      Tất cả sản phẩm
+                    </Link>
+                    <div className="h-[1px] bg-gray-100/80 my-1 mx-2" />
+                    {productCategories.map((cat, idx) => (
+                      <Link
+                        key={idx}
+                        href={`/products?category=${encodeURIComponent(cat)}`}
+                        className="block px-4 py-2.5 text-[13.5px] font-medium text-[#1C1C1C]/80 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-[8px]"
+                      >
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
               <Link href="/about" className={getNavLinkStyles("/about")}>
                 Về chúng tôi
               </Link>
@@ -344,14 +392,46 @@ export function Header() {
                 <span>Trang chủ</span>
                 {isLinkActive("/") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
               </Link>
-              <Link
-                href="/products"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={getMobileNavLinkStyles("/products")}
-              >
-                <span>Sản phẩm</span>
-                {isLinkActive("/products") && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
-              </Link>
+              <div className="flex flex-col">
+                <button
+                  onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                  className={`w-full cursor-pointer flex items-center justify-between text-[16px] font-semibold transition-colors font-body py-1 border-b border-[#E5E5E5]/50 ${
+                    isLinkActive("/products") ? "text-[#D4AF37]" : "text-[#1C1C1C] hover:text-[#D4AF37]"
+                  }`}
+                >
+                  <span>Sản phẩm</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMobileProductsOpen ? "rotate-180" : ""}`} />
+                </button>
+                <div
+                  className={`pl-4 flex flex-col gap-2.5 overflow-hidden transition-all duration-300 ${
+                    isMobileProductsOpen ? "max-h-[300px] mt-3 pb-2" : "max-h-0"
+                  }`}
+                >
+                  <Link
+                    href="/products"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setIsMobileProductsOpen(false);
+                    }}
+                    className="text-[14.5px] font-semibold text-gray-800 hover:text-[#D4AF37] py-1 border-b border-[#E5E5E5]/30 block"
+                  >
+                    Tất cả sản phẩm
+                  </Link>
+                  {productCategories.map((cat, idx) => (
+                    <Link
+                      key={idx}
+                      href={`/products?category=${encodeURIComponent(cat)}`}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileProductsOpen(false);
+                      }}
+                      className="text-[14px] font-medium text-gray-600 hover:text-[#D4AF37] py-1 border-b border-[#E5E5E5]/30 block"
+                    >
+                      {cat}
+                    </Link>
+                  ))}
+                </div>
+              </div>
               <Link
                 href="/about"
                 onClick={() => setIsMobileMenuOpen(false)}
