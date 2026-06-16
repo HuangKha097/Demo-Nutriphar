@@ -9,24 +9,38 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "Mình dùng yến sào Nutriphar được 3 tháng rồi, sức khỏe cải thiện rõ rệt. Da dẻ mịn màng hơn, ngủ ngon hơn. Sản phẩm chất lượng thật sự, mình rất hài lòng và sẽ tiếp tục ủng hộ!",
+      "Mình dùng yến sào Nutriphar được 3 tháng rồi, sức khỏe cải thiện rõ rệt. Công việc văn phòng áp lực khiến mình hay bị stress và khó ngủ, nhưng từ khi duy trì thói quen chưng yến mỗi tuần, mình thấy cơ thể nhẹ nhõm hẳn. Da dẻ cũng trở nên hồng hào, căng mịn hơn trước rất nhiều. Thực sự đây là một khoản đầu tư vô cùng xứng đáng cho sức khoẻ bản thân và gia đình. Sản phẩm đóng gói đẹp mắt, chất lượng thì cực kỳ xuất sắc, mình sẽ tiếp tục ủng hộ lâu dài!",
     name: "Chị Nguyễn Thị Mai",
     title: "Khách hàng tại TP. Hồ Chí Minh",
     image: "/images/customer1.jpg",
   },
   {
     quote:
-      "Tôi mua yến sào Nutriphar tặng ba mẹ, hai người dùng đều khen ngon và thấy khỏe hơn. Đặc biệt là ba tôi bị yếu phổi, sau khi dùng thường xuyên đã cải thiện đáng kể. Cảm ơn Nutriphar!",
+      "Tôi mua yến sào Nutriphar tặng ba mẹ dịp Tết vừa rồi, hai người dùng đều khen nức nở vì yến nở to và thơm tự nhiên. Đặc biệt là ba tôi từng bị di chứng hậu Covid khiến phổi yếu và hay ho khan về đêm. Sau khoảng hơn một tháng dùng yến chưng thường xuyên, những cơn ho đã giảm hẳn, ông ăn uống ngon miệng và lên cân lại. Nhìn thấy sức khỏe ba mẹ ngày một tốt lên là niềm vui lớn nhất của con cái. Vô cùng biết ơn Nutriphar đã mang đến một sản phẩm thực sự tuyệt vời!",
     name: "Anh Trần Văn Hùng",
     image: "/images/customer3.webp",
     title: "Khách hàng tại Khánh Hòa",
   },
   {
     quote:
-      "Mình đang mang thai tháng thứ 5, được bạn giới thiệu dùng yến sào Nutriphar. Vị rất thơm ngon, dễ uống. Mình cảm thấy ít mệt mỏi hơn nhiều so với trước. Sẽ giới thiệu cho các mẹ bầu khác!",
+      "Mình đang mang thai bé thứ hai ở tháng thứ 5, cơ thể thường xuyên đau nhức và thai nghén mệt mỏi rã rời. Được một chị bạn đồng nghiệp giới thiệu dùng thử yến sào Nutriphar, ban đầu mình cũng chần chừ nhưng khi trải nghiệm thì hoàn toàn bị thuyết phục. Yến có vị rất thanh, không bị tanh như một số loại khác mình từng thử, cực kỳ phù hợp với mẹ bầu. Mình cảm thấy cơ thể dồi dào năng lượng hơn hẳn, bé trong bụng cũng phát triển vượt chuẩn. Chắc chắn sẽ mua thêm để dùng dài lâu!",
     name: "Chị Phạm Thanh Hương",
     title: "Khách hàng tại Hà Nội",
     image: "/images/customer2.jpg",
+  },
+  {
+    quote:
+      "Tôi vốn bị chứng mất ngủ mãn tính hành hạ suốt nhiều năm nay, đêm nào cũng trằn trọc đến 2-3 giờ sáng mới chợp mắt. Từ ngày con gái đi làm mua biếu hộp yến tinh chế Nutriphar thượng hạng, tôi chưng dùng kiên trì mỗi tuần 3 lần thì thấy phép màu thực sự xảy ra. Tôi ngủ sâu giấc hơn hẳn, không còn bị giật mình nửa đêm, sáng dậy đầu óc tỉnh táo và không hề uể oải. Thêm vào đó, chứng trào ngược dạ dày cũng thuyên giảm rất nhiều. Quả là tiền nào của nấy.",
+    name: "Bác Lê Văn Sơn",
+    title: "Khách hàng tại Đà Nẵng",
+    image: "/images/customer1.jpg",
+  },
+  {
+    quote:
+      "Là một người nội trợ cực kỳ kỹ tính trong việc chọn lựa thực phẩm tẩm bổ cho tổ ấm, điều mình ấn tượng nhất ở Nutriphar chính là độ tinh khiết hoàn hảo. Từng sợi yến luôn nở cực kỳ to, khi chưng lên rất dôi, nước trong vắt và đặc biệt là giữ nguyên được độ dai giòn rụm sần sật vô cùng hấp dẫn. Cả nhà mình từ ông bà nội đến mấy đứa nhỏ ai cũng mê tít món yến chưng hạt sen táo đỏ. Mình hoàn toàn tin tưởng chất lượng của Nutriphar.",
+    name: "Chị Trần Ngọc Hà",
+    title: "Khách hàng tại Cần Thơ",
+    image: "/images/customer3.webp",
   },
 ];
 
@@ -79,8 +93,8 @@ export function TestimonialsSection() {
                 {/* Opening quote */}
                 <Quote className="w-10 h-10 text-[#D4AF37] mb-4 fill-[#D4AF37]" />
 
-                <p className="text-[16px] lg:text-[17px] leading-[1.8] text-[#4A4A4A] font-body min-h-[120px]">
-                  {t.quote}
+                <p className="text-[16px] lg:text-[17px] leading-[1.8] text-[#4A4A4A] font-body min-h-[120px] italic">
+                  "{t.quote}"
                 </p>
 
                 {/* Closing quote */}
