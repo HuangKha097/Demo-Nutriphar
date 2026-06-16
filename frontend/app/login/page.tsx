@@ -120,7 +120,7 @@ export default function LoginPage() {
         <div className="hidden md:block relative w-full h-full overflow-hidden bg-[#FAFAF7] select-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/herobackground.jpg"
+            src="/images/herobackground1.jpg"
             alt="Nutriphar Login Showcase"
             className="absolute inset-0 w-full h-full object-cover brightness-[0.88] contrast-[1.02] transition-transform duration-700 hover:scale-[1.02]"
           />

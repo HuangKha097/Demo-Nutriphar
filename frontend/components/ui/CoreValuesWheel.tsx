@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ShieldCheck, Heart, Sparkles, Target } from "lucide-react";
 import { type CoreValue } from "@/services/api";
 
@@ -16,118 +15,148 @@ interface CoreValuesWheelProps {
 }
 
 export function CoreValuesWheel({ coreValues }: CoreValuesWheelProps) {
-  // Initially activeIndex is 3 (index of "Đột Phá Nghiên Cứu" - bottom right quadrant)
-  // to match the user's sketch of the exploded slice
-  const [activeIndex, setActiveIndex] = useState<number>(3);
+  // Extract individual core values safely
+  const val1 = coreValues[0];
+  const val2 = coreValues[1];
+  const val3 = coreValues[2];
+  const val4 = coreValues[3];
 
-  const activeValue = coreValues[activeIndex];
-  const ActiveIcon = activeValue ? (iconMap[activeValue.iconName] || ShieldCheck) : ShieldCheck;
-
-  // Configurations for each quadrant
-  const quadrants = [
-    {
-      index: 0,
-      label: "01",
-      roundedClass: "rounded-tl-full",
-      activeTransform: "-translate-x-4 -translate-y-4 border-[#D4AF37] bg-[#1A2F6B] text-white shadow-xl scale-[1.02]",
-      inactiveTransform: "translate-x-0 translate-y-0 bg-white text-[#1C1C1C] border-[#E5E5E5] hover:border-[#D4AF37]/50 hover:-translate-x-2 hover:-translate-y-2 hover:shadow-md",
-      contentAlign: "justify-end items-end pb-8 pr-8"
-    },
-    {
-      index: 1,
-      label: "02",
-      roundedClass: "rounded-tr-full",
-      activeTransform: "translate-x-4 -translate-y-4 border-[#D4AF37] bg-[#1A2F6B] text-white shadow-xl scale-[1.02]",
-      inactiveTransform: "translate-x-0 translate-y-0 bg-white text-[#1C1C1C] border-[#E5E5E5] hover:border-[#D4AF37]/50 hover:translate-x-2 hover:-translate-y-2 hover:shadow-md",
-      contentAlign: "justify-end items-start pb-8 pl-8"
-    },
-    {
-      index: 2,
-      label: "03",
-      roundedClass: "rounded-bl-full",
-      activeTransform: "-translate-x-4 translate-y-4 border-[#D4AF37] bg-[#1A2F6B] text-white shadow-xl scale-[1.02]",
-      inactiveTransform: "translate-x-0 translate-y-0 bg-white text-[#1C1C1C] border-[#E5E5E5] hover:border-[#D4AF37]/50 hover:-translate-x-2 hover:translate-y-2 hover:shadow-md",
-      contentAlign: "justify-start items-end pt-8 pr-8"
-    },
-    {
-      index: 3,
-      label: "04",
-      roundedClass: "rounded-br-full",
-      activeTransform: "translate-x-4 translate-y-4 border-[#D4AF37] bg-[#1A2F6B] text-white shadow-xl scale-[1.02]",
-      inactiveTransform: "translate-x-0 translate-y-0 bg-white text-[#1C1C1C] border-[#E5E5E5] hover:border-[#D4AF37]/50 hover:translate-x-2 hover:translate-y-2 hover:shadow-md",
-      contentAlign: "justify-start items-start pt-8 pl-8"
-    }
-  ];
+  // Map corresponding icons or default to Sparkles/ShieldCheck
+  const Icon1 = val1 ? (iconMap[val1.iconName] || Sparkles) : Sparkles;
+  const Icon2 = val2 ? (iconMap[val2.iconName] || ShieldCheck) : ShieldCheck;
+  const Icon3 = val3 ? (iconMap[val3.iconName] || Heart) : Heart;
+  const Icon4 = val4 ? (iconMap[val4.iconName] || Target) : Target;
 
   return (
-    <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-      {/* Left Column: Interactive Quadrant Wheel */}
-      <div className="lg:col-span-6 flex justify-center items-center py-8">
-        <div className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] md:w-[380px] md:h-[380px] grid grid-cols-2 grid-rows-2 gap-2.5 select-none">
-          
-          {/* Centered Brand Emblem Ring */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-[#FAFAF7] border-2 border-[#D4AF37] flex items-center justify-center z-20 shadow-md">
-            <span className="font-display font-bold text-xs text-[#D4AF37] tracking-widest">NTP</span>
-          </div>
-
-          {quadrants.map((quad) => {
-            const value = coreValues[quad.index];
-            if (!value) return null;
-            const Icon = iconMap[value.iconName] || ShieldCheck;
-            const isActive = activeIndex === quad.index;
-
-            return (
-              <button
-                key={quad.index}
-                onClick={() => setActiveIndex(quad.index)}
-                onMouseEnter={() => setActiveIndex(quad.index)}
-                className={`relative flex flex-col p-4 sm:p-6 w-full h-full border transition-all duration-500 ease-out cursor-pointer ${quad.roundedClass} ${quad.contentAlign} ${
-                  isActive ? quad.activeTransform : quad.inactiveTransform
-                }`}
-                aria-label={`Giá trị cốt lõi ${quad.label}: ${value.title}`}
-              >
-                <div className="flex flex-col items-center gap-1 sm:gap-2">
-                  <Icon className={`w-6 h-6 sm:w-8 sm:h-8 transition-colors duration-500 ${isActive ? "text-[#D4AF37]" : "text-[#D4AF37]"}`} strokeWidth={1.5} />
-                  <span className="text-[11px] sm:text-[12.5px] font-bold font-display uppercase tracking-wider block leading-tight max-w-[110px] sm:max-w-[130px]">
-                    {value.title}
-                  </span>
-                  <span className="text-[10px] sm:text-[11px] opacity-60 font-body tracking-wider">{quad.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Right Column: Display Active Core Value Description Card */}
-      <div className="lg:col-span-6 flex flex-col justify-center min-h-[280px] p-6 sm:p-10 bg-white border border-[#E5E5E5]/80 rounded-xs shadow-xs relative overflow-hidden transition-all duration-500 hover:shadow-md">
+    <div className="w-full py-4">
+      {/* Bento Grid Layout: 6-column grid on desktop, collapses to single column on mobile */}
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-6 w-full max-w-6xl mx-auto">
         
-        {/* Decorative background circle */}
-        <div className="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-[#D4AF37]/5 blur-2xl pointer-events-none" />
-
-        {activeValue && (
-          <div key={activeIndex} className="flex flex-col gap-4 animate-fade-in">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#E0F1FC] text-primary flex items-center justify-center">
-                <ActiveIcon className="w-5 h-5 text-primary" strokeWidth={1.8} />
-              </div>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#D4AF37] font-body">
-                GIÁ TRỊ CỐT LÕI 0{activeIndex + 1} / 04
-              </span>
-            </div>
+        {/* Card 01 - Main Content: Spans 4 columns on desktop */}
+        {val1 && (
+          <div className="col-span-1 md:col-span-4 relative overflow-hidden bg-white border border-[#E5E5E5]/70 rounded-xs p-6 md:p-8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group min-h-[260px]">
+            {/* Watermark Number */}
+            <span className="absolute top-4 right-6 text-[72px] md:text-[96px] font-bold font-display text-[#D4AF37]/8 leading-none pointer-events-none select-none">
+              01
+            </span>
             
-            <h3 className="text-[24px] sm:text-[32px] font-bold font-display text-primary leading-tight">
-              {activeValue.title}
-            </h3>
-
-            {/* Decorative line */}
-            <div className="h-[2px] w-12 bg-[#D4AF37] rounded-full" />
-
-            <p className="text-[15px] sm:text-[16px] leading-[1.8] text-neutral-700 font-body mt-2">
-              {activeValue.description}
-            </p>
+            {/* Inner Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start h-full">
+              {/* Left Column: Title and Icon */}
+              <div className="lg:col-span-2 flex flex-col gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/15">
+                  <Icon1 className="w-6 h-6" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C6A00] font-body block mb-1">
+                    Giá trị cốt lõi 01
+                  </span>
+                  <h3 className="text-[20px] sm:text-[22px] font-bold font-display text-primary leading-tight uppercase tracking-wide">
+                    {val1.title}
+                  </h3>
+                </div>
+              </div>
+              
+              {/* Right Column: Description */}
+              <div className="lg:col-span-3 lg:pt-2 flex items-center h-full">
+                <p className="text-[14px] leading-[1.7] text-slate-600 font-body">
+                  {val1.description}
+                </p>
+              </div>
+            </div>
           </div>
         )}
+
+        {/* Card 02 - Sidebar: Spans 2 columns on desktop */}
+        {val2 && (
+          <div className="col-span-1 md:col-span-2 relative overflow-hidden bg-white border border-[#E5E5E5]/70 rounded-xs p-6 md:p-8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group min-h-[260px]">
+            {/* Watermark Number */}
+            <span className="absolute top-4 right-6 text-[72px] md:text-[96px] font-bold font-display text-[#D4AF37]/8 leading-none pointer-events-none select-none">
+              02
+            </span>
+
+            <div className="flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/15">
+                <Icon2 className="w-6 h-6" strokeWidth={1.8} />
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C6A00] font-body block mb-1">
+                  Giá trị cốt lõi 02
+                </span>
+                <h3 className="text-[20px] sm:text-[22px] font-bold font-display text-primary leading-tight uppercase tracking-wide">
+                  {val2.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-[14px] leading-[1.7] text-slate-600 font-body">
+                {val2.description}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Card 03 - Twin Left: Spans 3 columns on desktop */}
+        {val3 && (
+          <div className="col-span-1 md:col-span-3 relative overflow-hidden bg-white border border-[#E5E5E5]/70 rounded-xs p-6 md:p-8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group min-h-[260px]">
+            {/* Watermark Number */}
+            <span className="absolute top-4 right-6 text-[72px] md:text-[96px] font-bold font-display text-[#D4AF37]/8 leading-none pointer-events-none select-none">
+              03
+            </span>
+
+            <div className="flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/15">
+                <Icon3 className="w-6 h-6" strokeWidth={1.8} />
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C6A00] font-body block mb-1">
+                  Giá trị cốt lõi 03
+                </span>
+                <h3 className="text-[20px] sm:text-[22px] font-bold font-display text-primary leading-tight uppercase tracking-wide">
+                  {val3.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-[14px] leading-[1.7] text-slate-600 font-body">
+                {val3.description}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Card 04 - Twin Right: Spans 3 columns on desktop */}
+        {val4 && (
+          <div className="col-span-1 md:col-span-3 relative overflow-hidden bg-white border border-[#E5E5E5]/70 rounded-xs p-6 md:p-8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group min-h-[260px]">
+            {/* Watermark Number */}
+            <span className="absolute top-4 right-6 text-[72px] md:text-[96px] font-bold font-display text-[#D4AF37]/8 leading-none pointer-events-none select-none">
+              04
+            </span>
+
+            <div className="flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/15">
+                <Icon4 className="w-6 h-6" strokeWidth={1.8} />
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C6A00] font-body block mb-1">
+                  Giá trị cốt lõi 04
+                </span>
+                <h3 className="text-[20px] sm:text-[22px] font-bold font-display text-primary leading-tight uppercase tracking-wide">
+                  {val4.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-[14px] leading-[1.7] text-slate-600 font-body">
+                {val4.description}
+              </p>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

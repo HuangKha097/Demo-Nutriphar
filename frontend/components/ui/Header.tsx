@@ -4,9 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "./Container";
 import { CtaButton } from "./CtaButton";
-import { Globe, Menu, Search, ShoppingCart, User, X, ChevronDown } from "lucide-react";
+import { Globe, Menu, Search, ShoppingCart, User, X, ChevronDown, LogOut, Shield } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import { useUser } from "@/hooks/use-users-query";
+import { toast } from "sonner";
 
 const productCategories = [
   "Yến sào Khánh Hòa",
@@ -17,6 +20,9 @@ const productCategories = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { currentUserId, logout } = useAuth();
+  const { data: user } = useUser(currentUserId || "");
   const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -25,6 +31,13 @@ export function Header() {
   const [cartCount, setCartCount] = useState(0);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
+  const handleLogoutClick = () => {
+    logout();
+    toast.success("Đăng xuất tài khoản thành công!");
+    router.push("/");
+  };
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -319,15 +332,69 @@ export function Header() {
                 <span>VI</span>
               </button>
 
-              <div className="hidden md:block">
-                <Link href="/login">
-                  <CtaButton
-                    icon={<User className="h-4 w-4 text-white" />}
-                    className="pl-5 pr-1.5 py-1 text-[13.5px] shadow-sm bg-primary hover:bg-[#12224F]"
+              <div className="hidden md:block relative">
+                {currentUserId ? (
+                  <div
+                    className="relative py-2"
+                    onMouseEnter={() => setIsUserDropdownOpen(true)}
+                    onMouseLeave={() => setIsUserDropdownOpen(false)}
                   >
-                    Đăng nhập
-                  </CtaButton>
-                </Link>
+                    <button className="flex items-center gap-2 text-[13.5px] font-semibold text-primary font-body hover:text-accent transition-colors duration-300 py-1.5 px-3.5 rounded-full border border-[#E5E5E5]/60 bg-white shadow-2xs cursor-pointer">
+                      <User className="w-3.5 h-3.5 text-primary" />
+                      <span className="max-w-[100px] truncate">{user?.fullName ? user.fullName.split(" ").pop() : "Tài khoản"}</span>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isUserDropdownOpen ? "rotate-180 text-accent" : ""}`} />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    <div
+                      className={`absolute top-full right-0 pt-2 w-48 transition-all duration-300 ${
+                        isUserDropdownOpen
+                          ? "opacity-100 translate-y-0 pointer-events-auto"
+                          : "opacity-0 -translate-y-2 pointer-events-none"
+                      }`}
+                    >
+                      <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-xs flex flex-col gap-0.5 text-left">
+                        <div className="px-2.5 py-1.5 border-b border-gray-100 mb-1">
+                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Xin chào,</p>
+                          <p className="text-[13px] font-bold text-primary truncate font-display">{user?.fullName || "Thành viên"}</p>
+                        </div>
+                        <Link
+                          href="/profile"
+                          className="flex items-center gap-2 px-2.5 py-2 text-[13px] font-semibold text-slate-700 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs font-body"
+                        >
+                          <User className="w-3.5 h-3.5" strokeWidth={1.5} />
+                          Hồ sơ cá nhân
+                        </Link>
+                        {user?.roleId === "role-admin" && (
+                          <Link
+                            href="/admin"
+                            className="flex items-center gap-2 px-2.5 py-2 text-[13px] font-semibold text-slate-700 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs font-body"
+                          >
+                            <Shield className="w-3.5 h-3.5" strokeWidth={1.5} />
+                            Trang quản trị
+                          </Link>
+                        )}
+                        <div className="h-[1px] bg-gray-100 my-1 mx-2.5" />
+                        <button
+                          onClick={handleLogoutClick}
+                          className="flex items-center gap-2 px-2.5 py-2 text-[13px] font-semibold text-[#A4161A] hover:bg-red-50 transition-colors rounded-xs w-full text-left font-body cursor-pointer"
+                        >
+                          <LogOut className="w-3.5 h-3.5" strokeWidth={1.5} />
+                          Đăng xuất
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link href="/login">
+                    <CtaButton
+                      icon={<User className="h-4 w-4 text-white" />}
+                      className="pl-5 pr-1.5 py-1 text-[13.5px] shadow-sm bg-primary hover:bg-[#12224F]"
+                    >
+                      Đăng nhập
+                    </CtaButton>
+                  </Link>
+                )}
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -455,15 +522,56 @@ export function Header() {
               <span>Tiếng Việt (VI)</span>
             </button>
 
-            {/* Login button */}
-            <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full">
-              <CtaButton
-                icon={<User className="h-4 w-4 text-white" />}
-                className="w-full justify-between bg-primary hover:bg-[#12224F]"
-              >
-                Đăng nhập
-              </CtaButton>
-            </Link>
+            {/* Login / Profile options on mobile */}
+            {currentUserId ? (
+              <div className="flex flex-col gap-3">
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full"
+                >
+                  <CtaButton
+                    icon={<User className="h-4 w-4 text-white" />}
+                    className="w-full justify-between bg-primary hover:bg-[#12224F]"
+                  >
+                    Hồ sơ cá nhân
+                  </CtaButton>
+                </Link>
+                {user?.roleId === "role-admin" && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full"
+                  >
+                    <CtaButton
+                      icon={<Shield className="h-4 w-4 text-white" />}
+                      className="w-full justify-between bg-slate-200 hover:bg-slate-350 text-slate-800 border border-[#E5E5E5]/60"
+                    >
+                      Trang quản trị
+                    </CtaButton>
+                  </Link>
+                )}
+                <CtaButton
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogoutClick();
+                  }}
+                  icon={<LogOut className="h-4 w-4 text-white" />}
+                  className="w-full justify-between bg-accent hover:bg-[#8B1215] text-left"
+                >
+                  Đăng xuất
+                </CtaButton>
+              </div>
+            ) : (
+              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full">
+                <CtaButton
+                  icon={<User className="h-4 w-4 text-white" />}
+                  className="w-full justify-between bg-primary hover:bg-[#12224F]"
+                >
+                  Đăng nhập
+                </CtaButton>
+              </Link>
+            )}
           </div>
         </div>
       </div>

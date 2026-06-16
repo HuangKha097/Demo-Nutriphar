@@ -110,8 +110,8 @@ export function setLocalStorage<T>(key: string, value: T): void {
 }
 
 // Global API configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
-const USE_MOCK = true; // Set to false to hit the live API endpoints
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+export const USE_MOCK = true; // Set to false to hit the live API endpoints
 
 // Default Category Definitions
 export const DEFAULT_CATEGORIES = [
@@ -458,6 +458,9 @@ export interface AuthResponse {
 }
 
 export async function loginWithCredentials(email: string, password: string): Promise<AuthResponse> {
+  const { loginSchema } = await import("./user.service");
+  loginSchema.parse({ email, password });
+
   if (!USE_MOCK && API_BASE_URL) {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
@@ -485,14 +488,6 @@ export async function loginWithCredentials(email: string, password: string): Pro
     };
   }
 
-  // Accept any valid-looking input for demo purposes, but simulate real validation
-  if (!email.includes("@")) {
-    throw new Error("Địa chỉ email không hợp lệ");
-  }
-  if (password.length < 6) {
-    throw new Error("Mật khẩu phải chứa ít nhất 6 ký tự");
-  }
-
   return {
     user: {
       id: String(Math.floor(Math.random() * 1000) + 10),
@@ -504,6 +499,9 @@ export async function loginWithCredentials(email: string, password: string): Pro
 }
 
 export async function registerWithCredentials(name: string, email: string, password: string): Promise<AuthResponse> {
+  const { loginSchema } = await import("./user.service");
+  loginSchema.parse({ email, password });
+
   if (!USE_MOCK && API_BASE_URL) {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: "POST",
@@ -519,13 +517,6 @@ export async function registerWithCredentials(name: string, email: string, passw
 
   // Simulated mock registration
   await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  if (!email.includes("@")) {
-    throw new Error("Địa chỉ email không hợp lệ");
-  }
-  if (password.length < 6) {
-    throw new Error("Mật khẩu phải chứa ít nhất 6 ký tự");
-  }
 
   return {
     user: {
