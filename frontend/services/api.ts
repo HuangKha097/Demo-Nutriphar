@@ -119,7 +119,7 @@ export const USE_MOCK = true; // Set to false to hit the live API endpoints
 export const DEFAULT_CATEGORIES = [
   { id: "cat-1", name: "Sản phẩm cho người cao tuổi", image: "/images/yensao.png" },
   { id: "cat-2", name: "Sản phẩm cho trẻ em", image: "/images/Nuoc-yen-sao-co-duong.png" },
-  { id: "cat-3", name: "Sản phẩm người chăm sóc sức khoẻ (kiêng đường, xương khớp...)", image: "/images/Ve-Yen-Thi-Web.png" },
+  { id: "cat-3", name: "Sản phẩm chăm sóc sức khoẻ", image: "/images/Ve-Yen-Thi-Web.png" },
   { id: "cat-4", name: "Sản phẩm thông dụng khác", image: "/images/vecongty.jpg" },
   { id: "cat-5", name: "Phụ kiện sản phẩm", image: "/images/quytrinhsanxuat.jpg" }
 ];
@@ -243,8 +243,8 @@ export async function getProducts(params?: {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   // Load products dynamically from localStorage
-  const storedProducts = getLocalStorage<Product[]>("nutriphar_products", INITIAL_PRODUCTS as any);
-  const storedCategories = getLocalStorage<any[]>("nutriphar_categories", DEFAULT_CATEGORIES);
+  const storedProducts = getLocalStorage<Product[]>("nutriphar_products_v4", INITIAL_PRODUCTS as any);
+  const storedCategories = getLocalStorage<any[]>("nutriphar_categories_v3", DEFAULT_CATEGORIES);
 
   let result = [...storedProducts];
 
@@ -314,7 +314,7 @@ export async function getProductById(id: string): Promise<Product | null> {
   }
 
   await new Promise((resolve) => setTimeout(resolve, 150));
-  const storedProducts = getLocalStorage<Product[]>("nutriphar_products", INITIAL_PRODUCTS as any);
+  const storedProducts = getLocalStorage<Product[]>("nutriphar_products_v4", INITIAL_PRODUCTS as any);
   const product = storedProducts.find((p) => p.id === id);
   return product || null;
 }

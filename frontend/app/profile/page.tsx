@@ -13,6 +13,7 @@ import { ProfileSidebar } from "./components/ProfileSidebar";
 import { ProfileForm } from "./components/ProfileForm";
 import { OrdersTable, MockOrder } from "./components/OrdersTable";
 import { SecurityForm } from "./components/SecurityForm";
+import { ProfileAddresses } from "./components/ProfileAddresses";
 import { getRoleLabel } from "./components/ProfileUI";
 import { type ProfileInput, type SecurityInput } from "@/services/user.service";
 
@@ -25,8 +26,18 @@ export default function ProfilePage() {
   const { data: user, isLoading: userLoading } = useUser(currentUserId || "1");
   const updateUserMutation = useUpdateUser();
 
-  // Active navigation tab (profile | orders | security)
-  const [activeTab, setActiveTab] = useState<"profile" | "orders" | "security">("profile");
+  // Active navigation tab (profile | orders | security | addresses)
+  const [activeTab, setActiveTab] = React.useState<"profile" | "orders" | "security" | "addresses">("profile");
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab === 'addresses' || tab === 'orders' || tab === 'security' || tab === 'profile') {
+        setActiveTab(tab as any);
+      }
+    }
+  }, []);
 
   // Local state for password submission loading indicator
   const [updatingPassword, setUpdatingPassword] = useState(false);
@@ -180,6 +191,10 @@ export default function ProfilePage() {
                   updatingPassword={updatingPassword}
                   handlePasswordSubmit={handlePasswordSubmit}
                 />
+              )}
+
+              {activeTab === "addresses" && (
+                <ProfileAddresses />
               )}
             </div>
 

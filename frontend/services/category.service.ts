@@ -3,7 +3,7 @@ import { getLocalStorage, setLocalStorage, DEFAULT_CATEGORIES, USE_MOCK } from "
 import { apiClient } from "@/lib/api-client";
 import type { Category, CreateCategoryDto, UpdateCategoryDto, PaginatedResponse, PaginationParams } from "@/types";
 
-const INITIAL_CATEGORIES_KEY = "nutriphar_categories";
+const INITIAL_CATEGORIES_KEY = "nutriphar_categories_v3";
 
 export const categorySchema = z.object({
   name: z.string().trim().min(1, "Tên danh mục là bắt buộc").max(80),

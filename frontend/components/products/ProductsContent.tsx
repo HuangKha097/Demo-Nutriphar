@@ -9,10 +9,11 @@ import { useSearchParams } from "next/navigation";
 
 const categories = [
   "Tất cả",
-  "Yến sào Khánh Hòa",
-  "Yến chưng sẵn",
-  "Nước yến dinh dưỡng",
-  "Quà tặng cao cấp"
+  "Sản phẩm cho người cao tuổi",
+  "Sản phẩm cho trẻ em",
+  "Sản phẩm chăm sóc sức khoẻ",
+  "Sản phẩm thông dụng khác",
+  "Phụ kiện sản phẩm"
 ];
 
 const priceFilters = [
@@ -120,13 +121,13 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedCategory(cat)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedCategory === cat
+              className={`flex items-start gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedCategory === cat
                 ? "text-[#8C6A00] font-semibold"
                 : "text-[#4A4A4A] hover:text-[#D4AF37]"
                 }`}
             >
               <span
-                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedCategory === cat ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                className={`w-3.5 h-3.5 shrink-0 mt-[3px] rounded-full border flex items-center justify-center transition-all ${selectedCategory === cat ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
                   }`}
               >
                 {selectedCategory === cat && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}
@@ -147,13 +148,13 @@ export function ProductsContent() {
             <button
               key={i}
               onClick={() => setSelectedPriceRange(p)}
-              className={`flex items-center gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedPriceRange.label === p.label
+              className={`flex items-start gap-2.5 text-[14px] font-body transition-colors py-0.5 text-left select-none cursor-pointer ${selectedPriceRange.label === p.label
                 ? "text-[#8C6A00] font-semibold"
                 : "text-[#4A4A4A] hover:text-[#D4AF37]"
                 }`}
             >
               <span
-                className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-all ${selectedPriceRange.label === p.label ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
+                className={`w-3.5 h-3.5 shrink-0 mt-[3px] rounded-full border flex items-center justify-center transition-all ${selectedPriceRange.label === p.label ? "border-[#D4AF37] bg-[#D4AF37]/10" : "border-gray-300 bg-white"
                   }`}
               >
                 {selectedPriceRange.label === p.label && <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A00]" />}

@@ -3,7 +3,7 @@ import { getLocalStorage, setLocalStorage, INITIAL_PRODUCTS, USE_MOCK } from "./
 import { apiClient } from "@/lib/api-client";
 import type { Product, CreateProductDto, UpdateProductDto, PaginatedResponse, PaginationParams } from "@/types";
 
-const INITIAL_PRODUCTS_KEY = "nutriphar_products";
+const INITIAL_PRODUCTS_KEY = "nutriphar_products_v4";
 
 export const productSchema = z.object({
   name: z.string().trim().min(1, "Tên là bắt buộc").max(120),

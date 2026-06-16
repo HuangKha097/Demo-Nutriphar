@@ -12,10 +12,11 @@ import { useUser } from "@/hooks/use-users-query";
 import { toast } from "sonner";
 
 const productCategories = [
-  "Yến sào Khánh Hòa",
-  "Yến chưng sẵn",
-  "Nước yến dinh dưỡng",
-  "Quà tặng cao cấp"
+  "Sản phẩm cho người cao tuổi",
+  "Sản phẩm cho trẻ em",
+  "Sản phẩm chăm sóc sức khoẻ",
+  "Sản phẩm thông dụng khác",
+  "Phụ kiện sản phẩm"
 ];
 
 export function Header() {
@@ -250,7 +251,7 @@ export function Header() {
                 </Link>
                 {/* Premium Dropdown Menu */}
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 transition-all duration-300 ${isProductsDropdownOpen
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-max min-w-[260px] transition-all duration-300 ${isProductsDropdownOpen
                     ? "opacity-100 translate-y-0 pointer-events-auto"
                     : "opacity-0 -translate-y-2 pointer-events-none"
                     }`}
@@ -258,7 +259,7 @@ export function Header() {
                   <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-xs flex flex-col gap-0.5">
                     <Link
                       href="/products"
-                      className="block px-4 py-2.5 text-[14px] font-bold text-[#1C1C1C] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs"
+                      className="block px-4 py-2.5 text-[14px] font-bold text-[#1C1C1C] hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs whitespace-nowrap"
                     >
                       Tất cả sản phẩm
                     </Link>
@@ -267,7 +268,7 @@ export function Header() {
                       <Link
                         key={idx}
                         href={`/products?category=${encodeURIComponent(cat)}`}
-                        className="block px-4 py-2.5 text-[13.5px] font-medium text-[#1C1C1C]/80 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs"
+                        className="block px-4 py-2.5 text-[13.5px] font-medium text-[#1C1C1C]/80 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs whitespace-nowrap"
                       >
                         {cat}
                       </Link>
@@ -347,11 +348,10 @@ export function Header() {
 
                     {/* Dropdown Menu */}
                     <div
-                      className={`absolute top-full right-0 pt-2 w-48 transition-all duration-300 ${
-                        isUserDropdownOpen
-                          ? "opacity-100 translate-y-0 pointer-events-auto"
-                          : "opacity-0 -translate-y-2 pointer-events-none"
-                      }`}
+                      className={`absolute top-full right-0 pt-2 w-48 transition-all duration-300 ${isUserDropdownOpen
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 -translate-y-2 pointer-events-none"
+                        }`}
                     >
                       <div className="bg-white/95 backdrop-blur-[12px] shadow-xl border border-[#E5E5E5]/40 p-1.5 rounded-xs flex flex-col gap-0.5 text-left">
                         <div className="px-2.5 py-1.5 border-b border-gray-100 mb-1">

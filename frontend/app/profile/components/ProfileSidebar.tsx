@@ -5,14 +5,15 @@ import {
   User as UserIcon,
   ShoppingBag,
   Key,
-  LogOut
+  LogOut,
+  MapPin
 } from "lucide-react";
 import { getRoleLabel } from "./ProfileUI";
 import { CtaButton } from "@/components/ui/CtaButton";
 
 interface ProfileSidebarProps {
-  activeTab: "profile" | "orders" | "security";
-  setActiveTab: (tab: "profile" | "orders" | "security") => void;
+  activeTab: "profile" | "orders" | "security" | "addresses";
+  setActiveTab: (tab: "profile" | "orders" | "security" | "addresses") => void;
   fullName: string;
   roleId: string | undefined;
   handleLogout: () => void;
@@ -67,6 +68,17 @@ export function ProfileSidebar({
         >
           <ShoppingBag className="w-4 h-4" strokeWidth={activeTab === "orders" ? 2 : 1.2} />
           <span>Đơn hàng của tôi</span>
+        </li>
+
+        <li
+          onClick={() => setActiveTab("addresses")}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[12.5px] font-bold uppercase tracking-wider font-body transition-all duration-300 text-left justify-start cursor-pointer ${activeTab === "addresses"
+            ? "bg-[#1A2F6B] text-white shadow-xs"
+            : "bg-transparent text-slate-600 hover:bg-[#FAFAF7] hover:text-primary"
+            }`}
+        >
+          <MapPin className="w-4 h-4" strokeWidth={activeTab === "addresses" ? 2 : 1.2} />
+          <span>Địa chỉ giao hàng</span>
         </li>
 
         <li

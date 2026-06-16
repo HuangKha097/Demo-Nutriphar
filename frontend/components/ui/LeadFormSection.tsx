@@ -12,7 +12,7 @@ export function LeadFormSection() {
   const [formData, setFormData] = useState({
     name: "",
     contact: "",
-    needs: "Tư vấn Yến sào Khánh Hòa"
+    needs: "Tư vấn Sản phẩm cho người cao tuổi"
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,7 +65,7 @@ export function LeadFormSection() {
       setFormData({
         name: "",
         contact: "",
-        needs: "Tư vấn Yến sào Khánh Hòa"
+        needs: "Tư vấn Sản phẩm cho người cao tuổi"
       });
 
       // Reset success state after a few seconds
@@ -163,7 +163,8 @@ export function LeadFormSection() {
                     onChange={(e) => setFormData({ ...formData, needs: e.target.value })}
                     className="w-full h-[48px] pl-4 pr-10 rounded-xs bg-white/10 text-white border border-white/20 focus:border-[#D4AF37] focus:bg-white/15 outline-none transition-all duration-300 text-[14px] font-body appearance-none cursor-pointer"
                   >
-                    <option className="bg-[#1A2F6B] text-white" value="Tư vấn Yến sào Khánh Hòa">Tư vấn Yến sào Khánh Hòa</option>
+                    <option className="bg-[#1A2F6B] text-white" value="Tư vấn Sản phẩm cho người cao tuổi">Tư vấn Sản phẩm cho người cao tuổi</option>
+                    <option className="bg-[#1A2F6B] text-white" value="Tư vấn Sản phẩm cho trẻ em">Tư vấn Sản phẩm cho trẻ em</option>
                     <option className="bg-[#1A2F6B] text-white" value="Mua hàng nhanh / Đặt hàng gấp">Mua hàng nhanh / Đặt hàng gấp</option>
                     <option className="bg-[#1A2F6B] text-white" value="Tư vấn sức khỏe cùng Dược sĩ">Tư vấn sức khỏe cùng Dược sĩ</option>
                     <option className="bg-[#1A2F6B] text-white" value="Hợp tác đại lý / Phân phối">Hợp tác đại lý / Phân phối</option>
