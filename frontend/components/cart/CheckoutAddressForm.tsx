@@ -116,7 +116,7 @@ export function CheckoutAddressForm({
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <CtaButton
               onClick={() => setShowAddressForm(!showAddressForm)}
-              className=" py-1.5 text-[12px] whitespace-nowrap flex-1 sm:flex-none justify-center"
+              className=" py-1.5 px-3 text-[12px] whitespace-nowrap flex-1 sm:flex-none justify-center"
               icon={showAddressForm ? <List className="w-4 h-4 text-white shrink-0" /> : <Plus className="w-4 h-4 text-white shrink-0" />}
               iconWrapperClassName="w-6 h-6 shrink-0"
             >

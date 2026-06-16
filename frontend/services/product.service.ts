@@ -23,19 +23,19 @@ export const productService = {
       return apiClient.get<PaginatedResponse<Product>>("/products", params as any);
     }
     const products = getLocalStorage<any[]>(INITIAL_PRODUCTS_KEY, INITIAL_PRODUCTS);
-    
+
     let result = [...products];
     if (params?.search) {
       const q = params.search.toLowerCase();
       result = result.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
     }
-    
+
     const page = params?.page || 1;
     const limit = params?.limit || 10;
     const total = result.length;
     const startIndex = (page - 1) * limit;
     const data = result.slice(startIndex, startIndex + limit);
-    
+
     return { data, total, page, limit };
   },
 
@@ -61,12 +61,12 @@ export const productService = {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    
+
     const priceVal = Number(validated.price);
     const priceStr = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(priceVal).replace(/\s/g, '');
     (newProduct as any).priceVal = priceVal;
     (newProduct as any).price = priceStr;
-    
+
     products.push(newProduct);
     setLocalStorage(INITIAL_PRODUCTS_KEY, products);
     return newProduct as any;
@@ -80,20 +80,20 @@ export const productService = {
     const products = getLocalStorage<any[]>(INITIAL_PRODUCTS_KEY, INITIAL_PRODUCTS);
     const index = products.findIndex(p => p.id === id);
     if (index === -1) throw new Error("Product not found");
-    
+
     const updated = {
       ...products[index],
       ...validated,
       updatedAt: new Date().toISOString()
     };
-    
+
     if (validated.price !== undefined) {
       const priceVal = Number(validated.price);
       const priceStr = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(priceVal).replace(/\s/g, '');
       (updated as any).priceVal = priceVal;
       (updated as any).price = priceStr;
     }
-    
+
     products[index] = updated;
     setLocalStorage(INITIAL_PRODUCTS_KEY, products);
     return updated as any;

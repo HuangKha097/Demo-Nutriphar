@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { Container } from "./Container";
 
 const IMAGES = [
-  "/images/vecongty.jpg",
-  "/images/quytrinhsanxuat.jpg",
-  "/images/khanhhoa-sea.jpg"
+  "/images/about_banner_island.png",
+  "/images/about_banner_lab.png",
+  "/images/about_banner_product.png"
 ];
 
 export function AboutHero() {
@@ -20,7 +20,7 @@ export function AboutHero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[55vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[70vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
       {/* Background Slideshow (Full Width) */}
       <div className="absolute inset-0 z-0">
         {IMAGES.map((src, index) => (

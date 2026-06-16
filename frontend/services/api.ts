@@ -25,12 +25,14 @@ export interface TimelineEvent {
   year: string;
   title: string;
   description: string;
+  image?: string;
 }
 
 export interface Certification {
   title: string;
   subtitle: string;
   description: string;
+  image?: string;
 }
 
 export interface TeamMember {
@@ -115,10 +117,11 @@ export const USE_MOCK = true; // Set to false to hit the live API endpoints
 
 // Default Category Definitions
 export const DEFAULT_CATEGORIES = [
-  { id: "cat-1", name: "Yến sào Khánh Hòa", image: "/images/yensao.png" },
-  { id: "cat-2", name: "Yến chưng sẵn", image: "/images/Nuoc-yen-sao-co-duong.png" },
-  { id: "cat-3", name: "Nước yến dinh dưỡng", image: "/images/Ve-Yen-Thi-Web.png" },
-  { id: "cat-4", name: "Quà tặng cao cấp", image: "/images/vecongty.jpg" }
+  { id: "cat-1", name: "Sản phẩm cho người cao tuổi", image: "/images/yensao.png" },
+  { id: "cat-2", name: "Sản phẩm cho trẻ em", image: "/images/Nuoc-yen-sao-co-duong.png" },
+  { id: "cat-3", name: "Sản phẩm người chăm sóc sức khoẻ (kiêng đường, xương khớp...)", image: "/images/Ve-Yen-Thi-Web.png" },
+  { id: "cat-4", name: "Sản phẩm thông dụng khác", image: "/images/vecongty.jpg" },
+  { id: "cat-5", name: "Phụ kiện sản phẩm", image: "/images/quytrinhsanxuat.jpg" }
 ];
 
 // Helper to map category names to categoryIds
@@ -335,7 +338,7 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | 
     if (!response.ok) throw new Error("Failed to fetch news article detail");
     return response.json();
   }
-  
+
   await new Promise((resolve) => setTimeout(resolve, 100));
   const articles = await getNewsArticles();
   return articles.find((art) => art.slug.endsWith(slug)) || null;
@@ -379,21 +382,25 @@ export async function getAboutData(): Promise<AboutData> {
         year: "2018",
         title: "Khởi Đầu Đầy Khát Vọng",
         description: "Thành lập Công ty Cổ phần Dược phẩm Nutriphar, tập trung đầu tư xây dựng chuỗi nhà yến đạt tiêu chuẩn kiểm soát vi khí hậu khép kín.",
+        image: "/images/herobackground1.jpg",
       },
       {
         year: "2020",
         title: "Chuẩn Hóa Quốc Tế",
         description: "Nhà máy sản xuất chính thức đi vào hoạt động công suất cao, xuất sắc đạt chứng nhận an toàn thực phẩm ISO 22000 & HACCP quốc tế.",
+        image: "/images/quytrinhsanxuat.jpg",
       },
       {
         year: "2022",
         title: "Vươn Tầm Quốc Gia",
         description: "Ra mắt dòng sản phẩm yến chưng sẵn cao cấp kết hợp dược liệu quý, vinh dự lọt Top các thương hiệu yến sào được tin dùng hàng đầu.",
+        image: "/images/vecongty.jpg",
       },
       {
         year: "2025",
         title: "Đổi Mới & Xuất Khẩu",
         description: "Ứng dụng thành công công nghệ sấy thăng hoa giữ trọn hoạt tính sinh học, chính thức xuất khẩu sản phẩm sang thị trường Đông Nam Á.",
+        image: "/images/khanhhoa-sea.jpg",
       },
     ],
     certifications: [
@@ -401,21 +408,25 @@ export async function getAboutData(): Promise<AboutData> {
         title: "Đạt Chuẩn GMP",
         subtitle: "Thực hành sản xuất tốt",
         description: "Hệ thống nhà máy vận hành đồng bộ theo tiêu chuẩn y tế quốc tế khắt khe.",
+        image: "/images/cert_gmp.png",
       },
       {
         title: "Chứng Chỉ ISO 22000",
         subtitle: "An toàn thực phẩm toàn cầu",
         description: "Hệ thống quản lý chất lượng đạt tiêu chuẩn châu Âu nghiêm ngặt.",
+        image: "/images/cert_iso.png",
       },
       {
         title: "Tiêu Chuẩn HACCP",
         subtitle: "Kiểm soát mối nguy sinh học",
         description: "Cam kết ngăn ngừa mọi rủi ro vệ sinh trong suốt dây chuyền chế biến.",
+        image: "/images/cert_haccp.png",
       },
       {
         title: "Cam Kết 100% Yến Thật",
         subtitle: "Bảo hiểm chất lượng",
         description: "Cam kết bồi hoàn giá trị nếu phát hiện pha trộn tạp chất hoặc chất độn.",
+        image: "/images/cert_pure.png",
       },
     ],
     teamMembers: [

@@ -29,7 +29,7 @@ export default async function AboutPage() {
       <AboutHero />
 
       {/* Core Values Section */}
-      <Section className="bg-[#FAFAF7] !py-16 md:!py-24 border-b border-[#E5E5E5]/60">
+      <Section className="bg-[#FAFAF7] !pt-10 md:!pt-12 !pb-12 md:!pb-16 border-b border-[#E5E5E5]/60">
         <Container>
           <div className="text-center mb-14">
             <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
@@ -54,7 +54,7 @@ export default async function AboutPage() {
       <BenefitsSection />
 
       {/* Timeline/Milestones Section */}
-      <Section className="bg-[#FAFAF7] !py-16 md:!py-24 border-y border-[#E5E5E5]/60">
+      <Section className="bg-[#FAFAF7] !py-12 md:!py-16 border-y border-[#E5E5E5]/60">
         <Container>
           <div className="text-center mb-14">
             <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
@@ -74,54 +74,36 @@ export default async function AboutPage() {
           <div className="relative max-w-4xl mx-auto">
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#1A2F6B] via-[#D4AF37] to-[#A4161A] transform md:-translate-x-1/2 opacity-30"></div>
 
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 md:gap-14">
               {aboutData.timelineEvents.map((event, i) => (
                 <div
                   key={i}
-                  className={`flex flex-col md:flex-row items-stretch relative ${i % 2 === 0 ? "" : "md:flex-row-reverse"
+                  className={`flex flex-col md:flex-row items-center relative gap-8 md:gap-0 ${i % 2 === 0 ? "" : "md:flex-row-reverse"
                     }`}
                 >
-                  <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-[#D4AF37] border-4 border-white transform -translate-x-[7px] md:-translate-x-1/2 top-1.5 shadow-md z-10"></div>
+                  <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-[#D4AF37] border-4 border-white transform -translate-x-[7px] md:-translate-x-1/2 top-4 md:top-1/2 md:-translate-y-1/2 shadow-md z-10 hidden md:block"></div>
 
-                  <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8 text-left md:text-right flex flex-col justify-start">
-                    {i % 2 === 0 ? (
-                      <>
-                        <span className="text-[28px] font-bold text-primary font-display block leading-none mb-1">
-                          {event.year}
-                        </span>
-                        <h3 className="text-[18px] font-semibold text-[#1C1C1C] font-display">
-                          {event.title}
-                        </h3>
-                      </>
-                    ) : (
-                      <div className="md:hidden">
-                        <span className="text-[28px] font-bold text-primary font-display block leading-none mb-1">
-                          {event.year}
-                        </span>
-                        <h3 className="text-[18px] font-semibold text-[#1C1C1C] font-display">
-                          {event.title}
-                        </h3>
-                      </div>
-                    )}
+                  <div className={`w-full md:w-1/2 text-left flex flex-col justify-center ${i % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"}`}>
+                    <span className="text-[32px] md:text-[40px] font-bold text-primary font-display block leading-none mb-2">
+                      {event.year}
+                    </span>
+                    <h3 className="text-[20px] md:text-[22px] font-semibold text-[#1C1C1C] font-display mb-3">
+                      {event.title}
+                    </h3>
+                    <p className="text-[14px] md:text-[15px] leading-[1.7] text-muted-foreground font-body">
+                      {event.description}
+                    </p>
                   </div>
 
-                  <div className="w-full md:w-1/2 pl-12 md:px-8 text-left flex flex-col justify-start">
-                    {i % 2 !== 0 ? (
-                      <>
-                        <span className="text-[28px] font-bold text-primary font-display hidden md:block leading-none mb-1">
-                          {event.year}
-                        </span>
-                        <h3 className="text-[18px] font-semibold text-[#1C1C1C] font-display hidden md:block">
-                          {event.title}
-                        </h3>
-                        <p className="text-[14px] leading-[1.6] text-muted-foreground font-body mt-2">
-                          {event.description}
-                        </p>
-                      </>
+                  <div className={`w-full md:w-1/2 flex justify-center mt-6 md:mt-0 ${i % 2 === 0 ? "md:pl-16" : "md:pr-16"}`}>
+                    {event.image ? (
+                      <div className="relative w-full h-40 sm:h-48 lg:h-52 rounded-xs overflow-hidden shadow-md group">
+                        <img src={event.image} alt={event.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      </div>
                     ) : (
-                      <p className="text-[14px] leading-[1.6] text-muted-foreground font-body mt-2">
-                        {event.description}
-                      </p>
+                      <div className="relative w-full h-40 sm:h-48 lg:h-52 rounded-xs overflow-hidden shadow-md bg-gray-100 flex items-center justify-center">
+                        <span className="text-gray-400">Hình ảnh {event.year}</span>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -132,7 +114,7 @@ export default async function AboutPage() {
       </Section>
 
       {/* Certifications Section */}
-      <Section className="bg-white !py-16 md:!py-24 border-b border-[#E5E5E5]/60">
+      <Section className="bg-white !py-12 md:!py-16 border-b border-[#E5E5E5]/60">
         <Container>
           <div className="text-center mb-14">
             <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">
@@ -153,22 +135,27 @@ export default async function AboutPage() {
             {aboutData.certifications.map((cert, i) => (
               <div
                 key={i}
-                className="bg-[#FAFAF7] p-8 rounded-xs border border-[#E5E5E5] hover:border-primary/40 shadow-sm transition-all duration-300 flex flex-col justify-between"
+                className="bg-[#FAFAF7] p-6 lg:p-8 rounded-xs border border-[#E5E5E5] hover:border-primary/40 shadow-sm transition-all duration-300 flex flex-col justify-start group"
               >
+                {cert.image && (
+                  <div className="w-full aspect-[4/3] rounded-sm overflow-hidden mb-6 relative border border-[#E5E5E5]/50 bg-white shadow-xs">
+                    <img src={cert.image} alt={cert.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                )}
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <BadgeCheck className="w-6 h-6 text-[#D4AF37]" />
-                    <span className="text-[12px] font-bold tracking-widest text-[#8C6A00] uppercase font-body">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BadgeCheck className="w-5 h-5 text-[#D4AF37]" />
+                    <span className="text-[11px] font-bold tracking-widest text-[#8C6A00] uppercase font-body">
                       Nutriphar Cert
                     </span>
                   </div>
-                  <h3 className="text-[18px] font-bold font-display text-primary mb-1">
+                  <h3 className="text-[17px] md:text-[18px] font-bold font-display text-primary mb-1">
                     {cert.title}
                   </h3>
-                  <p className="text-[13px] font-semibold text-[#A4161A] font-body mb-3">
+                  <p className="text-[12.5px] md:text-[13px] font-semibold text-[#A4161A] font-body mb-3">
                     {cert.subtitle}
                   </p>
-                  <p className="text-[14px] leading-[1.6] text-muted-foreground font-body">
+                  <p className="text-[13.5px] md:text-[14px] leading-[1.6] text-muted-foreground font-body">
                     {cert.description}
                   </p>
                 </div>
@@ -179,7 +166,7 @@ export default async function AboutPage() {
       </Section>
 
       {/* Leadership & Expert Team Section */}
-      <Section className="bg-[#FAFAF7] !py-16 md:!py-24">
+      <Section className="bg-[#FAFAF7] !py-12 md:!py-16">
         <Container>
           <div className="text-center mb-14">
             <h2 className="text-[36px] md:text-[48px] font-bold font-display uppercase tracking-wide mb-4 bg-gradient-to-r from-[#8C6A00] via-[#D4AF37] to-[#8C6A00] bg-clip-text text-transparent">

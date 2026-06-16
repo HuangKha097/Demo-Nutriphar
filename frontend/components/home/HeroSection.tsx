@@ -13,6 +13,7 @@ import { useGSAP } from "@gsap/react";
 export function HeroSection() {
   const rootRef = useGsapReveal();
   const leafWrapperRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (leafWrapperRef.current) {
@@ -24,6 +25,16 @@ export function HeroSection() {
         duration: 2,
         ease: "power3.out",
         delay: 0.2, // Start a bit faster
+      });
+    }
+
+    if (glowRef.current) {
+      gsap.to(glowRef.current, {
+        opacity: 0.1,
+        duration: 2.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
       });
     }
   }, { scope: rootRef });
@@ -77,8 +88,8 @@ export function HeroSection() {
           </div>
 
           <div data-reveal className="hidden lg:flex lg:col-span-5 relative w-full h-[600px] items-center justify-center">
-            {/* Glow mềm màu champagne */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-[#D4AF37] opacity-30 blur-[80px] rounded-full pointer-events-none"></div>
+            {/* Glow mềm màu vàng */}
+            <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-[#FFD700] opacity-30 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
 
             {/* Ảnh sản phẩm */}
             {/* eslint-disable-next-line @next/next/no-img-element */}

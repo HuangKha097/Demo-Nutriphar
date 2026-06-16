@@ -17,19 +17,19 @@ export const categoryService = {
       return apiClient.get<PaginatedResponse<Category>>("/categories", params as any);
     }
     const categories = getLocalStorage<Category[]>(INITIAL_CATEGORIES_KEY, DEFAULT_CATEGORIES);
-    
+
     let result = [...categories];
     if (params?.search) {
       const q = params.search.toLowerCase();
       result = result.filter(c => c.name.toLowerCase().includes(q));
     }
-    
+
     const page = params?.page || 1;
     const limit = params?.limit || 10;
     const total = result.length;
     const startIndex = (page - 1) * limit;
     const data = result.slice(startIndex, startIndex + limit);
-    
+
     return { data, total, page, limit };
   },
 
@@ -76,7 +76,7 @@ export const categoryService = {
     const categories = getLocalStorage<Category[]>(INITIAL_CATEGORIES_KEY, DEFAULT_CATEGORIES);
     const index = categories.findIndex(c => c.id === id);
     if (index === -1) throw new Error("Category not found");
-    
+
     const updated = {
       ...categories[index],
       ...validated,

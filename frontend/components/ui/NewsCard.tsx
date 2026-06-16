@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 
 export interface NewsCardProps {
   title: string;
@@ -25,7 +25,7 @@ export function NewsCard({
   return (
     <Link
       href={slug}
-      className={`group relative flex flex-col rounded-xs overflow-hidden bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-1 w-full ${
+      className={`group relative flex flex-col rounded-xs overflow-hidden bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-1 w-full ${
         isFeatured ? "h-full" : "h-auto"
       } ${
         isHorizontal ? "md:flex-row" : ""
@@ -72,9 +72,10 @@ export function NewsCard({
         }`}
       >
         {/* Date */}
-        <time className="text-[12px] text-[#9E9E9E] font-body tracking-wide mb-1.5 block">
-          {date}
-        </time>
+        <div className="flex items-center gap-1.5 text-[12px] text-[#9E9E9E] font-body tracking-wide mb-1.5">
+          <Calendar className="w-3.5 h-3.5" strokeWidth={1.5} />
+          <time>{date}</time>
+        </div>
 
         {/* Title */}
         <h3
@@ -106,8 +107,8 @@ export function NewsCard({
         </p>
 
         {/* Read more with Nested Circle Button */}
-        <div className="mt-auto pt-2 flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 text-primary font-bold text-[13px] font-body">
+        <div className="mt-auto pt-2 flex items-center justify-end gap-2">
+          <span className="inline-flex items-center text-primary font-bold text-[13px] font-body">
             Đọc thêm
           </span>
           <span className="w-7 h-7 rounded-full bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-all duration-500 ease-out">
