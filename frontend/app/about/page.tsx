@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { BenefitsSection } from "@/components/home/BenefitsSection";
 import { AboutHero } from "@/components/ui/AboutHero";
 import { getAboutData } from "@/services/api";
-import { CoreValuesWheel } from "@/components/ui/CoreValuesWheel";
+import { CoreValuesGrid } from "@/components/ui/CoreValuesGrid";
 import { ShieldCheck, Heart, Sparkles, Target, Users, BadgeCheck } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <CoreValuesWheel coreValues={aboutData.coreValues} />
+          <CoreValuesGrid coreValues={aboutData.coreValues} />
         </Container>
       </Section>
 

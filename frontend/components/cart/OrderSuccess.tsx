@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle2, Building } from "lucide-react";
+import { CheckCircle2, Building, ShoppingCart } from "lucide-react";
 import { CtaButton } from "@/components/ui/CtaButton";
 
 interface OrderSuccessProps {
@@ -21,7 +21,7 @@ export function OrderSuccess({ orderInfo }: OrderSuccessProps) {
   return (
     <div className="bg-white border border-[#E5E5E5]/60 rounded-xs p-8 md:p-12 shadow-md text-center flex flex-col items-center gap-6 animate-toast-in">
       <div className="h-16 w-16 rounded-full bg-green-50 flex items-center justify-center text-green-600 shadow-inner">
-        <CheckCircle2 className="h-10 w-10 animate-bounce" strokeWidth={1.5} />
+        <CheckCircle2 className="h-10 w-10" strokeWidth={1.5} />
       </div>
 
       <div>
@@ -90,7 +90,8 @@ export function OrderSuccess({ orderInfo }: OrderSuccessProps) {
 
       <div className="flex gap-4 w-full sm:w-auto mt-2">
         <Link href="/products" className="w-full sm:w-auto">
-          <CtaButton className="w-full justify-center">Tiếp tục mua sắm</CtaButton>
+          <CtaButton icon={<ShoppingCart className="h-4 w-4 text-white" />}
+            className="w-full justify-between bg-primary hover:bg-[#12224F]">Tiếp tục mua sắm</CtaButton>
         </Link>
       </div>
     </div>

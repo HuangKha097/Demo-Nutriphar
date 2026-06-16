@@ -2,10 +2,11 @@ import { forwardRef, ReactNode } from "react";
 
 export interface CtaButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
+  iconWrapperClassName?: string;
 }
 
 export const CtaButton = forwardRef<HTMLButtonElement, CtaButtonProps>(
-  ({ className = "", children, icon, ...props }, ref) => {
+  ({ className = "", children, icon, iconWrapperClassName = "w-9 h-9", ...props }, ref) => {
     const hasBg = className.includes("bg-");
     const bgClasses = hasBg ? "" : "bg-primary hover:bg-[#12224F]";
 
@@ -20,7 +21,7 @@ export const CtaButton = forwardRef<HTMLButtonElement, CtaButtonProps>(
       >
         <span className="font-body">{children}</span>
         {icon && (
-          <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center ml-4 group-hover:translate-x-1 transition-transform duration-300 shrink-0">
+          <div className={`${iconWrapperClassName} rounded-full bg-white/20 flex items-center justify-center ml-4 group-hover:translate-x-1 transition-transform duration-300 shrink-0`}>
             {icon}
           </div>
         )}

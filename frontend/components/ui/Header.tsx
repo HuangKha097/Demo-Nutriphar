@@ -365,15 +365,6 @@ export function Header() {
                           <User className="w-3.5 h-3.5" strokeWidth={1.5} />
                           Hồ sơ cá nhân
                         </Link>
-                        {user?.roleId === "role-admin" && (
-                          <Link
-                            href="/admin"
-                            className="flex items-center gap-2 px-2.5 py-2 text-[13px] font-semibold text-slate-700 hover:bg-[#D4AF37]/10 hover:text-[#8C6A00] transition-colors rounded-xs font-body"
-                          >
-                            <Shield className="w-3.5 h-3.5" strokeWidth={1.5} />
-                            Trang quản trị
-                          </Link>
-                        )}
                         <div className="h-[1px] bg-gray-100 my-1 mx-2.5" />
                         <button
                           onClick={handleLogoutClick}
@@ -537,20 +528,6 @@ export function Header() {
                     Hồ sơ cá nhân
                   </CtaButton>
                 </Link>
-                {user?.roleId === "role-admin" && (
-                  <Link
-                    href="/admin"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full"
-                  >
-                    <CtaButton
-                      icon={<Shield className="h-4 w-4 text-white" />}
-                      className="w-full justify-between bg-slate-200 hover:bg-slate-350 text-slate-800 border border-[#E5E5E5]/60"
-                    >
-                      Trang quản trị
-                    </CtaButton>
-                  </Link>
-                )}
                 <CtaButton
                   onClick={() => {
                     setIsMobileMenuOpen(false);
