@@ -4,6 +4,7 @@ import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { StarRating } from "@/components/ui/StarRating";
 import { useToast } from "@/context/ToastContext";
+import { CtaButton } from "@/components/ui/CtaButton";
 
 export interface ProductCardProps {
   id: string;
@@ -100,12 +101,11 @@ export function ProductCard({
             </span>
           </div>
 
-          <span
-            role="button"
+          <CtaButton
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              
+
               const defaultSize = name.toLowerCase().includes("hũ") || description.toLowerCase().includes("hũ")
                 ? "Hộp 6 hũ"
                 : "Hộp 50g";
@@ -134,11 +134,12 @@ export function ProductCard({
               window.dispatchEvent(new Event("cart-updated"));
               showSuccessToast(`Đã thêm thành công 1 ${defaultSize} của "${name}" vào giỏ hàng!`);
             }}
-            className="flex items-center justify-center gap-2 px-4 h-[40px] bg-accent hover:bg-[#D7263D] text-white text-[13px] font-medium rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none"
+            icon={<ShoppingCart className="w-3.5 h-3.5 text-white" />}
+            iconWrapperClassName="w-8 h-8"
+            className="h-[36px] lg:h-[40px] pl-3 pr-2 py-1 text-[12px] lg:text-[13px] bg-accent hover:bg-[#8B1215] shadow-lg border-none shadow-sm "
           >
-            <ShoppingCart className="w-4 h-4" />
-            <span className="hidden sm:inline">Mua</span>
-          </span>
+            <span className="hidden sm:inline mr-1">Mua</span>
+          </CtaButton>
         </div>
       </div>
     </Link>
