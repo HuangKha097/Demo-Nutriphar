@@ -16,7 +16,7 @@ export function Footer() {
               <Image src="/images/logo.svg" alt="Nutriphar" width={150} height={50} className="h-10 w-auto brightness-110" />
             </Link>
             <p className="text-white/70 text-sm leading-relaxed max-w-sm font-body">
-              Cung cấp các sản phẩm chăm sóc sức khỏe tự nhiên, chất lượng cao, mang lại cuộc sống tốt đẹp hơn.
+              Cung cấp các sản phẩm chăm sóc sức khỏe tự nhiên, chất lượng đạt chuẩn, mang lại cuộc sống tốt đẹp hơn.
             </p>
             <div className="flex items-center gap-3 mt-2">
               <Link

@@ -35,28 +35,28 @@ export const DEFAULT_USERS: User[] = [
 // Zod Schemas & Types
 export const loginSchema = z.object({
   email: z.string().trim().toLowerCase().email("Địa chỉ email không hợp lệ").max(255),
-  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").max(100),
+  password: z.string().min(6, "Mật khẩu phải có tối thiểu 6 ký tự").max(100),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 
 export const userCreateSchema = z.object({
   email: z.string().email("Email không hợp lệ"),
-  fullName: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự"),
-  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+  fullName: z.string().min(2, "Họ tên phải có tối thiểu 2 ký tự"),
+  password: z.string().min(6, "Mật khẩu phải có tối thiểu 6 ký tự"),
   roleId: z.string().min(1, "Vai trò là bắt buộc"),
 });
 export type UserCreateInput = z.infer<typeof userCreateSchema>;
 
 export const userEditSchema = z.object({
   email: z.string().email("Email không hợp lệ"),
-  fullName: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự"),
+  fullName: z.string().min(2, "Họ tên phải có tối thiểu 2 ký tự"),
   password: z.string().optional(),
   roleId: z.string().min(1, "Vai trò là bắt buộc"),
 });
 export type UserEditInput = z.infer<typeof userEditSchema>;
 
 export const profileSchema = z.object({
-  fullName: z.string().min(2, "Họ và tên phải có ít nhất 2 ký tự"),
+  fullName: z.string().min(2, "Họ và tên phải có tối thiểu 2 ký tự"),
   phone: z.string()
     .optional()
     .or(z.literal(""))
@@ -69,7 +69,7 @@ export type ProfileInput = z.infer<typeof profileSchema>;
 
 export const securitySchema = z.object({
   oldPassword: z.string().min(1, "Vui lòng nhập mật khẩu hiện tại"),
-  newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự"),
+  newPassword: z.string().min(6, "Mật khẩu mới phải có tối thiểu 6 ký tự"),
   confirmPassword: z.string().min(1, "Vui lòng xác nhận mật khẩu mới"),
 }).refine((data) => data.newPassword === data.confirmPassword, {
   message: "Xác nhận mật khẩu mới không khớp",

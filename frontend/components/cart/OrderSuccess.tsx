@@ -29,7 +29,7 @@ export function OrderSuccess({ orderInfo }: OrderSuccessProps) {
           Đặt Hàng Thành Công!
         </h2>
         <p className="text-gray-500 font-body text-[14px]">
-          Cảm ơn bạn đã lựa chọn Nutriphar. Đơn hàng của bạn đã được ghi nhận vào hệ thống.
+          Cảm ơn bạn đã tin dùng Nutriphar. Đơn hàng của bạn đã được ghi nhận vào hệ thống.
         </p>
       </div>
 

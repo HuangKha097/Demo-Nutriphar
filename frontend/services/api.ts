@@ -187,12 +187,12 @@ export const DEFAULT_NEWS = [
   {
     id: 1,
     title: "Yến Sào Nutriphar Đạt Chứng Nhận Chất Lượng ISO 22000:2018",
-    excerpt: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm, khẳng định cam kết chất lượng vượt trội.",
+    excerpt: "Công ty Cổ phần Dược phẩm Nutriphar vinh dự đạt chứng nhận ISO 22000:2018 về hệ thống quản lý vệ sinh thực phẩm, khẳng định cam kết chất lượng vượt trội.",
     image: "/images/quytrinhsanxuat.jpg",
     date: "15/05/2025",
     slug: "/news/iso-22000-2018",
     category: "Sự kiện & Doanh nghiệp",
-    content: "<p>Công ty Cổ phần Dược phẩm Nutriphar tự hào thông báo đã chính thức đạt chứng nhận chất lượng ISO 22000:2018 về hệ thống quản lý an toàn thực phẩm. Đây là cột mốc quan trọng khẳng định cam kết chất lượng vượt trội của Nutriphar đối với sức khỏe người tiêu dùng.</p><h4>Quy trình kiểm định nghiêm ngặt</h4><p>Để đạt được chứng nhận này, toàn bộ dây chuyền sản xuất của Nutriphar đã trải qua quá trình đánh giá độc lập vô cùng khắt khe từ tổ chức kiểm định quốc tế. Các yếu tố từ nguyên liệu yến thô đảo Khánh Hòa đầu vào, môi trường tinh chế khép kín vô trùng, đến khâu đóng gói hoàn thiện đều tuân thủ nghiêm ngặt tiêu chuẩn y tế quốc tế.</p><h4>Cam kết từ Nutriphar</h4><p>Chúng tôi cam kết luôn giữ vững và liên tục cải tiến hệ thống quản lý chất lượng để mang tới cho khách hàng những sản phẩm yến sào thượng hạng, bảo toàn trọn vẹn dưỡng chất thiên nhiên và an toàn tuyệt đối cho cả gia đình bạn.</p>"
+    content: "<p>Công ty Cổ phần Dược phẩm Nutriphar tự hào thông báo đã chính thức đạt chứng nhận chất lượng ISO 22000:2018 về hệ thống quản lý vệ sinh thực phẩm. Đây là cột mốc quan trọng khẳng định cam kết chất lượng vượt trội của Nutriphar đối với sức khỏe người tiêu dùng.</p><h4>Quy trình kiểm định nghiêm ngặt</h4><p>Để đạt được chứng nhận này, toàn bộ dây chuyền sản xuất của Nutriphar đã trải qua quá trình đánh giá độc lập vô cùng khắt khe từ tổ chức kiểm định quốc tế. Các yếu tố từ nguyên liệu yến thô đảo Khánh Hòa đầu vào, môi trường tinh chế khép kín vô trùng, đến khâu đóng gói hoàn thiện đều tuân thủ nghiêm ngặt tiêu chuẩn y tế quốc tế.</p><h4>Cam kết từ Nutriphar</h4><p>Chúng tôi cam kết luôn giữ vững và liên tục cải tiến hệ thống quản lý chất lượng để mang tới cho khách hàng những sản phẩm yến sào thượng hạng, bảo toàn trọn vẹn dưỡng chất thiên nhiên và đảm bảo sức khỏe cho cả gia đình bạn.</p>"
   },
   {
     id: 2,
@@ -216,13 +216,13 @@ export const DEFAULT_NEWS = [
   },
   {
     id: 4,
-    title: "5 Cách Phân Biệt Yến Sào Thật Giả Chính Xác Nhất",
+    title: "5 Cách Phân Biệt Yến Sào Thật Giả Chính Xác",
     excerpt: "Mẹo nhỏ giúp người tiêu dùng thông minh nhận biết tổ yến nguyên chất so với tổ yến giả, yến độn hóa chất độc hại trên thị trường.",
     image: "/images/vecongty.jpg",
     date: "05/04/2025",
     slug: "/news/cach-phan-biet-yen-sao-that-gia",
     category: "Khoa học & Sức khỏe",
-    content: "<p>Phân biệt yến thật yến giả luôn là mối quan tâm hàng đầu của người tiêu dùng...</p>"
+    content: "<p>Phân biệt yến thật yến giả luôn là mối quan tâm đặc biệt của người tiêu dùng...</p>"
   },
   {
     id: 5,
@@ -247,7 +247,7 @@ export const DEFAULT_NEWS = [
   {
     id: 7,
     title: "Chương Trình Khuyến Mãi 'Sức Khỏe Vàng - Ngập Tràn Yêu Thương'",
-    excerpt: "Đón hè rực rỡ cùng vô vàn ưu đãi hấp dẫn từ Nutriphar: Giảm ngay 15% tất cả các dòng sản phẩm yến hũ chưng sẵn và combo quà tặng.",
+    excerpt: "Đón hè rực rỡ cùng vô vàn ưu đãi hấp dẫn từ Nutriphar: Ưu đãi giảm 15% tất cả các dòng sản phẩm yến hũ chưng sẵn và combo quà tặng.",
     image: "/images/khanhhoa-sea.jpg",
     date: "01/03/2025",
     slug: "/news/chuong-trinh-khuyen-mai-he",
@@ -468,13 +468,13 @@ export async function getAboutData(): Promise<AboutData> {
       {
         year: "2020",
         title: "Chuẩn Hóa Quốc Tế",
-        description: "Nhà máy sản xuất chính thức đi vào hoạt động công suất cao, xuất sắc đạt chứng nhận an toàn thực phẩm ISO 22000 & HACCP quốc tế.",
+        description: "Nhà máy sản xuất chính thức đi vào hoạt động công suất cao, xuất sắc đạt chứng nhận vệ sinh thực phẩm ISO 22000 & HACCP quốc tế.",
         image: "/images/quytrinhsanxuat.jpg",
       },
       {
         year: "2022",
         title: "Vươn Tầm Quốc Gia",
-        description: "Ra mắt dòng sản phẩm yến chưng sẵn cao cấp kết hợp dược liệu quý, vinh dự lọt Top các thương hiệu yến sào được tin dùng hàng đầu.",
+        description: "Ra mắt dòng sản phẩm yến chưng sẵn cao cấp kết hợp dược liệu quý, vinh dự lọt Top các thương hiệu yến sào được tin dùng và uy tín.",
         image: "/images/vecongty.jpg",
       },
       {
@@ -493,7 +493,7 @@ export async function getAboutData(): Promise<AboutData> {
       },
       {
         title: "Chứng Chỉ ISO 22000",
-        subtitle: "An toàn thực phẩm toàn cầu",
+        subtitle: "Vệ sinh thực phẩm toàn cầu",
         description: "Hệ thống quản lý chất lượng đạt tiêu chuẩn châu Âu nghiêm ngặt.",
         image: "/images/cert_iso.png",
       },
@@ -522,7 +522,7 @@ export async function getAboutData(): Promise<AboutData> {
         name: "Bà Trần Thị B",
         role: "Sáng lập viên & Tổng Giám đốc (CEO)",
         experience: "Người mang khát vọng nâng tầm yến sào Việt",
-        bio: "Nutriphar không chỉ bán sản phẩm chăm sóc sức khỏe, chúng tôi trao gửi giải pháp sức khỏe bền vững đi từ cái Tâm và uy tín hàng đầu.",
+        bio: "Nutriphar không chỉ bán sản phẩm chăm sóc sức khỏe, chúng tôi trao gửi giải pháp sức khỏe bền vững đi từ cái Tâm và uy tín vững chắc.",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
       },
       {

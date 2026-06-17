@@ -205,7 +205,7 @@ export function Header() {
           <div className="flex animate-marquee text-white/90 whitespace-nowrap">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="flex items-center gap-8 px-4 text-[12px] md:text-[13px] font-body tracking-wide">
-                <span> Giảm 15% cho đơn hàng đầu tiên</span>
+                <span> Giảm 15% cho đơn mua lần đầu</span>
                 <span className="text-[#D4AF37]">✦</span>
                 <span> Miễn phí vận chuyển đơn từ 500K</span>
                 <span className="text-[#D4AF37]">✦</span>

@@ -42,13 +42,13 @@ export function AboutSection() {
               />
             </div>
 
-            {/* Right: Text + Hotline + Button */}
+            {/* Right: Text + Điện thoại + Button */}
             <div data-reveal className="flex flex-col justify-center">
               <p className="text-[16px] lg:text-[17px] leading-[1.8] text-[#4A4A4A] font-body mb-6">
-                <span className="font-bold text-accent">Công ty Cổ phần Dược phẩm Nutriphar</span> tự hào là đơn vị tiên phong trong lĩnh vực nghiên cứu, sản xuất và phân phối các sản phẩm chăm sóc sức khỏe từ thiên nhiên. Với sứ mệnh &quot;Kiến tạo sức khỏe bền vững cho cộng đồng&quot;, chúng tôi cam kết mang đến những sản phẩm chất lượng, an toàn và hiệu quả, được phát triển bởi đội ngũ chuyên gia hàng đầu trong ngành y dược.
+                <span className="font-bold text-accent">Công ty Cổ phần Dược phẩm Nutriphar</span> tự hào là đơn vị tiên phong trong lĩnh vực nghiên cứu, sản xuất và phân phối các sản phẩm chăm sóc sức khỏe từ thiên nhiên. Với sứ mệnh &quot;Kiến tạo sức khỏe bền vững cho cộng đồng&quot;, chúng tôi cam kết mang đến những sản phẩm chất lượng, chuẩn y tế và hiệu quả, được phát triển bởi đội ngũ chuyên gia chuyên môn cao trong ngành y dược.
               </p>
               <p className="text-[15px] leading-[1.8] text-[#4A4A4A] font-body mb-8">
-                Hotline liên hệ: <span className="font-bold text-accent">0988.781.879</span>
+                Điện thoại liên hệ: <span className="font-bold text-accent">0988.781.879</span>
               </p>
               <div>
                 <Link href="/about">

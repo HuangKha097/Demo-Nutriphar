@@ -136,7 +136,7 @@ export default function Dashboard() {
                   <Activity className="w-4 h-4 text-[#D4AF37]" />
                   <h3 className="font-display font-semibold text-[18px] text-[#1A2F6B]">Nhật ký hệ thống</h3>
                 </div>
-                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider font-body">Mới nhất</span>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider font-body">Mới cập nhật</span>
               </div>
               <ul className="space-y-5">
                 <ActivityItem

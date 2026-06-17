@@ -6,7 +6,7 @@ import { getNewsArticles } from "@/services/api";
 
 export const metadata: Metadata = {
   title: "Tin tức & Sự kiện | Nutriphar",
-  description: "Cập nhật những thông tin mới nhất về sản phẩm, hoạt động sản xuất và kiến thức chăm sóc sức khỏe y học thảo dược từ Nutriphar.",
+  description: "Cập nhật những thông tin mới cập nhật về sản phẩm, hoạt động sản xuất và kiến thức chăm sóc sức khỏe y học thảo dược từ Nutriphar.",
 };
 
 export default async function NewsPage() {

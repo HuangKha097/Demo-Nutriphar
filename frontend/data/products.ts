@@ -267,7 +267,7 @@ export const sharedProducts: SharedProduct[] = [
     },
     benefits: [
       "Nâng tầm đẳng cấp món quà tặng.",
-      "Bảo quản sản phẩm bên trong an toàn.",
+      "Bảo quản sản phẩm bên trong đảm bảo chất lượng.",
       "Thích hợp làm quà biếu đối tác, doanh nghiệp."
     ],
     gallery: ["/images/vecongty.jpg", "/images/yensaohero.png"]

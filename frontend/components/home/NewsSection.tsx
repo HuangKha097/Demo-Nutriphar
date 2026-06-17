@@ -25,7 +25,7 @@ export async function NewsSection() {
             <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
           </div>
           <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
-            Cập nhật những thông tin mới nhất về sản phẩm, hoạt động và kiến
+            Cập nhật những thông tin mới cập nhật về sản phẩm, hoạt động và kiến
             thức sức khỏe từ Nutriphar
           </p>
         </div>

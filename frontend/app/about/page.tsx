@@ -127,7 +127,7 @@ export default async function AboutPage() {
               <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
             </div>
             <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
-              Nutriphar tự hào đạt đầy đủ các tiêu chuẩn kiểm định an toàn vệ sinh y tế cao nhất để bảo vệ sức khỏe người dùng.
+              Nutriphar tự hào đạt đầy đủ các tiêu chuẩn kiểm định vệ sinh y tế khắt khe để bảo vệ sức khỏe người dùng.
             </p>
           </div>
 
@@ -179,7 +179,7 @@ export default async function AboutPage() {
               <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
             </div>
             <p className="text-muted-foreground text-[15px] md:text-[16px] leading-[1.7] max-w-[560px] mx-auto font-body">
-              Quy tụ đội ngũ sáng lập tận tâm cùng những dược sĩ hàng đầu trong ngành nghiên cứu và phát triển y học thảo dược.
+              Quy tụ đội ngũ sáng lập tận tâm cùng những dược sĩ chuyên môn cao trong ngành nghiên cứu và phát triển y học thảo dược.
             </p>
           </div>
 

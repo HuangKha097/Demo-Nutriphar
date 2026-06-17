@@ -301,7 +301,7 @@ export function ProductsContent() {
                   <option value="default">Mặc định</option>
                   <option value="price-asc">Giá: Thấp đến Cao</option>
                   <option value="price-desc">Giá: Cao đến Thấp</option>
-                  <option value="reviews">Bán chạy nhất (Đánh giá)</option>
+                  <option value="reviews">Bán chạy (Đánh giá)</option>
                 </select>
                 <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
               </div>

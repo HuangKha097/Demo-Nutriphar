@@ -22,7 +22,7 @@ const STEPS = [
     icon: ShieldCheck,
     image: "/images/quytrinhsanxuat.jpg",
     title: "Kiểm Định Chất Lượng",
-    desc: "Tiệt trùng bằng tia UV và kiểm định các chỉ tiêu vi sinh khắt khe đạt tiêu chuẩn vệ sinh an toàn thực phẩm ISO 22000."
+    desc: "Tiệt trùng bằng tia UV và kiểm định các chỉ tiêu vi sinh khắt khe đạt tiêu chuẩn vệ sinh thực phẩm ISO 22000."
   },
   {
     step: "04",
@@ -53,7 +53,7 @@ export function ManufacturingSection() {
             <div className="h-[2px] w-6 bg-[#D4AF37]/40 rounded-full" />
           </div>
           <p className="text-muted-foreground text-[14.5px] md:text-[16px] leading-[1.7] max-w-[620px] mx-auto font-body">
-            Đảm bảo tính chuyên nghiệp, minh bạch và an toàn tuyệt đối. Mỗi tổ yến Nutriphar đều trải qua 4 bước kiểm soát nghiêm ngặt trước khi trao tay người dùng.
+            Đảm bảo tính chuyên nghiệp, minh bạch và đảm bảo chất lượng. Mỗi tổ yến Nutriphar đều trải qua 4 bước kiểm soát nghiêm ngặt trước khi trao tay người dùng.
           </p>
         </div>
 

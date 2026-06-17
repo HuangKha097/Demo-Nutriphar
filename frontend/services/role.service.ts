@@ -50,7 +50,7 @@ export const DEFAULT_ROLES: Role[] = [
 ];
 
 export const roleCreateSchema = z.object({
-  roleName: z.string().min(2, "Tên vai trò phải có ít nhất 2 ký tự"),
+  roleName: z.string().min(2, "Tên vai trò phải có tối thiểu 2 ký tự"),
   description: z.string().optional(),
   permissions: z.record(z.string(), z.record(z.string(), z.boolean())).optional(),
 });

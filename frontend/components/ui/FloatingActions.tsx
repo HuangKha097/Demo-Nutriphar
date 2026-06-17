@@ -77,26 +77,26 @@ export function FloatingActions() {
 
         <div className="flex items-center gap-2">
           <span className="bg-accent/90 text-white text-[12px] font-medium px-2.5 py-1.5 rounded-md shadow-md border border-white/10 whitespace-nowrap">
-            Hotline 1: 0258.6257.287
+            Tổng đài 1: 0258.6257.287
           </span>
           <Link
             href="tel:02586257287"
             className="flex items-center justify-center w-11 h-11 rounded-full bg-accent   text-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 shrink-0"
-            aria-label="Gọi điện thoại hotline 1"
+            aria-label="Gọi điện thoại tổng đài 1"
           >
             <Phone className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* Hotline Button */}
+        {/* Tổng đài Button */}
         <div className="flex items-center gap-2">
           <span className="bg-accent/90 text-white text-[12px] font-medium px-2.5 py-1.5 rounded-md shadow-md border border-white/10 whitespace-nowrap">
-            Hotline 2: 0988.781.879
+            Tổng đài 2: 0988.781.879
           </span>
           <Link
             href="tel:0988781879"
             className="flex items-center justify-center w-11 h-11 rounded-full bg-accent text-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 shrink-0"
-            aria-label="Gọi điện thoại hotline 2"
+            aria-label="Gọi điện thoại tổng đài 2"
           >
             <Phone className="w-4 h-4" />
           </Link>

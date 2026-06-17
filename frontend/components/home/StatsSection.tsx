@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 
 const stats = [
-  { value: "Top 10", label: "Thương hiệu hàng đầu" },
+  { value: "Top 10", label: "Thương hiệu uy tín" },
   { value: "10,000+", label: "Khách hàng thân thiết" },
   { value: "100%", label: "Hài lòng chất lượng" },
   { value: "Ưu đãi", label: "Ngập tràn mỗi tháng" },

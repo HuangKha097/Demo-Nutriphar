@@ -99,7 +99,7 @@ export function LeadFormSection() {
             </div>
 
             <p className="text-white/80 text-[15px] md:text-[16px] leading-[1.7] max-w-[580px] mx-auto font-body font-light">
-              Hãy để lại thông tin liên hệ của bạn. Đội ngũ chuyên gia dinh dưỡng và dược sĩ hàng đầu từ Nutriphar sẽ gọi lại hỗ trợ giải đáp mọi thắc mắc trong vòng 5 phút.
+              Hãy để lại thông tin liên hệ của bạn. Đội ngũ chuyên gia dinh dưỡng và dược sĩ chuyên môn cao từ Nutriphar sẽ gọi lại hỗ trợ giải đáp mọi thắc mắc trong vòng 5 phút.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export function LeadFormSection() {
                   Gửi Thông Tin Thành Công!
                 </h3>
                 <p className="text-white/80 text-[14.5px] max-w-sm font-body leading-relaxed">
-                  Cảm ơn bạn đã lựa chọn Nutriphar. Đội ngũ dược sĩ chuyên trách sẽ liên hệ hỗ trợ bạn qua thông tin vừa đăng ký.
+                  Cảm ơn bạn đã tin dùng Nutriphar. Đội ngũ dược sĩ chuyên trách sẽ liên hệ hỗ trợ bạn qua thông tin vừa đăng ký.
                 </p>
               </div>
             )}

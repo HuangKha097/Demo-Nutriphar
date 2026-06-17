@@ -16,7 +16,7 @@ const testimonials = [
   },
   {
     quote:
-      "Tôi mua yến sào Nutriphar tặng ba mẹ dịp Tết vừa rồi, hai người dùng đều khen nức nở vì yến nở to và thơm tự nhiên. Đặc biệt là ba tôi từng bị di chứng hậu Covid khiến phổi yếu và hay ho khan về đêm. Sau khoảng hơn một tháng dùng yến chưng thường xuyên, những cơn ho đã giảm hẳn, ông ăn uống ngon miệng và lên cân lại. Nhìn thấy sức khỏe ba mẹ ngày một tốt lên là niềm vui lớn nhất của con cái. Vô cùng biết ơn Nutriphar đã mang đến một sản phẩm thực sự tuyệt vời!",
+      "Tôi mua yến sào Nutriphar tặng ba mẹ dịp Tết vừa rồi, hai người dùng đều khen nức nở vì yến nở to và thơm tự nhiên. Đặc biệt là ba tôi từng bị di chứng hậu Covid khiến phổi yếu và hay ho khan về đêm. Sau khoảng hơn một tháng dùng yến chưng thường xuyên, những cơn ho đã thuyên giảm đáng kể, ông ăn uống ngon miệng và lên cân lại. Nhìn thấy sức khỏe ba mẹ ngày một tốt lên là niềm vui lớn lao của con cái. Vô cùng biết ơn Nutriphar đã mang đến một sản phẩm thực sự tuyệt vời!",
     name: "Anh Trần Văn Hùng",
     image: "/images/customer3.webp",
     title: "Khách hàng tại Khánh Hòa",
@@ -37,7 +37,7 @@ const testimonials = [
   },
   {
     quote:
-      "Là một người nội trợ cực kỳ kỹ tính trong việc chọn lựa thực phẩm tẩm bổ cho tổ ấm, điều mình ấn tượng nhất ở Nutriphar chính là độ tinh khiết hoàn hảo. Từng sợi yến luôn nở cực kỳ to, khi chưng lên rất dôi, nước trong vắt và đặc biệt là giữ nguyên được độ dai giòn rụm sần sật vô cùng hấp dẫn. Cả nhà mình từ ông bà nội đến mấy đứa nhỏ ai cũng mê tít món yến chưng hạt sen táo đỏ. Mình hoàn toàn tin tưởng chất lượng của Nutriphar.",
+      "Là một người nội trợ cực kỳ kỹ tính trong việc chọn lựa thực phẩm tẩm bổ cho tổ ấm, điều mình ấn tượng đặc biệt ở Nutriphar chính là độ tinh khiết hoàn hảo. Từng sợi yến luôn nở cực kỳ to, khi chưng lên rất dôi, nước trong vắt và đặc biệt là giữ nguyên được độ dai giòn rụm sần sật vô cùng hấp dẫn. Cả nhà mình từ ông bà nội đến mấy đứa nhỏ ai cũng mê tít món yến chưng hạt sen táo đỏ. Mình hoàn toàn tin tưởng chất lượng của Nutriphar.",
     name: "Chị Trần Ngọc Hà",
     title: "Khách hàng tại Cần Thơ",
     image: "/images/customer3.webp",

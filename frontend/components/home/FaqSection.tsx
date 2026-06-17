@@ -14,7 +14,7 @@ const highlights = [
   {
     title: "Chất Lượng - Uy Tín",
     description:
-      'Luôn đáp ứng tiêu chuẩn thực phẩm bổ sung - là sản phẩm uy tín được khách hàng đón nhận trên toàn quốc. Với phương châm giữ vững chữ TÂM và TÍN để mãi luôn đồng hành cùng khách hàng, Nutriphar mong muốn mang đến những sản phẩm tốt nhất tới tận tay người dùng.',
+      'Luôn đáp ứng tiêu chuẩn thực phẩm bổ sung - là sản phẩm uy tín được khách hàng đón nhận trên toàn quốc. Với phương châm giữ vững chữ TÂM và TÍN để mãi luôn đồng hành cùng khách hàng, Nutriphar mong muốn mang đến những sản phẩm chất lượng vượt trội tới tận tay người dùng.',
   },
   {
     title: "Nha Trang - Khánh Hòa",
