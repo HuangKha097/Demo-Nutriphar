@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/Button";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { ArrowRight } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { Suspense, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 export function HeroSection() {
+  const router = useRouter();
   const rootRef = useGsapReveal();
   const leafWrapperRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -76,12 +78,16 @@ export function HeroSection() {
 
             <div data-reveal className="relative z-20 flex flex-row flex-wrap items-center justify-center lg:justify-start gap-3">
               <CtaButton
+                onClick={() => router.push('/products')}
                 icon={<ArrowRight className="w-4 h-4 text-white" />}
                 className="w-auto h-[46px] md:h-[52px] text-[14px] md:text-[16px] pl-6 pr-1.5 md:pl-8 md:pr-2 bg-accent hover:bg-[#8B1215] shadow-lg border-none"
               >
                 Mua Ngay
               </CtaButton>
-              <button className="w-auto bg-transparent border-white border-2 text-white hover:bg-white/10 hover:opacity-80 font-medium text-[14px] md:text-[16px] px-6 md:px-8 h-[46px] md:h-[52px] rounded-full transition-all duration-300 active:scale-[0.98] cursor-pointer">
+              <button 
+                onClick={() => router.push('/about')}
+                className="w-auto bg-transparent border-white border-2 text-white hover:bg-white/10 hover:opacity-80 font-medium text-[14px] md:text-[16px] px-6 md:px-8 h-[46px] md:h-[52px] rounded-full transition-all duration-300 active:scale-[0.98] cursor-pointer"
+              >
                 Tìm Hiểu Thêm
               </button>
             </div>

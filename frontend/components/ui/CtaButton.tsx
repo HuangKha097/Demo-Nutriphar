@@ -16,7 +16,7 @@ export const CtaButton = forwardRef<HTMLButtonElement, CtaButtonProps>(
     return (
       <button
         ref={ref}
-        className={`group flex items-center justify-between ${paddingClasses} ${bgClasses} text-white font-medium text-[15px] rounded-full shadow-md hover:shadow-lg hover:scale-[1.015] hover:brightness-110 hover:opacity-95 transition-all duration-300 active:scale-[0.98] select-none cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
+        className={`group flex items-center justify-between ${paddingClasses} ${bgClasses} text-white font-medium text-[15px] rounded-full shadow-md hover:shadow-lg hover:brightness-110 hover:opacity-95 transition-all duration-300 active:scale-[0.98] select-none cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
         {...props}
       >
         <span className="font-body">{children}</span>

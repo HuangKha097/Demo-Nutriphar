@@ -4,6 +4,50 @@ export interface Product extends SharedProduct {
   categoryId?: string | null;
 }
 
+export interface Review {
+  id: string;
+  productId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export const DEFAULT_REVIEWS: Review[] = [
+  {
+    id: "rev-1",
+    productId: "1",
+    userName: "Nguyễn Văn Anh",
+    rating: 5,
+    comment: "Sản phẩm chất lượng tuyệt vời, đóng gói rất đẹp và sang trọng. Rất phù hợp để làm quà biếu.",
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // 2 days ago
+  },
+  {
+    id: "rev-2",
+    productId: "1",
+    userName: "Trần Thị Bé",
+    rating: 4,
+    comment: "Giao hàng nhanh, yến chưng uống rất ngon, vị ngọt thanh không bị gắt. Sẽ ủng hộ shop dài dài.",
+    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+  },
+  {
+    id: "rev-3",
+    productId: "1",
+    userName: "Hoàng Minh",
+    rating: 5,
+    comment: "Mua cho ba mẹ dùng thử thấy khen ngon, ăn ngủ ngon hơn hẳn. Sản phẩm rất đáng tiền.",
+    date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString() // 10 days ago
+  },
+  {
+    id: "rev-4",
+    productId: "2",
+    userName: "Lê Hoàng Cường",
+    rating: 5,
+    comment: "Bé nhà mình rất thích uống loại này. Từ ngày uống yến thấy bé ăn ngon miệng hơn hẳn.",
+    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days ago
+  }
+];
+
 export interface NewsArticle {
   id: number;
   title: string;
@@ -317,6 +361,43 @@ export async function getProductById(id: string): Promise<Product | null> {
   const storedProducts = getLocalStorage<Product[]>("nutriphar_products_v4", INITIAL_PRODUCTS as any);
   const product = storedProducts.find((p) => p.id === id);
   return product || null;
+}
+
+export async function getProductReviews(productId: string): Promise<Review[]> {
+  if (!USE_MOCK && API_BASE_URL) {
+    const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`);
+    if (!response.ok) throw new Error("Failed to fetch reviews");
+    return response.json();
+  }
+  
+  await new Promise((resolve) => setTimeout(resolve, 150));
+  const storedReviews = getLocalStorage<Review[]>("nutriphar_reviews", DEFAULT_REVIEWS);
+  return storedReviews
+    .filter(r => r.productId === productId)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export async function addProductReview(review: Omit<Review, "id" | "date">): Promise<Review> {
+  if (!USE_MOCK && API_BASE_URL) {
+    const response = await fetch(`${API_BASE_URL}/reviews`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(review),
+    });
+    if (!response.ok) throw new Error("Failed to add review");
+    return response.json();
+  }
+  
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  const storedReviews = getLocalStorage<Review[]>("nutriphar_reviews", DEFAULT_REVIEWS);
+  const newReview: Review = {
+    ...review,
+    id: Math.random().toString(36).substring(2, 9),
+    date: new Date().toISOString()
+  };
+  storedReviews.push(newReview);
+  setLocalStorage("nutriphar_reviews", storedReviews);
+  return newReview;
 }
 
 export async function getNewsArticles(): Promise<any[]> {

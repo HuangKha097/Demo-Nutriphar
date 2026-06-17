@@ -8,6 +8,7 @@ import { CtaButton } from "@/components/ui/CtaButton";
 import { SliderNavigation } from "@/components/ui/SliderNavigation";
 import { StarRating } from "@/components/ui/StarRating";
 import { useToast } from "@/context/ToastContext";
+import { ProductReviews } from "./ProductReviews";
 import Link from "next/link";
 
 interface ProductDetailClientProps {
@@ -18,7 +19,7 @@ interface ProductDetailClientProps {
 export function ProductDetailClient({ product, relatedProducts }: ProductDetailClientProps) {
   const [selectedImage, setSelectedImage] = useState(product.gallery[0] || product.image);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<"desc" | "ingredients" | "usage">("desc");
+  const [activeTab, setActiveTab] = useState<"desc" | "ingredients" | "usage" | "reviews">("desc");
   const defaultSize = product.category.includes("Yến sào") ? "Hộp 50g" : "Hộp 6 hũ";
   const [selectedSize, setSelectedSize] = useState(defaultSize);
   const { success: showSuccessToast } = useToast();
@@ -281,6 +282,16 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
               <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D4AF37]" />
             )}
           </button>
+          <button
+            onClick={() => setActiveTab("reviews")}
+            className={`pb-4 text-[15px] font-semibold font-body transition-colors cursor-pointer relative select-none ${activeTab === "reviews" ? "text-primary" : "text-gray-400 hover:text-primary"
+              }`}
+          >
+            Đánh giá
+            {activeTab === "reviews" && (
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D4AF37]" />
+            )}
+          </button>
         </div>
 
         {/* Tab content panels */}
@@ -331,6 +342,10 @@ export function ProductDetailClient({ product, relatedProducts }: ProductDetailC
             <div className="flex flex-col gap-4">
               <p>{product.usage}</p>
             </div>
+          )}
+
+          {activeTab === "reviews" && (
+            <ProductReviews productId={product.id} />
           )}
         </div>
       </div>
